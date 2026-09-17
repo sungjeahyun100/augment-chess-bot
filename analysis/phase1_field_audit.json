@@ -1,0 +1,3405 @@
+{
+  "source_sha256": "0dbbad680c6e8e2abcdb6e49817ff486aa2f8ef799a8035bd356baef8a2731ea",
+  "static_count": 292,
+  "reset_count": 251,
+  "fields": [
+    {
+      "field": "acceleration",
+      "category": "rule",
+      "disposition": "deferred rule state; NOT silently dropped by an importer; feature unsupported",
+      "in_static_inventory": true,
+      "in_reset": true,
+      "dynamic_candidate": false,
+      "first_reference": 59207
+    },
+    {
+      "field": "accelerationPendingFor",
+      "category": "rule",
+      "disposition": "deferred rule state; NOT silently dropped by an importer; feature unsupported",
+      "in_static_inventory": true,
+      "in_reset": true,
+      "dynamic_candidate": false,
+      "first_reference": 81389
+    },
+    {
+      "field": "accelerationPendingTurns",
+      "category": "rule",
+      "disposition": "deferred rule state; NOT silently dropped by an importer; feature unsupported",
+      "in_static_inventory": true,
+      "in_reset": true,
+      "dynamic_candidate": false,
+      "first_reference": 81396
+    },
+    {
+      "field": "accelerationStartsAfterBlackTurns",
+      "category": "rule",
+      "disposition": "deferred rule state; NOT silently dropped by an importer; feature unsupported",
+      "in_static_inventory": true,
+      "in_reset": true,
+      "dynamic_candidate": false,
+      "first_reference": 81394
+    },
+    {
+      "field": "accelerationTrail",
+      "category": "rule",
+      "disposition": "deferred rule state; NOT silently dropped by an importer; feature unsupported",
+      "in_static_inventory": true,
+      "in_reset": true,
+      "dynamic_candidate": false,
+      "first_reference": 59175
+    },
+    {
+      "field": "actionsRemaining",
+      "category": "rule",
+      "disposition": "turn.actions_remaining",
+      "in_static_inventory": true,
+      "in_reset": true,
+      "dynamic_candidate": false,
+      "first_reference": 53034
+    },
+    {
+      "field": "activeHistoryMoveNumber",
+      "category": "presentation",
+      "disposition": "excluded from core; no UI callback/timer serialization",
+      "in_static_inventory": true,
+      "in_reset": false,
+      "dynamic_candidate": false,
+      "first_reference": 74725
+    },
+    {
+      "field": "activeTrolley",
+      "category": "rule",
+      "disposition": "deferred rule state; NOT silently dropped by an importer; feature unsupported",
+      "in_static_inventory": true,
+      "in_reset": true,
+      "dynamic_candidate": false,
+      "first_reference": 51871
+    },
+    {
+      "field": "additionalRuleCards",
+      "category": "rule",
+      "disposition": "deferred rule state; NOT silently dropped by an importer; feature unsupported",
+      "in_static_inventory": true,
+      "in_reset": true,
+      "dynamic_candidate": false,
+      "first_reference": 53229
+    },
+    {
+      "field": "afterimageQueen",
+      "category": "rule",
+      "disposition": "deferred rule state; NOT silently dropped by an importer; feature unsupported",
+      "in_static_inventory": true,
+      "in_reset": true,
+      "dynamic_candidate": false,
+      "first_reference": 69390
+    },
+    {
+      "field": "aiHumanColor",
+      "category": "rule",
+      "disposition": "deferred configuration/external input; only explicit cardless local setup supported",
+      "in_static_inventory": true,
+      "in_reset": false,
+      "dynamic_candidate": false,
+      "first_reference": 46993
+    },
+    {
+      "field": "animatedPieceIds",
+      "category": "presentation",
+      "disposition": "excluded from core; no UI callback/timer serialization",
+      "in_static_inventory": true,
+      "in_reset": true,
+      "dynamic_candidate": false,
+      "first_reference": 62546
+    },
+    {
+      "field": "appliedRuleCard",
+      "category": "rule",
+      "disposition": "deferred rule state; NOT silently dropped by an importer; feature unsupported",
+      "in_static_inventory": true,
+      "in_reset": true,
+      "dynamic_candidate": false,
+      "first_reference": 53151
+    },
+    {
+      "field": "armistice",
+      "category": "rule",
+      "disposition": "deferred rule state; NOT silently dropped by an importer; feature unsupported",
+      "in_static_inventory": true,
+      "in_reset": true,
+      "dynamic_candidate": false,
+      "first_reference": 60929
+    },
+    {
+      "field": "auctionInventoryOpen",
+      "category": "presentation",
+      "disposition": "excluded from core; no UI callback/timer serialization",
+      "in_static_inventory": true,
+      "in_reset": true,
+      "dynamic_candidate": false,
+      "first_reference": 65790
+    },
+    {
+      "field": "authoritativeEndgame",
+      "category": "unresolved",
+      "disposition": "reject full JS snapshot; investigate reads/writes before enabling this feature",
+      "in_static_inventory": true,
+      "in_reset": false,
+      "dynamic_candidate": false,
+      "first_reference": 96373
+    },
+    {
+      "field": "authoritativeRepetitionCount",
+      "category": "unresolved",
+      "disposition": "reject full JS snapshot; investigate reads/writes before enabling this feature",
+      "in_static_inventory": true,
+      "in_reset": false,
+      "dynamic_candidate": false,
+      "first_reference": 96374
+    },
+    {
+      "field": "backwardKnight",
+      "category": "rule",
+      "disposition": "deferred rule state; NOT silently dropped by an importer; feature unsupported",
+      "in_static_inventory": true,
+      "in_reset": true,
+      "dynamic_candidate": false,
+      "first_reference": 69379
+    },
+    {
+      "field": "barricadeDirectionChoice",
+      "category": "rule",
+      "disposition": "deferred rule state; NOT silently dropped by an importer; feature unsupported",
+      "in_static_inventory": true,
+      "in_reset": true,
+      "dynamic_candidate": false,
+      "first_reference": 60107
+    },
+    {
+      "field": "barricadePreview",
+      "category": "presentation",
+      "disposition": "excluded from core; no UI callback/timer serialization",
+      "in_static_inventory": true,
+      "in_reset": true,
+      "dynamic_candidate": false,
+      "first_reference": 59712
+    },
+    {
+      "field": "betaOptionalExtraMove",
+      "category": "rule",
+      "disposition": "deferred rule state; NOT silently dropped by an importer; feature unsupported",
+      "in_static_inventory": true,
+      "in_reset": false,
+      "dynamic_candidate": false,
+      "first_reference": 60524
+    },
+    {
+      "field": "bigRookPreview",
+      "category": "presentation",
+      "disposition": "excluded from core; no UI callback/timer serialization",
+      "in_static_inventory": true,
+      "in_reset": true,
+      "dynamic_candidate": false,
+      "first_reference": 59709
+    },
+    {
+      "field": "binaMate",
+      "category": "rule",
+      "disposition": "deferred rule state; NOT silently dropped by an importer; feature unsupported",
+      "in_static_inventory": true,
+      "in_reset": true,
+      "dynamic_candidate": false,
+      "first_reference": 54546
+    },
+    {
+      "field": "bishopSnipe",
+      "category": "rule",
+      "disposition": "deferred rule state; NOT silently dropped by an importer; feature unsupported",
+      "in_static_inventory": true,
+      "in_reset": true,
+      "dynamic_candidate": false,
+      "first_reference": 69404
+    },
+    {
+      "field": "blackHole",
+      "category": "rule",
+      "disposition": "deferred rule state; NOT silently dropped by an importer; feature unsupported",
+      "in_static_inventory": true,
+      "in_reset": true,
+      "dynamic_candidate": false,
+      "first_reference": 57487
+    },
+    {
+      "field": "bloodMoonEffectLibraryOpen",
+      "category": "presentation",
+      "disposition": "excluded from core; no UI callback/timer serialization",
+      "in_static_inventory": true,
+      "in_reset": true,
+      "dynamic_candidate": false,
+      "first_reference": 56919
+    },
+    {
+      "field": "board",
+      "category": "rule",
+      "disposition": "board + pieces (cell IDs / unique entities)",
+      "in_static_inventory": true,
+      "in_reset": true,
+      "dynamic_candidate": false,
+      "first_reference": 48856
+    },
+    {
+      "field": "boardFlip",
+      "category": "presentation",
+      "disposition": "excluded from core; no UI callback/timer serialization",
+      "in_static_inventory": true,
+      "in_reset": true,
+      "dynamic_candidate": false,
+      "first_reference": 56516
+    },
+    {
+      "field": "boardHistory",
+      "category": "unresolved",
+      "disposition": "reject full JS snapshot; investigate reads/writes before enabling this feature",
+      "in_static_inventory": true,
+      "in_reset": true,
+      "dynamic_candidate": false,
+      "first_reference": 56596
+    },
+    {
+      "field": "breakthroughPawns",
+      "category": "rule",
+      "disposition": "deferred rule state; NOT silently dropped by an importer; feature unsupported",
+      "in_static_inventory": true,
+      "in_reset": true,
+      "dynamic_candidate": false,
+      "first_reference": 69405
+    },
+    {
+      "field": "brilliantMove",
+      "category": "presentation",
+      "disposition": "excluded from core; no UI callback/timer serialization",
+      "in_static_inventory": false,
+      "in_reset": true,
+      "dynamic_candidate": false,
+      "first_reference": null
+    },
+    {
+      "field": "camouflageRule",
+      "category": "rule",
+      "disposition": "deferred rule state; NOT silently dropped by an importer; feature unsupported",
+      "in_static_inventory": true,
+      "in_reset": true,
+      "dynamic_candidate": false,
+      "first_reference": 55352
+    },
+    {
+      "field": "campaign",
+      "category": "rule",
+      "disposition": "deferred configuration/external input; only explicit cardless local setup supported",
+      "in_static_inventory": true,
+      "in_reset": true,
+      "dynamic_candidate": false,
+      "first_reference": 44874
+    },
+    {
+      "field": "cannonGhostScreen",
+      "category": "rule",
+      "disposition": "fixed latest local profile; behavior remains deferred to owning rules",
+      "in_static_inventory": true,
+      "in_reset": true,
+      "dynamic_candidate": false,
+      "first_reference": 96615
+    },
+    {
+      "field": "cannonScarecrowScreen",
+      "category": "rule",
+      "disposition": "fixed latest local profile; behavior remains deferred to owning rules",
+      "in_static_inventory": true,
+      "in_reset": true,
+      "dynamic_candidate": false,
+      "first_reference": 96609
+    },
+    {
+      "field": "captureTheFlag",
+      "category": "rule",
+      "disposition": "deferred rule state; NOT silently dropped by an importer; feature unsupported",
+      "in_static_inventory": true,
+      "in_reset": false,
+      "dynamic_candidate": false,
+      "first_reference": 59850
+    },
+    {
+      "field": "capturedTypes",
+      "category": "rule",
+      "disposition": "deferred rule state; NOT silently dropped by an importer; feature unsupported",
+      "in_static_inventory": true,
+      "in_reset": true,
+      "dynamic_candidate": false,
+      "first_reference": 74684
+    },
+    {
+      "field": "captures",
+      "category": "rule",
+      "disposition": "deferred rule state; NOT silently dropped by an importer; feature unsupported",
+      "in_static_inventory": true,
+      "in_reset": true,
+      "dynamic_candidate": false,
+      "first_reference": 69315
+    },
+    {
+      "field": "cardAcquisitionNonce",
+      "category": "rule",
+      "disposition": "deferred rule state; NOT silently dropped by an importer; feature unsupported",
+      "in_static_inventory": true,
+      "in_reset": true,
+      "dynamic_candidate": false,
+      "first_reference": 55800
+    },
+    {
+      "field": "cardArchiveAvailable",
+      "category": "presentation",
+      "disposition": "excluded from core; no UI callback/timer serialization",
+      "in_static_inventory": true,
+      "in_reset": true,
+      "dynamic_candidate": false,
+      "first_reference": 49938
+    },
+    {
+      "field": "cardArchiveOpen",
+      "category": "presentation",
+      "disposition": "excluded from core; no UI callback/timer serialization",
+      "in_static_inventory": true,
+      "in_reset": true,
+      "dynamic_candidate": false,
+      "first_reference": 46995
+    },
+    {
+      "field": "cardBanIds",
+      "category": "rule",
+      "disposition": "deferred configuration/external input; only explicit cardless local setup supported",
+      "in_static_inventory": true,
+      "in_reset": true,
+      "dynamic_candidate": false,
+      "first_reference": 53017
+    },
+    {
+      "field": "cardState",
+      "category": "unresolved",
+      "disposition": "reject full JS snapshot; investigate reads/writes before enabling this feature",
+      "in_static_inventory": true,
+      "in_reset": false,
+      "dynamic_candidate": false,
+      "first_reference": 96677
+    },
+    {
+      "field": "cardsUsedThisTurn",
+      "category": "rule",
+      "disposition": "players.*.cards_used_this_turn",
+      "in_static_inventory": true,
+      "in_reset": true,
+      "dynamic_candidate": false,
+      "first_reference": 42442
+    },
+    {
+      "field": "castled",
+      "category": "rule",
+      "disposition": "history.castled",
+      "in_static_inventory": true,
+      "in_reset": true,
+      "dynamic_candidate": true,
+      "first_reference": 69403
+    },
+    {
+      "field": "castlingCanceled",
+      "category": "rule",
+      "disposition": "history.castling_canceled",
+      "in_static_inventory": true,
+      "in_reset": true,
+      "dynamic_candidate": false,
+      "first_reference": 66891
+    },
+    {
+      "field": "castlingMoved",
+      "category": "unresolved",
+      "disposition": "reject full JS snapshot; investigate reads/writes before enabling this feature",
+      "in_static_inventory": true,
+      "in_reset": false,
+      "dynamic_candidate": false,
+      "first_reference": 57639
+    },
+    {
+      "field": "chainBonds",
+      "category": "rule",
+      "disposition": "deferred rule state; NOT silently dropped by an importer; feature unsupported",
+      "in_static_inventory": true,
+      "in_reset": true,
+      "dynamic_candidate": false,
+      "first_reference": 57324
+    },
+    {
+      "field": "chaosNoCaptureUntilHalfTurn",
+      "category": "rule",
+      "disposition": "deferred rule state; NOT silently dropped by an importer; feature unsupported",
+      "in_static_inventory": true,
+      "in_reset": true,
+      "dynamic_candidate": false,
+      "first_reference": 52612
+    },
+    {
+      "field": "checkAlertEnabled",
+      "category": "presentation",
+      "disposition": "excluded from core; no UI callback/timer serialization",
+      "in_static_inventory": true,
+      "in_reset": false,
+      "dynamic_candidate": false,
+      "first_reference": 100686
+    },
+    {
+      "field": "clock",
+      "category": "rule",
+      "disposition": "deferred configuration/external input; only explicit cardless local setup supported",
+      "in_static_inventory": true,
+      "in_reset": true,
+      "dynamic_candidate": false,
+      "first_reference": 48628
+    },
+    {
+      "field": "clonePassive",
+      "category": "rule",
+      "disposition": "deferred rule state; NOT silently dropped by an importer; feature unsupported",
+      "in_static_inventory": true,
+      "in_reset": true,
+      "dynamic_candidate": false,
+      "first_reference": 55969
+    },
+    {
+      "field": "clonedPassiveCards",
+      "category": "rule",
+      "disposition": "deferred rule state; NOT silently dropped by an importer; feature unsupported",
+      "in_static_inventory": true,
+      "in_reset": true,
+      "dynamic_candidate": false,
+      "first_reference": 55926
+    },
+    {
+      "field": "collapseDepth",
+      "category": "rule",
+      "disposition": "deferred rule state; NOT silently dropped by an importer; feature unsupported",
+      "in_static_inventory": true,
+      "in_reset": true,
+      "dynamic_candidate": false,
+      "first_reference": 57441
+    },
+    {
+      "field": "collapsePending",
+      "category": "rule",
+      "disposition": "deferred rule state; NOT silently dropped by an importer; feature unsupported",
+      "in_static_inventory": true,
+      "in_reset": true,
+      "dynamic_candidate": false,
+      "first_reference": 57443
+    },
+    {
+      "field": "collapsed",
+      "category": "rule",
+      "disposition": "deferred rule state; NOT silently dropped by an importer; feature unsupported",
+      "in_static_inventory": true,
+      "in_reset": true,
+      "dynamic_candidate": false,
+      "first_reference": 57442
+    },
+    {
+      "field": "collapsedCells",
+      "category": "rule",
+      "disposition": "deferred rule state; NOT silently dropped by an importer; feature unsupported",
+      "in_static_inventory": true,
+      "in_reset": true,
+      "dynamic_candidate": false,
+      "first_reference": 57444
+    },
+    {
+      "field": "completeRandom",
+      "category": "rule",
+      "disposition": "deferred configuration/external input; only explicit cardless local setup supported",
+      "in_static_inventory": true,
+      "in_reset": true,
+      "dynamic_candidate": false,
+      "first_reference": 53572
+    },
+    {
+      "field": "conscription",
+      "category": "rule",
+      "disposition": "deferred rule state; NOT silently dropped by an importer; feature unsupported",
+      "in_static_inventory": true,
+      "in_reset": true,
+      "dynamic_candidate": false,
+      "first_reference": 95490
+    },
+    {
+      "field": "conscriptionUsed",
+      "category": "rule",
+      "disposition": "deferred rule state; NOT silently dropped by an importer; feature unsupported",
+      "in_static_inventory": true,
+      "in_reset": true,
+      "dynamic_candidate": false,
+      "first_reference": 95490
+    },
+    {
+      "field": "conveyorRule",
+      "category": "rule",
+      "disposition": "deferred rule state; NOT silently dropped by an importer; feature unsupported",
+      "in_static_inventory": true,
+      "in_reset": true,
+      "dynamic_candidate": false,
+      "first_reference": 69334
+    },
+    {
+      "field": "coolGuy",
+      "category": "rule",
+      "disposition": "deferred rule state; NOT silently dropped by an importer; feature unsupported",
+      "in_static_inventory": true,
+      "in_reset": true,
+      "dynamic_candidate": false,
+      "first_reference": 52603
+    },
+    {
+      "field": "cornerKick",
+      "category": "rule",
+      "disposition": "deferred rule state; NOT silently dropped by an importer; feature unsupported",
+      "in_static_inventory": true,
+      "in_reset": true,
+      "dynamic_candidate": false,
+      "first_reference": 54518
+    },
+    {
+      "field": "coronation",
+      "category": "rule",
+      "disposition": "deferred rule state; NOT silently dropped by an importer; feature unsupported",
+      "in_static_inventory": true,
+      "in_reset": true,
+      "dynamic_candidate": false,
+      "first_reference": 69450
+    },
+    {
+      "field": "crownRule",
+      "category": "rule",
+      "disposition": "deferred rule state; NOT silently dropped by an importer; feature unsupported",
+      "in_static_inventory": true,
+      "in_reset": true,
+      "dynamic_candidate": false,
+      "first_reference": 57525
+    },
+    {
+      "field": "deathmatch",
+      "category": "rule",
+      "disposition": "deferred rule state; NOT silently dropped by an importer; feature unsupported",
+      "in_static_inventory": true,
+      "in_reset": true,
+      "dynamic_candidate": false,
+      "first_reference": 81136
+    },
+    {
+      "field": "deathmatchEnabled",
+      "category": "rule",
+      "disposition": "deferred configuration/external input; only explicit cardless local setup supported",
+      "in_static_inventory": true,
+      "in_reset": true,
+      "dynamic_candidate": false,
+      "first_reference": 53068
+    },
+    {
+      "field": "deathmatchLimitTurns",
+      "category": "rule",
+      "disposition": "deferred configuration/external input; only explicit cardless local setup supported",
+      "in_static_inventory": true,
+      "in_reset": true,
+      "dynamic_candidate": false,
+      "first_reference": 81130
+    },
+    {
+      "field": "deck",
+      "category": "rule",
+      "disposition": "deferred rule state; NOT silently dropped by an importer; feature unsupported",
+      "in_static_inventory": true,
+      "in_reset": true,
+      "dynamic_candidate": false,
+      "first_reference": 96697
+    },
+    {
+      "field": "deckSlots",
+      "category": "rule",
+      "disposition": "players.*.card_slots (empty slots only; occupied slots rejected)",
+      "in_static_inventory": true,
+      "in_reset": true,
+      "dynamic_candidate": false,
+      "first_reference": 55786
+    },
+    {
+      "field": "delayedHazards",
+      "category": "rule",
+      "disposition": "deferred rule state; NOT silently dropped by an importer; feature unsupported",
+      "in_static_inventory": true,
+      "in_reset": true,
+      "dynamic_candidate": false,
+      "first_reference": 69453
+    },
+    {
+      "field": "democracy",
+      "category": "rule",
+      "disposition": "deferred rule state; NOT silently dropped by an importer; feature unsupported",
+      "in_static_inventory": true,
+      "in_reset": true,
+      "dynamic_candidate": false,
+      "first_reference": 54428
+    },
+    {
+      "field": "devLibraryOpen",
+      "category": "presentation",
+      "disposition": "excluded from core; no UI callback/timer serialization",
+      "in_static_inventory": true,
+      "in_reset": true,
+      "dynamic_candidate": false,
+      "first_reference": 50897
+    },
+    {
+      "field": "devMode",
+      "category": "rule",
+      "disposition": "deferred configuration/external input; only explicit cardless local setup supported",
+      "in_static_inventory": true,
+      "in_reset": true,
+      "dynamic_candidate": false,
+      "first_reference": 47833
+    },
+    {
+      "field": "diceLocks",
+      "category": "rule",
+      "disposition": "deferred rule state; NOT silently dropped by an importer; feature unsupported",
+      "in_static_inventory": true,
+      "in_reset": true,
+      "dynamic_candidate": false,
+      "first_reference": 69445
+    },
+    {
+      "field": "disassembly",
+      "category": "rule",
+      "disposition": "deferred rule state; NOT silently dropped by an importer; feature unsupported",
+      "in_static_inventory": true,
+      "in_reset": false,
+      "dynamic_candidate": false,
+      "first_reference": 79779
+    },
+    {
+      "field": "draft",
+      "category": "rule",
+      "disposition": "deferred rule state; NOT silently dropped by an importer; feature unsupported",
+      "in_static_inventory": true,
+      "in_reset": true,
+      "dynamic_candidate": false,
+      "first_reference": 43644
+    },
+    {
+      "field": "draftBalance",
+      "category": "rule",
+      "disposition": "deferred rule state; NOT silently dropped by an importer; feature unsupported",
+      "in_static_inventory": true,
+      "in_reset": true,
+      "dynamic_candidate": false,
+      "first_reference": 54235
+    },
+    {
+      "field": "draftBoardPreview",
+      "category": "presentation",
+      "disposition": "excluded from core; no UI callback/timer serialization",
+      "in_static_inventory": true,
+      "in_reset": true,
+      "dynamic_candidate": false,
+      "first_reference": 53625
+    },
+    {
+      "field": "draftClock",
+      "category": "rule",
+      "disposition": "deferred configuration/external input; only explicit cardless local setup supported",
+      "in_static_inventory": true,
+      "in_reset": true,
+      "dynamic_candidate": false,
+      "first_reference": 48669
+    },
+    {
+      "field": "draftDelete",
+      "category": "rule",
+      "disposition": "config.draft_enabled (inverted; only disabled draft supported)",
+      "in_static_inventory": true,
+      "in_reset": true,
+      "dynamic_candidate": false,
+      "first_reference": 53031
+    },
+    {
+      "field": "draftLocked",
+      "category": "rule",
+      "disposition": "deferred rule state; NOT silently dropped by an importer; feature unsupported",
+      "in_static_inventory": true,
+      "in_reset": true,
+      "dynamic_candidate": false,
+      "first_reference": 44016
+    },
+    {
+      "field": "draftPreviewBundleIndex",
+      "category": "presentation",
+      "disposition": "excluded from core; no UI callback/timer serialization",
+      "in_static_inventory": true,
+      "in_reset": true,
+      "dynamic_candidate": false,
+      "first_reference": 53627
+    },
+    {
+      "field": "draftPreviewCardId",
+      "category": "presentation",
+      "disposition": "excluded from core; no UI callback/timer serialization",
+      "in_static_inventory": true,
+      "in_reset": true,
+      "dynamic_candidate": false,
+      "first_reference": 53626
+    },
+    {
+      "field": "draftResumeTurn",
+      "category": "rule",
+      "disposition": "deferred rule state; NOT silently dropped by an importer; feature unsupported",
+      "in_static_inventory": true,
+      "in_reset": true,
+      "dynamic_candidate": false,
+      "first_reference": 53637
+    },
+    {
+      "field": "dragging",
+      "category": "presentation",
+      "disposition": "excluded from core; no UI callback/timer serialization",
+      "in_static_inventory": true,
+      "in_reset": true,
+      "dynamic_candidate": false,
+      "first_reference": 57747
+    },
+    {
+      "field": "drawOffer",
+      "category": "rule",
+      "disposition": "deferred rule state; NOT silently dropped by an importer; feature unsupported",
+      "in_static_inventory": true,
+      "in_reset": true,
+      "dynamic_candidate": false,
+      "first_reference": 50352
+    },
+    {
+      "field": "drawRejection",
+      "category": "rule",
+      "disposition": "deferred rule state; NOT silently dropped by an importer; feature unsupported",
+      "in_static_inventory": true,
+      "in_reset": false,
+      "dynamic_candidate": false,
+      "first_reference": 50387
+    },
+    {
+      "field": "earlyPromotion",
+      "category": "rule",
+      "disposition": "deferred rule state; NOT silently dropped by an importer; feature unsupported",
+      "in_static_inventory": true,
+      "in_reset": true,
+      "dynamic_candidate": false,
+      "first_reference": 69451
+    },
+    {
+      "field": "effects",
+      "category": "rule",
+      "disposition": "deferred rule state; NOT silently dropped by an importer; feature unsupported",
+      "in_static_inventory": true,
+      "in_reset": true,
+      "dynamic_candidate": false,
+      "first_reference": 62567
+    },
+    {
+      "field": "enPassant",
+      "category": "rule",
+      "disposition": "history.en_passant (typed entity/target reference; transition deferred)",
+      "in_static_inventory": true,
+      "in_reset": true,
+      "dynamic_candidate": false,
+      "first_reference": 57645
+    },
+    {
+      "field": "enPassantFrenzy",
+      "category": "rule",
+      "disposition": "deferred rule state; NOT silently dropped by an importer; feature unsupported",
+      "in_static_inventory": true,
+      "in_reset": true,
+      "dynamic_candidate": false,
+      "first_reference": 69406
+    },
+    {
+      "field": "encouragement",
+      "category": "rule",
+      "disposition": "deferred rule state; NOT silently dropped by an importer; feature unsupported",
+      "in_static_inventory": true,
+      "in_reset": true,
+      "dynamic_candidate": false,
+      "first_reference": 69371
+    },
+    {
+      "field": "endDraftDone",
+      "category": "rule",
+      "disposition": "deferred rule state; NOT silently dropped by an importer; feature unsupported",
+      "in_static_inventory": true,
+      "in_reset": true,
+      "dynamic_candidate": false,
+      "first_reference": 53639
+    },
+    {
+      "field": "endPhaseStartMove",
+      "category": "rule",
+      "disposition": "deferred rule state; NOT silently dropped by an importer; feature unsupported",
+      "in_static_inventory": true,
+      "in_reset": true,
+      "dynamic_candidate": false,
+      "first_reference": 53640
+    },
+    {
+      "field": "exhaustion",
+      "category": "rule",
+      "disposition": "deferred rule state; NOT silently dropped by an importer; feature unsupported",
+      "in_static_inventory": true,
+      "in_reset": true,
+      "dynamic_candidate": true,
+      "first_reference": 54426
+    },
+    {
+      "field": "extinctionMinorTargets",
+      "category": "rule",
+      "disposition": "fixed latest local profile; behavior remains deferred to owning rules",
+      "in_static_inventory": true,
+      "in_reset": true,
+      "dynamic_candidate": false,
+      "first_reference": 96614
+    },
+    {
+      "field": "falseStart",
+      "category": "rule",
+      "disposition": "deferred rule state; NOT silently dropped by an importer; feature unsupported",
+      "in_static_inventory": false,
+      "in_reset": false,
+      "dynamic_candidate": true,
+      "first_reference": null
+    },
+    {
+      "field": "fastGrowth",
+      "category": "rule",
+      "disposition": "deferred rule state; NOT silently dropped by an importer; feature unsupported",
+      "in_static_inventory": true,
+      "in_reset": true,
+      "dynamic_candidate": false,
+      "first_reference": 69452
+    },
+    {
+      "field": "feudalContracts",
+      "category": "rule",
+      "disposition": "deferred rule state; NOT silently dropped by an importer; feature unsupported",
+      "in_static_inventory": true,
+      "in_reset": true,
+      "dynamic_candidate": false,
+      "first_reference": 57337
+    },
+    {
+      "field": "fianchetto",
+      "category": "rule",
+      "disposition": "deferred rule state; NOT silently dropped by an importer; feature unsupported",
+      "in_static_inventory": true,
+      "in_reset": true,
+      "dynamic_candidate": false,
+      "first_reference": 54460
+    },
+    {
+      "field": "fieldPromotion",
+      "category": "rule",
+      "disposition": "deferred rule state; NOT silently dropped by an importer; feature unsupported",
+      "in_static_inventory": true,
+      "in_reset": true,
+      "dynamic_candidate": true,
+      "first_reference": 55480
+    },
+    {
+      "field": "fileSurge",
+      "category": "rule",
+      "disposition": "deferred rule state; NOT silently dropped by an importer; feature unsupported",
+      "in_static_inventory": true,
+      "in_reset": true,
+      "dynamic_candidate": false,
+      "first_reference": 69386
+    },
+    {
+      "field": "finalWeapon",
+      "category": "rule",
+      "disposition": "deferred rule state; NOT silently dropped by an importer; feature unsupported",
+      "in_static_inventory": true,
+      "in_reset": true,
+      "dynamic_candidate": false,
+      "first_reference": 69389
+    },
+    {
+      "field": "firstMoveCardsForced",
+      "category": "rule",
+      "disposition": "players.*.first_move_cards_forced",
+      "in_static_inventory": true,
+      "in_reset": true,
+      "dynamic_candidate": false,
+      "first_reference": 68574
+    },
+    {
+      "field": "firstMoveUndo",
+      "category": "rule",
+      "disposition": "deferred rule state; NOT silently dropped by an importer; feature unsupported",
+      "in_static_inventory": true,
+      "in_reset": false,
+      "dynamic_candidate": false,
+      "first_reference": 74482
+    },
+    {
+      "field": "fog",
+      "category": "unresolved",
+      "disposition": "reject full JS snapshot; investigate reads/writes before enabling this feature",
+      "in_static_inventory": true,
+      "in_reset": false,
+      "dynamic_candidate": false,
+      "first_reference": 50732
+    },
+    {
+      "field": "fogOfWar",
+      "category": "unresolved",
+      "disposition": "reject full JS snapshot; investigate reads/writes before enabling this feature",
+      "in_static_inventory": true,
+      "in_reset": false,
+      "dynamic_candidate": false,
+      "first_reference": 50731
+    },
+    {
+      "field": "fogWar",
+      "category": "unresolved",
+      "disposition": "reject full JS snapshot; investigate reads/writes before enabling this feature",
+      "in_static_inventory": true,
+      "in_reset": false,
+      "dynamic_candidate": false,
+      "first_reference": 50731
+    },
+    {
+      "field": "forceAnimatedPieceIds",
+      "category": "presentation",
+      "disposition": "excluded from core; no UI callback/timer serialization",
+      "in_static_inventory": true,
+      "in_reset": true,
+      "dynamic_candidate": false,
+      "first_reference": 62544
+    },
+    {
+      "field": "freeCardUsed",
+      "category": "rule",
+      "disposition": "deferred rule state; NOT silently dropped by an importer; feature unsupported",
+      "in_static_inventory": true,
+      "in_reset": true,
+      "dynamic_candidate": false,
+      "first_reference": 80110
+    },
+    {
+      "field": "freeCastling",
+      "category": "rule",
+      "disposition": "deferred rule state; NOT silently dropped by an importer; feature unsupported",
+      "in_static_inventory": true,
+      "in_reset": true,
+      "dynamic_candidate": false,
+      "first_reference": 69398
+    },
+    {
+      "field": "freeMoveCaptureLock",
+      "category": "rule",
+      "disposition": "deferred rule state; NOT silently dropped by an importer; feature unsupported",
+      "in_static_inventory": true,
+      "in_reset": true,
+      "dynamic_candidate": false,
+      "first_reference": 52601
+    },
+    {
+      "field": "frontlineResponse",
+      "category": "rule",
+      "disposition": "deferred rule state; NOT silently dropped by an importer; feature unsupported",
+      "in_static_inventory": true,
+      "in_reset": true,
+      "dynamic_candidate": true,
+      "first_reference": 55476
+    },
+    {
+      "field": "fullMove",
+      "category": "rule",
+      "disposition": "turn.full_move",
+      "in_static_inventory": true,
+      "in_reset": true,
+      "dynamic_candidate": false,
+      "first_reference": 51881
+    },
+    {
+      "field": "gameOver",
+      "category": "unresolved",
+      "disposition": "reject full JS snapshot; investigate reads/writes before enabling this feature",
+      "in_static_inventory": true,
+      "in_reset": false,
+      "dynamic_candidate": false,
+      "first_reference": 44452
+    },
+    {
+      "field": "gameStyle",
+      "category": "rule",
+      "disposition": "deferred configuration/external input; only explicit cardless local setup supported",
+      "in_static_inventory": true,
+      "in_reset": true,
+      "dynamic_candidate": false,
+      "first_reference": 56810
+    },
+    {
+      "field": "genevaConvention",
+      "category": "rule",
+      "disposition": "deferred rule state; NOT silently dropped by an importer; feature unsupported",
+      "in_static_inventory": true,
+      "in_reset": true,
+      "dynamic_candidate": false,
+      "first_reference": 55484
+    },
+    {
+      "field": "gomoku",
+      "category": "rule",
+      "disposition": "deferred rule state; NOT silently dropped by an importer; feature unsupported",
+      "in_static_inventory": true,
+      "in_reset": true,
+      "dynamic_candidate": false,
+      "first_reference": 69348
+    },
+    {
+      "field": "gomokuVictoryCells",
+      "category": "rule",
+      "disposition": "deferred rule state; NOT silently dropped by an importer; feature unsupported",
+      "in_static_inventory": true,
+      "in_reset": true,
+      "dynamic_candidate": false,
+      "first_reference": 69349
+    },
+    {
+      "field": "grandEndTurnCounts",
+      "category": "rule",
+      "disposition": "deferred rule state; NOT silently dropped by an importer; feature unsupported",
+      "in_static_inventory": true,
+      "in_reset": false,
+      "dynamic_candidate": false,
+      "first_reference": 96514
+    },
+    {
+      "field": "hallucination",
+      "category": "rule",
+      "disposition": "deferred rule state; NOT silently dropped by an importer; feature unsupported",
+      "in_static_inventory": true,
+      "in_reset": true,
+      "dynamic_candidate": false,
+      "first_reference": 61754
+    },
+    {
+      "field": "hands",
+      "category": "rule",
+      "disposition": "deferred rule state; NOT silently dropped by an importer; feature unsupported",
+      "in_static_inventory": true,
+      "in_reset": true,
+      "dynamic_candidate": false,
+      "first_reference": 66886
+    },
+    {
+      "field": "highGround",
+      "category": "rule",
+      "disposition": "deferred rule state; NOT silently dropped by an importer; feature unsupported",
+      "in_static_inventory": true,
+      "in_reset": true,
+      "dynamic_candidate": false,
+      "first_reference": 57437
+    },
+    {
+      "field": "highlander",
+      "category": "rule",
+      "disposition": "deferred rule state; NOT silently dropped by an importer; feature unsupported",
+      "in_static_inventory": true,
+      "in_reset": false,
+      "dynamic_candidate": false,
+      "first_reference": 101114
+    },
+    {
+      "field": "highway",
+      "category": "rule",
+      "disposition": "deferred rule state; NOT silently dropped by an importer; feature unsupported",
+      "in_static_inventory": true,
+      "in_reset": true,
+      "dynamic_candidate": false,
+      "first_reference": 69397
+    },
+    {
+      "field": "hillKing",
+      "category": "rule",
+      "disposition": "deferred rule state; NOT silently dropped by an importer; feature unsupported",
+      "in_static_inventory": true,
+      "in_reset": true,
+      "dynamic_candidate": false,
+      "first_reference": 55482
+    },
+    {
+      "field": "historyViewIndex",
+      "category": "presentation",
+      "disposition": "excluded from core; no UI callback/timer serialization",
+      "in_static_inventory": true,
+      "in_reset": true,
+      "dynamic_candidate": false,
+      "first_reference": 44960
+    },
+    {
+      "field": "idolEncoreUsedByPiece",
+      "category": "rule",
+      "disposition": "deferred rule state; NOT silently dropped by an importer; feature unsupported",
+      "in_static_inventory": true,
+      "in_reset": true,
+      "dynamic_candidate": false,
+      "first_reference": 69324
+    },
+    {
+      "field": "imperialStudies",
+      "category": "rule",
+      "disposition": "deferred rule state; NOT silently dropped by an importer; feature unsupported",
+      "in_static_inventory": true,
+      "in_reset": true,
+      "dynamic_candidate": false,
+      "first_reference": 62649
+    },
+    {
+      "field": "initiative",
+      "category": "rule",
+      "disposition": "deferred rule state; NOT silently dropped by an importer; feature unsupported",
+      "in_static_inventory": true,
+      "in_reset": true,
+      "dynamic_candidate": false,
+      "first_reference": 69436
+    },
+    {
+      "field": "internalSixFixes",
+      "category": "rule",
+      "disposition": "fixed latest local profile; behavior remains deferred to owning rules",
+      "in_static_inventory": true,
+      "in_reset": true,
+      "dynamic_candidate": false,
+      "first_reference": 96610
+    },
+    {
+      "field": "ironMonarch",
+      "category": "rule",
+      "disposition": "deferred rule state; NOT silently dropped by an importer; feature unsupported",
+      "in_static_inventory": true,
+      "in_reset": true,
+      "dynamic_candidate": false,
+      "first_reference": 69372
+    },
+    {
+      "field": "jokerChoice",
+      "category": "rule",
+      "disposition": "deferred rule state; NOT silently dropped by an importer; feature unsupported",
+      "in_static_inventory": true,
+      "in_reset": true,
+      "dynamic_candidate": false,
+      "first_reference": 60406
+    },
+    {
+      "field": "judgmentExiles",
+      "category": "rule",
+      "disposition": "deferred rule state; NOT silently dropped by an importer; feature unsupported",
+      "in_static_inventory": true,
+      "in_reset": true,
+      "dynamic_candidate": false,
+      "first_reference": 69431
+    },
+    {
+      "field": "killerKing",
+      "category": "rule",
+      "disposition": "deferred rule state; NOT silently dropped by an importer; feature unsupported",
+      "in_static_inventory": true,
+      "in_reset": false,
+      "dynamic_candidate": false,
+      "first_reference": 84211
+    },
+    {
+      "field": "kingDead",
+      "category": "rule",
+      "disposition": "deferred rule state; NOT silently dropped by an importer; feature unsupported",
+      "in_static_inventory": true,
+      "in_reset": true,
+      "dynamic_candidate": false,
+      "first_reference": 69127
+    },
+    {
+      "field": "kingKnight",
+      "category": "rule",
+      "disposition": "deferred rule state; NOT silently dropped by an importer; feature unsupported",
+      "in_static_inventory": true,
+      "in_reset": true,
+      "dynamic_candidate": false,
+      "first_reference": 54707
+    },
+    {
+      "field": "kingThreatCaptureCauses",
+      "category": "derived",
+      "disposition": "recompute when owning rules are ported; not a canonical cache",
+      "in_static_inventory": true,
+      "in_reset": false,
+      "dynamic_candidate": false,
+      "first_reference": 71891
+    },
+    {
+      "field": "kingThreatEffectCauses",
+      "category": "derived",
+      "disposition": "recompute when owning rules are ported; not a canonical cache",
+      "in_static_inventory": true,
+      "in_reset": false,
+      "dynamic_candidate": false,
+      "first_reference": 71868
+    },
+    {
+      "field": "knightInjury",
+      "category": "rule",
+      "disposition": "deferred rule state; NOT silently dropped by an importer; feature unsupported",
+      "in_static_inventory": true,
+      "in_reset": true,
+      "dynamic_candidate": false,
+      "first_reference": 61356
+    },
+    {
+      "field": "knightmate",
+      "category": "rule",
+      "disposition": "deferred rule state; NOT silently dropped by an importer; feature unsupported",
+      "in_static_inventory": true,
+      "in_reset": true,
+      "dynamic_candidate": false,
+      "first_reference": 91420
+    },
+    {
+      "field": "lastMove",
+      "category": "unresolved",
+      "disposition": "reject full JS snapshot; investigate reads/writes before enabling this feature",
+      "in_static_inventory": true,
+      "in_reset": true,
+      "dynamic_candidate": false,
+      "first_reference": 52493
+    },
+    {
+      "field": "lastTurnCaptures",
+      "category": "rule",
+      "disposition": "deferred rule state; NOT silently dropped by an importer; feature unsupported",
+      "in_static_inventory": true,
+      "in_reset": true,
+      "dynamic_candidate": false,
+      "first_reference": 80059
+    },
+    {
+      "field": "legalMoves",
+      "category": "derived",
+      "disposition": "recompute when owning rules are ported; not a canonical cache",
+      "in_static_inventory": true,
+      "in_reset": true,
+      "dynamic_candidate": false,
+      "first_reference": 53631
+    },
+    {
+      "field": "localMode",
+      "category": "rule",
+      "disposition": "deferred configuration/external input; only explicit cardless local setup supported",
+      "in_static_inventory": true,
+      "in_reset": true,
+      "dynamic_candidate": false,
+      "first_reference": 44443
+    },
+    {
+      "field": "locustSwarm",
+      "category": "rule",
+      "disposition": "deferred rule state; NOT silently dropped by an importer; feature unsupported",
+      "in_static_inventory": true,
+      "in_reset": false,
+      "dynamic_candidate": false,
+      "first_reference": 82172
+    },
+    {
+      "field": "logHidden",
+      "category": "presentation",
+      "disposition": "excluded from core; no UI callback/timer serialization",
+      "in_static_inventory": true,
+      "in_reset": true,
+      "dynamic_candidate": false,
+      "first_reference": 48152
+    },
+    {
+      "field": "logs",
+      "category": "presentation",
+      "disposition": "excluded from core; no UI callback/timer serialization",
+      "in_static_inventory": true,
+      "in_reset": true,
+      "dynamic_candidate": false,
+      "first_reference": 47822
+    },
+    {
+      "field": "longEnPassant",
+      "category": "rule",
+      "disposition": "deferred rule state; NOT silently dropped by an importer; feature unsupported",
+      "in_static_inventory": true,
+      "in_reset": false,
+      "dynamic_candidate": false,
+      "first_reference": 101124
+    },
+    {
+      "field": "machoChess",
+      "category": "rule",
+      "disposition": "deferred rule state; NOT silently dropped by an importer; feature unsupported",
+      "in_static_inventory": true,
+      "in_reset": true,
+      "dynamic_candidate": false,
+      "first_reference": 53545
+    },
+    {
+      "field": "madAi",
+      "category": "rule",
+      "disposition": "deferred configuration/external input; only explicit cardless local setup supported",
+      "in_static_inventory": true,
+      "in_reset": true,
+      "dynamic_candidate": false,
+      "first_reference": 46994
+    },
+    {
+      "field": "madHorse",
+      "category": "rule",
+      "disposition": "deferred rule state; NOT silently dropped by an importer; feature unsupported",
+      "in_static_inventory": true,
+      "in_reset": true,
+      "dynamic_candidate": false,
+      "first_reference": 69381
+    },
+    {
+      "field": "magicGirlSurge",
+      "category": "rule",
+      "disposition": "deferred rule state; NOT silently dropped by an importer; feature unsupported",
+      "in_static_inventory": true,
+      "in_reset": true,
+      "dynamic_candidate": false,
+      "first_reference": 52662
+    },
+    {
+      "field": "magicGirlSurgeRefreshPending",
+      "category": "rule",
+      "disposition": "deferred rule state; NOT silently dropped by an importer; feature unsupported",
+      "in_static_inventory": true,
+      "in_reset": true,
+      "dynamic_candidate": false,
+      "first_reference": 52664
+    },
+    {
+      "field": "majesty",
+      "category": "rule",
+      "disposition": "deferred rule state; NOT silently dropped by an importer; feature unsupported",
+      "in_static_inventory": true,
+      "in_reset": false,
+      "dynamic_candidate": false,
+      "first_reference": 84472
+    },
+    {
+      "field": "middleDraftDone",
+      "category": "rule",
+      "disposition": "deferred rule state; NOT silently dropped by an importer; feature unsupported",
+      "in_static_inventory": true,
+      "in_reset": true,
+      "dynamic_candidate": false,
+      "first_reference": 53638
+    },
+    {
+      "field": "miracleSelectsBishop",
+      "category": "rule",
+      "disposition": "fixed latest local profile; behavior remains deferred to owning rules",
+      "in_static_inventory": true,
+      "in_reset": true,
+      "dynamic_candidate": false,
+      "first_reference": 96618
+    },
+    {
+      "field": "mistakeCard",
+      "category": "rule",
+      "disposition": "deferred rule state; NOT silently dropped by an importer; feature unsupported",
+      "in_static_inventory": true,
+      "in_reset": true,
+      "dynamic_candidate": false,
+      "first_reference": 69338
+    },
+    {
+      "field": "mistakeRule",
+      "category": "rule",
+      "disposition": "deferred rule state; NOT silently dropped by an importer; feature unsupported",
+      "in_static_inventory": true,
+      "in_reset": true,
+      "dynamic_candidate": false,
+      "first_reference": 69359
+    },
+    {
+      "field": "mode",
+      "category": "rule",
+      "disposition": "phase (play/terminal only; idle/rule-event/draft not imported)",
+      "in_static_inventory": true,
+      "in_reset": true,
+      "dynamic_candidate": false,
+      "first_reference": 36589
+    },
+    {
+      "field": "monochromeChess",
+      "category": "rule",
+      "disposition": "deferred rule state; NOT silently dropped by an importer; feature unsupported",
+      "in_static_inventory": true,
+      "in_reset": true,
+      "dynamic_candidate": false,
+      "first_reference": 52555
+    },
+    {
+      "field": "moveCount",
+      "category": "rule",
+      "disposition": "turn.move_count",
+      "in_static_inventory": true,
+      "in_reset": true,
+      "dynamic_candidate": false,
+      "first_reference": 44444
+    },
+    {
+      "field": "moveReplay",
+      "category": "rule",
+      "disposition": "deferred rule state; NOT silently dropped by an importer; feature unsupported",
+      "in_static_inventory": true,
+      "in_reset": true,
+      "dynamic_candidate": false,
+      "first_reference": 55470
+    },
+    {
+      "field": "moving",
+      "category": "rule",
+      "disposition": "deferred rule state; NOT silently dropped by an importer; feature unsupported",
+      "in_static_inventory": true,
+      "in_reset": true,
+      "dynamic_candidate": true,
+      "first_reference": 69401
+    },
+    {
+      "field": "mutation",
+      "category": "rule",
+      "disposition": "deferred rule state; NOT silently dropped by an importer; feature unsupported",
+      "in_static_inventory": false,
+      "in_reset": false,
+      "dynamic_candidate": true,
+      "first_reference": null
+    },
+    {
+      "field": "necromancy",
+      "category": "rule",
+      "disposition": "deferred rule state; NOT silently dropped by an importer; feature unsupported",
+      "in_static_inventory": true,
+      "in_reset": true,
+      "dynamic_candidate": false,
+      "first_reference": 69463
+    },
+    {
+      "field": "notationEvent",
+      "category": "presentation",
+      "disposition": "excluded from core; no UI callback/timer serialization",
+      "in_static_inventory": true,
+      "in_reset": true,
+      "dynamic_candidate": false,
+      "first_reference": 75141
+    },
+    {
+      "field": "notationEvents",
+      "category": "presentation",
+      "disposition": "excluded from core; no UI callback/timer serialization",
+      "in_static_inventory": true,
+      "in_reset": true,
+      "dynamic_candidate": false,
+      "first_reference": 57368
+    },
+    {
+      "field": "notationTimeline",
+      "category": "presentation",
+      "disposition": "excluded from core; no UI callback/timer serialization",
+      "in_static_inventory": true,
+      "in_reset": true,
+      "dynamic_candidate": false,
+      "first_reference": 44924
+    },
+    {
+      "field": "onlineEventNonce",
+      "category": "presentation",
+      "disposition": "excluded from core; no UI callback/timer serialization",
+      "in_static_inventory": true,
+      "in_reset": true,
+      "dynamic_candidate": false,
+      "first_reference": 43922
+    },
+    {
+      "field": "onlineEvents",
+      "category": "presentation",
+      "disposition": "excluded from core; no UI callback/timer serialization",
+      "in_static_inventory": true,
+      "in_reset": true,
+      "dynamic_candidate": false,
+      "first_reference": 43931
+    },
+    {
+      "field": "onlineGameStarted",
+      "category": "presentation",
+      "disposition": "excluded from core; no UI callback/timer serialization",
+      "in_static_inventory": true,
+      "in_reset": true,
+      "dynamic_candidate": false,
+      "first_reference": 44361
+    },
+    {
+      "field": "openingAutoNoticeShown",
+      "category": "presentation",
+      "disposition": "excluded from core; no UI callback/timer serialization",
+      "in_static_inventory": true,
+      "in_reset": true,
+      "dynamic_candidate": false,
+      "first_reference": 53899
+    },
+    {
+      "field": "opponentLibraryOpen",
+      "category": "presentation",
+      "disposition": "excluded from core; no UI callback/timer serialization",
+      "in_static_inventory": true,
+      "in_reset": true,
+      "dynamic_candidate": false,
+      "first_reference": 50898
+    },
+    {
+      "field": "overtake",
+      "category": "rule",
+      "disposition": "deferred rule state; NOT silently dropped by an importer; feature unsupported",
+      "in_static_inventory": true,
+      "in_reset": false,
+      "dynamic_candidate": false,
+      "first_reference": 80027
+    },
+    {
+      "field": "overtakeTurnOnly",
+      "category": "rule",
+      "disposition": "fixed latest local profile; behavior remains deferred to owning rules",
+      "in_static_inventory": true,
+      "in_reset": true,
+      "dynamic_candidate": false,
+      "first_reference": 96613
+    },
+    {
+      "field": "overwhelm",
+      "category": "rule",
+      "disposition": "deferred rule state; NOT silently dropped by an importer; feature unsupported",
+      "in_static_inventory": true,
+      "in_reset": true,
+      "dynamic_candidate": false,
+      "first_reference": 54548
+    },
+    {
+      "field": "palaces",
+      "category": "rule",
+      "disposition": "deferred rule state; NOT silently dropped by an importer; feature unsupported",
+      "in_static_inventory": true,
+      "in_reset": true,
+      "dynamic_candidate": false,
+      "first_reference": 66614
+    },
+    {
+      "field": "parrotBasicMovement",
+      "category": "rule",
+      "disposition": "fixed latest local profile; behavior remains deferred to owning rules",
+      "in_static_inventory": true,
+      "in_reset": true,
+      "dynamic_candidate": false,
+      "first_reference": 96617
+    },
+    {
+      "field": "parrotMovement",
+      "category": "rule",
+      "disposition": "deferred rule state; NOT silently dropped by an importer; feature unsupported",
+      "in_static_inventory": true,
+      "in_reset": true,
+      "dynamic_candidate": false,
+      "first_reference": 57570
+    },
+    {
+      "field": "parrotRookTarget",
+      "category": "rule",
+      "disposition": "fixed latest local profile; behavior remains deferred to owning rules",
+      "in_static_inventory": true,
+      "in_reset": true,
+      "dynamic_candidate": false,
+      "first_reference": 96612
+    },
+    {
+      "field": "pawnConversion",
+      "category": "rule",
+      "disposition": "deferred rule state; NOT silently dropped by an importer; feature unsupported",
+      "in_static_inventory": true,
+      "in_reset": true,
+      "dynamic_candidate": false,
+      "first_reference": 54464
+    },
+    {
+      "field": "pawnLeap",
+      "category": "rule",
+      "disposition": "deferred rule state; NOT silently dropped by an importer; feature unsupported",
+      "in_static_inventory": true,
+      "in_reset": true,
+      "dynamic_candidate": false,
+      "first_reference": 69367
+    },
+    {
+      "field": "pawnSprint",
+      "category": "rule",
+      "disposition": "deferred rule state; NOT silently dropped by an importer; feature unsupported",
+      "in_static_inventory": true,
+      "in_reset": true,
+      "dynamic_candidate": false,
+      "first_reference": 69366
+    },
+    {
+      "field": "pendingBearRetaliations",
+      "category": "rule",
+      "disposition": "deferred rule state; NOT silently dropped by an importer; feature unsupported",
+      "in_static_inventory": true,
+      "in_reset": true,
+      "dynamic_candidate": false,
+      "first_reference": 69428
+    },
+    {
+      "field": "pendingFeudalStrike",
+      "category": "rule",
+      "disposition": "deferred rule state; NOT silently dropped by an importer; feature unsupported",
+      "in_static_inventory": true,
+      "in_reset": true,
+      "dynamic_candidate": false,
+      "first_reference": 94152
+    },
+    {
+      "field": "pendingFreeMoves",
+      "category": "rule",
+      "disposition": "deferred rule state; NOT silently dropped by an importer; feature unsupported",
+      "in_static_inventory": true,
+      "in_reset": true,
+      "dynamic_candidate": false,
+      "first_reference": 59381
+    },
+    {
+      "field": "pendingGales",
+      "category": "rule",
+      "disposition": "deferred rule state; NOT silently dropped by an importer; feature unsupported",
+      "in_static_inventory": true,
+      "in_reset": true,
+      "dynamic_candidate": false,
+      "first_reference": 62611
+    },
+    {
+      "field": "pendingIcbm",
+      "category": "rule",
+      "disposition": "deferred rule state; NOT silently dropped by an importer; feature unsupported",
+      "in_static_inventory": true,
+      "in_reset": true,
+      "dynamic_candidate": false,
+      "first_reference": 69426
+    },
+    {
+      "field": "pendingLobsters",
+      "category": "rule",
+      "disposition": "deferred rule state; NOT silently dropped by an importer; feature unsupported",
+      "in_static_inventory": true,
+      "in_reset": true,
+      "dynamic_candidate": false,
+      "first_reference": 54834
+    },
+    {
+      "field": "pendingNotation",
+      "category": "presentation",
+      "disposition": "excluded from core; no UI callback/timer serialization",
+      "in_static_inventory": true,
+      "in_reset": true,
+      "dynamic_candidate": false,
+      "first_reference": 57369
+    },
+    {
+      "field": "pendingNotations",
+      "category": "presentation",
+      "disposition": "excluded from core; no UI callback/timer serialization",
+      "in_static_inventory": true,
+      "in_reset": true,
+      "dynamic_candidate": false,
+      "first_reference": 57370
+    },
+    {
+      "field": "pendingOtherworld",
+      "category": "rule",
+      "disposition": "deferred rule state; NOT silently dropped by an importer; feature unsupported",
+      "in_static_inventory": true,
+      "in_reset": true,
+      "dynamic_candidate": false,
+      "first_reference": 69430
+    },
+    {
+      "field": "pendingPanic",
+      "category": "rule",
+      "disposition": "deferred rule state; NOT silently dropped by an importer; feature unsupported",
+      "in_static_inventory": true,
+      "in_reset": true,
+      "dynamic_candidate": false,
+      "first_reference": 54811
+    },
+    {
+      "field": "pendingPawnStorm",
+      "category": "rule",
+      "disposition": "deferred rule state; NOT silently dropped by an importer; feature unsupported",
+      "in_static_inventory": true,
+      "in_reset": true,
+      "dynamic_candidate": false,
+      "first_reference": 69422
+    },
+    {
+      "field": "pendingPortals",
+      "category": "rule",
+      "disposition": "deferred rule state; NOT silently dropped by an importer; feature unsupported",
+      "in_static_inventory": true,
+      "in_reset": true,
+      "dynamic_candidate": false,
+      "first_reference": 54837
+    },
+    {
+      "field": "pendingPromotion",
+      "category": "rule",
+      "disposition": "deferred rule state; NOT silently dropped by an importer; feature unsupported",
+      "in_static_inventory": true,
+      "in_reset": true,
+      "dynamic_candidate": false,
+      "first_reference": 44450
+    },
+    {
+      "field": "pendingRecurrences",
+      "category": "rule",
+      "disposition": "deferred rule state; NOT silently dropped by an importer; feature unsupported",
+      "in_static_inventory": true,
+      "in_reset": false,
+      "dynamic_candidate": false,
+      "first_reference": 69356
+    },
+    {
+      "field": "pendingReplayVisuals",
+      "category": "presentation",
+      "disposition": "excluded from core; no UI callback/timer serialization",
+      "in_static_inventory": true,
+      "in_reset": true,
+      "dynamic_candidate": false,
+      "first_reference": 57371
+    },
+    {
+      "field": "pendingRuleTickets",
+      "category": "rule",
+      "disposition": "deferred rule state; NOT silently dropped by an importer; feature unsupported",
+      "in_static_inventory": true,
+      "in_reset": true,
+      "dynamic_candidate": false,
+      "first_reference": 53187
+    },
+    {
+      "field": "pendingScarecrows",
+      "category": "rule",
+      "disposition": "deferred rule state; NOT silently dropped by an importer; feature unsupported",
+      "in_static_inventory": true,
+      "in_reset": true,
+      "dynamic_candidate": false,
+      "first_reference": 54830
+    },
+    {
+      "field": "pendingTrojanHorse",
+      "category": "rule",
+      "disposition": "deferred rule state; NOT silently dropped by an importer; feature unsupported",
+      "in_static_inventory": true,
+      "in_reset": true,
+      "dynamic_candidate": false,
+      "first_reference": 69427
+    },
+    {
+      "field": "pendingTrolley",
+      "category": "rule",
+      "disposition": "deferred rule state; NOT silently dropped by an importer; feature unsupported",
+      "in_static_inventory": true,
+      "in_reset": true,
+      "dynamic_candidate": false,
+      "first_reference": 69434
+    },
+    {
+      "field": "periodicCollapse",
+      "category": "rule",
+      "disposition": "deferred rule state; NOT silently dropped by an importer; feature unsupported",
+      "in_static_inventory": true,
+      "in_reset": true,
+      "dynamic_candidate": false,
+      "first_reference": 69329
+    },
+    {
+      "field": "pieceCardFlip",
+      "category": "presentation",
+      "disposition": "excluded from core; no UI callback/timer serialization",
+      "in_static_inventory": true,
+      "in_reset": true,
+      "dynamic_candidate": false,
+      "first_reference": 56517
+    },
+    {
+      "field": "platformRule",
+      "category": "rule",
+      "disposition": "deferred rule state; NOT silently dropped by an importer; feature unsupported",
+      "in_static_inventory": true,
+      "in_reset": true,
+      "dynamic_candidate": false,
+      "first_reference": 57475
+    },
+    {
+      "field": "playerCards",
+      "category": "rule",
+      "disposition": "deferred rule state; NOT silently dropped by an importer; feature unsupported",
+      "in_static_inventory": true,
+      "in_reset": true,
+      "dynamic_candidate": false,
+      "first_reference": 66893
+    },
+    {
+      "field": "portalRule",
+      "category": "rule",
+      "disposition": "deferred rule state; NOT silently dropped by an importer; feature unsupported",
+      "in_static_inventory": true,
+      "in_reset": true,
+      "dynamic_candidate": false,
+      "first_reference": 57507
+    },
+    {
+      "field": "positionCounts",
+      "category": "rule",
+      "disposition": "history.position_counts (sorted unique records)",
+      "in_static_inventory": true,
+      "in_reset": true,
+      "dynamic_candidate": false,
+      "first_reference": 57625
+    },
+    {
+      "field": "proficiency",
+      "category": "rule",
+      "disposition": "deferred rule state; NOT silently dropped by an importer; feature unsupported",
+      "in_static_inventory": true,
+      "in_reset": false,
+      "dynamic_candidate": false,
+      "first_reference": 101123
+    },
+    {
+      "field": "prophecy",
+      "category": "rule",
+      "disposition": "deferred rule state; NOT silently dropped by an importer; feature unsupported",
+      "in_static_inventory": true,
+      "in_reset": true,
+      "dynamic_candidate": false,
+      "first_reference": 55393
+    },
+    {
+      "field": "quantumPending",
+      "category": "rule",
+      "disposition": "deferred rule state; NOT silently dropped by an importer; feature unsupported",
+      "in_static_inventory": true,
+      "in_reset": true,
+      "dynamic_candidate": true,
+      "first_reference": 52588
+    },
+    {
+      "field": "queensGambitFiles",
+      "category": "rule",
+      "disposition": "deferred rule state; NOT silently dropped by an importer; feature unsupported",
+      "in_static_inventory": true,
+      "in_reset": true,
+      "dynamic_candidate": false,
+      "first_reference": 89509
+    },
+    {
+      "field": "racingKing",
+      "category": "rule",
+      "disposition": "deferred rule state; NOT silently dropped by an importer; feature unsupported",
+      "in_static_inventory": true,
+      "in_reset": true,
+      "dynamic_candidate": false,
+      "first_reference": 69369
+    },
+    {
+      "field": "radicalCharge",
+      "category": "rule",
+      "disposition": "deferred rule state; NOT silently dropped by an importer; feature unsupported",
+      "in_static_inventory": true,
+      "in_reset": true,
+      "dynamic_candidate": false,
+      "first_reference": 69370
+    },
+    {
+      "field": "recycling",
+      "category": "rule",
+      "disposition": "deferred rule state; NOT silently dropped by an importer; feature unsupported",
+      "in_static_inventory": true,
+      "in_reset": true,
+      "dynamic_candidate": false,
+      "first_reference": 61691
+    },
+    {
+      "field": "regency",
+      "category": "rule",
+      "disposition": "deferred rule state; NOT silently dropped by an importer; feature unsupported",
+      "in_static_inventory": true,
+      "in_reset": true,
+      "dynamic_candidate": false,
+      "first_reference": 55142
+    },
+    {
+      "field": "relay",
+      "category": "rule",
+      "disposition": "deferred rule state; NOT silently dropped by an importer; feature unsupported",
+      "in_static_inventory": true,
+      "in_reset": true,
+      "dynamic_candidate": false,
+      "first_reference": 55478
+    },
+    {
+      "field": "religiousVictory",
+      "category": "rule",
+      "disposition": "deferred rule state; NOT silently dropped by an importer; feature unsupported",
+      "in_static_inventory": true,
+      "in_reset": true,
+      "dynamic_candidate": false,
+      "first_reference": 54544
+    },
+    {
+      "field": "repetitionSalt",
+      "category": "rule",
+      "disposition": "history.repetition_salt",
+      "in_static_inventory": true,
+      "in_reset": true,
+      "dynamic_candidate": false,
+      "first_reference": 72259
+    },
+    {
+      "field": "replayBaseFrame",
+      "category": "presentation",
+      "disposition": "excluded from core; no UI callback/timer serialization",
+      "in_static_inventory": true,
+      "in_reset": true,
+      "dynamic_candidate": false,
+      "first_reference": 44922
+    },
+    {
+      "field": "replayCardHistoryComplete",
+      "category": "presentation",
+      "disposition": "excluded from core; no UI callback/timer serialization",
+      "in_static_inventory": true,
+      "in_reset": true,
+      "dynamic_candidate": false,
+      "first_reference": 75716
+    },
+    {
+      "field": "replayEndReason",
+      "category": "presentation",
+      "disposition": "excluded from core; no UI callback/timer serialization",
+      "in_static_inventory": true,
+      "in_reset": true,
+      "dynamic_candidate": false,
+      "first_reference": 56595
+    },
+    {
+      "field": "replayEndedAt",
+      "category": "presentation",
+      "disposition": "excluded from core; no UI callback/timer serialization",
+      "in_static_inventory": true,
+      "in_reset": true,
+      "dynamic_candidate": false,
+      "first_reference": 56594
+    },
+    {
+      "field": "replayEventNonce",
+      "category": "presentation",
+      "disposition": "excluded from core; no UI callback/timer serialization",
+      "in_static_inventory": true,
+      "in_reset": true,
+      "dynamic_candidate": false,
+      "first_reference": 57364
+    },
+    {
+      "field": "replayEvents",
+      "category": "presentation",
+      "disposition": "excluded from core; no UI callback/timer serialization",
+      "in_static_inventory": true,
+      "in_reset": true,
+      "dynamic_candidate": false,
+      "first_reference": 44923
+    },
+    {
+      "field": "replayHistoryComplete",
+      "category": "presentation",
+      "disposition": "excluded from core; no UI callback/timer serialization",
+      "in_static_inventory": true,
+      "in_reset": true,
+      "dynamic_candidate": false,
+      "first_reference": 75715
+    },
+    {
+      "field": "replayStartedAt",
+      "category": "presentation",
+      "disposition": "excluded from core; no UI callback/timer serialization",
+      "in_static_inventory": true,
+      "in_reset": true,
+      "dynamic_candidate": false,
+      "first_reference": 44409
+    },
+    {
+      "field": "replayTailFrame",
+      "category": "presentation",
+      "disposition": "excluded from core; no UI callback/timer serialization",
+      "in_static_inventory": true,
+      "in_reset": true,
+      "dynamic_candidate": false,
+      "first_reference": 57365
+    },
+    {
+      "field": "replayTimelineReady",
+      "category": "presentation",
+      "disposition": "excluded from core; no UI callback/timer serialization",
+      "in_static_inventory": true,
+      "in_reset": true,
+      "dynamic_candidate": false,
+      "first_reference": 57367
+    },
+    {
+      "field": "resolveMoveCredit",
+      "category": "rule",
+      "disposition": "deferred rule state; NOT silently dropped by an importer; feature unsupported",
+      "in_static_inventory": true,
+      "in_reset": false,
+      "dynamic_candidate": false,
+      "first_reference": 69355
+    },
+    {
+      "field": "resolveReady",
+      "category": "rule",
+      "disposition": "deferred rule state; NOT silently dropped by an importer; feature unsupported",
+      "in_static_inventory": true,
+      "in_reset": false,
+      "dynamic_candidate": false,
+      "first_reference": 59805
+    },
+    {
+      "field": "resolveSpentTurn",
+      "category": "rule",
+      "disposition": "deferred rule state; NOT silently dropped by an importer; feature unsupported",
+      "in_static_inventory": true,
+      "in_reset": false,
+      "dynamic_candidate": false,
+      "first_reference": 69354
+    },
+    {
+      "field": "retreat",
+      "category": "rule",
+      "disposition": "deferred rule state; NOT silently dropped by an importer; feature unsupported",
+      "in_static_inventory": true,
+      "in_reset": true,
+      "dynamic_candidate": false,
+      "first_reference": 69365
+    },
+    {
+      "field": "reversal",
+      "category": "rule",
+      "disposition": "deferred rule state; NOT silently dropped by an importer; feature unsupported",
+      "in_static_inventory": true,
+      "in_reset": false,
+      "dynamic_candidate": false,
+      "first_reference": 69352
+    },
+    {
+      "field": "rookLift",
+      "category": "rule",
+      "disposition": "deferred rule state; NOT silently dropped by an importer; feature unsupported",
+      "in_static_inventory": true,
+      "in_reset": true,
+      "dynamic_candidate": false,
+      "first_reference": 54516
+    },
+    {
+      "field": "royalCommand",
+      "category": "rule",
+      "disposition": "deferred rule state; NOT silently dropped by an importer; feature unsupported",
+      "in_static_inventory": true,
+      "in_reset": true,
+      "dynamic_candidate": false,
+      "first_reference": 62573
+    },
+    {
+      "field": "royalKnightKing",
+      "category": "rule",
+      "disposition": "deferred rule state; NOT silently dropped by an importer; feature unsupported",
+      "in_static_inventory": true,
+      "in_reset": true,
+      "dynamic_candidate": false,
+      "first_reference": 69441
+    },
+    {
+      "field": "ruleBombs",
+      "category": "rule",
+      "disposition": "deferred rule state; NOT silently dropped by an importer; feature unsupported",
+      "in_static_inventory": true,
+      "in_reset": true,
+      "dynamic_candidate": false,
+      "first_reference": 57496
+    },
+    {
+      "field": "ruleOpeningEnabled",
+      "category": "rule",
+      "disposition": "config.opening_rules_enabled (only false supported)",
+      "in_static_inventory": true,
+      "in_reset": false,
+      "dynamic_candidate": false,
+      "first_reference": 53116
+    },
+    {
+      "field": "ruleOpeningEvent",
+      "category": "rule",
+      "disposition": "deferred rule state; NOT silently dropped by an importer; feature unsupported",
+      "in_static_inventory": true,
+      "in_reset": true,
+      "dynamic_candidate": false,
+      "first_reference": 53021
+    },
+    {
+      "field": "ruleSelectionEnabled",
+      "category": "rule",
+      "disposition": "deferred configuration/external input; only explicit cardless local setup supported",
+      "in_static_inventory": true,
+      "in_reset": false,
+      "dynamic_candidate": false,
+      "first_reference": 53123
+    },
+    {
+      "field": "ruleTicketChoice",
+      "category": "rule",
+      "disposition": "deferred rule state; NOT silently dropped by an importer; feature unsupported",
+      "in_static_inventory": true,
+      "in_reset": true,
+      "dynamic_candidate": false,
+      "first_reference": 60123
+    },
+    {
+      "field": "saturationRule",
+      "category": "rule",
+      "disposition": "deferred rule state; NOT silently dropped by an importer; feature unsupported",
+      "in_static_inventory": true,
+      "in_reset": true,
+      "dynamic_candidate": false,
+      "first_reference": 52625
+    },
+    {
+      "field": "selected",
+      "category": "presentation",
+      "disposition": "excluded from core; no UI callback/timer serialization",
+      "in_static_inventory": true,
+      "in_reset": true,
+      "dynamic_candidate": false,
+      "first_reference": 53630
+    },
+    {
+      "field": "selectedRuleCardId",
+      "category": "rule",
+      "disposition": "deferred configuration/external input; only explicit cardless local setup supported",
+      "in_static_inventory": true,
+      "in_reset": true,
+      "dynamic_candidate": false,
+      "first_reference": 53092
+    },
+    {
+      "field": "selectedRuleCardIds",
+      "category": "rule",
+      "disposition": "deferred configuration/external input; only explicit cardless local setup supported",
+      "in_static_inventory": true,
+      "in_reset": true,
+      "dynamic_candidate": false,
+      "first_reference": 53091
+    },
+    {
+      "field": "serverCardAuthority",
+      "category": "unresolved",
+      "disposition": "reject full JS snapshot; investigate reads/writes before enabling this feature",
+      "in_static_inventory": true,
+      "in_reset": false,
+      "dynamic_candidate": false,
+      "first_reference": 96682
+    },
+    {
+      "field": "shotgunAction",
+      "category": "rule",
+      "disposition": "deferred rule state; NOT silently dropped by an importer; feature unsupported",
+      "in_static_inventory": true,
+      "in_reset": true,
+      "dynamic_candidate": false,
+      "first_reference": 53635
+    },
+    {
+      "field": "shotgunDlc",
+      "category": "rule",
+      "disposition": "deferred configuration/external input; only explicit cardless local setup supported",
+      "in_static_inventory": true,
+      "in_reset": true,
+      "dynamic_candidate": false,
+      "first_reference": 53023
+    },
+    {
+      "field": "shotgunOpeningColor",
+      "category": "rule",
+      "disposition": "deferred configuration/external input; only explicit cardless local setup supported",
+      "in_static_inventory": true,
+      "in_reset": true,
+      "dynamic_candidate": false,
+      "first_reference": 53024
+    },
+    {
+      "field": "shotgunOpeningForced",
+      "category": "rule",
+      "disposition": "deferred rule state; NOT silently dropped by an importer; feature unsupported",
+      "in_static_inventory": true,
+      "in_reset": true,
+      "dynamic_candidate": false,
+      "first_reference": 73574
+    },
+    {
+      "field": "shotgunPreview",
+      "category": "presentation",
+      "disposition": "excluded from core; no UI callback/timer serialization",
+      "in_static_inventory": true,
+      "in_reset": true,
+      "dynamic_candidate": false,
+      "first_reference": 53636
+    },
+    {
+      "field": "simpleBoardEditor",
+      "category": "rule",
+      "disposition": "deferred configuration/external input; only explicit cardless local setup supported",
+      "in_static_inventory": true,
+      "in_reset": false,
+      "dynamic_candidate": false,
+      "first_reference": 44869
+    },
+    {
+      "field": "simpleBoardEditorCardOverride",
+      "category": "rule",
+      "disposition": "deferred configuration/external input; only explicit cardless local setup supported",
+      "in_static_inventory": true,
+      "in_reset": false,
+      "dynamic_candidate": false,
+      "first_reference": 56060
+    },
+    {
+      "field": "simpleBoardEditorReturnHref",
+      "category": "presentation",
+      "disposition": "excluded from core; no UI callback/timer serialization",
+      "in_static_inventory": true,
+      "in_reset": false,
+      "dynamic_candidate": false,
+      "first_reference": 56943
+    },
+    {
+      "field": "sirenExposure",
+      "category": "rule",
+      "disposition": "deferred rule state; NOT silently dropped by an importer; feature unsupported",
+      "in_static_inventory": true,
+      "in_reset": true,
+      "dynamic_candidate": false,
+      "first_reference": 57348
+    },
+    {
+      "field": "skipTurn",
+      "category": "rule",
+      "disposition": "deferred rule state; NOT silently dropped by an importer; feature unsupported",
+      "in_static_inventory": true,
+      "in_reset": true,
+      "dynamic_candidate": false,
+      "first_reference": 69454
+    },
+    {
+      "field": "socialism",
+      "category": "rule",
+      "disposition": "deferred rule state; NOT silently dropped by an importer; feature unsupported",
+      "in_static_inventory": true,
+      "in_reset": true,
+      "dynamic_candidate": false,
+      "first_reference": 69442
+    },
+    {
+      "field": "starWinLimit",
+      "category": "rule",
+      "disposition": "deferred configuration/external input; only explicit cardless local setup supported",
+      "in_static_inventory": true,
+      "in_reset": true,
+      "dynamic_candidate": false,
+      "first_reference": 58897
+    },
+    {
+      "field": "substitution",
+      "category": "rule",
+      "disposition": "deferred rule state; NOT silently dropped by an importer; feature unsupported",
+      "in_static_inventory": true,
+      "in_reset": true,
+      "dynamic_candidate": false,
+      "first_reference": 69400
+    },
+    {
+      "field": "switcheroo",
+      "category": "rule",
+      "disposition": "deferred rule state; NOT silently dropped by an importer; feature unsupported",
+      "in_static_inventory": true,
+      "in_reset": true,
+      "dynamic_candidate": true,
+      "first_reference": 69399
+    },
+    {
+      "field": "symmetry",
+      "category": "rule",
+      "disposition": "deferred rule state; NOT silently dropped by an importer; feature unsupported",
+      "in_static_inventory": true,
+      "in_reset": false,
+      "dynamic_candidate": true,
+      "first_reference": 80019
+    },
+    {
+      "field": "targeting",
+      "category": "unresolved",
+      "disposition": "reject full JS snapshot; investigate reads/writes before enabling this feature",
+      "in_static_inventory": true,
+      "in_reset": true,
+      "dynamic_candidate": false,
+      "first_reference": 44451
+    },
+    {
+      "field": "taunt",
+      "category": "rule",
+      "disposition": "deferred rule state; NOT silently dropped by an importer; feature unsupported",
+      "in_static_inventory": true,
+      "in_reset": true,
+      "dynamic_candidate": false,
+      "first_reference": 69443
+    },
+    {
+      "field": "temporaryQueens",
+      "category": "rule",
+      "disposition": "deferred rule state; NOT silently dropped by an importer; feature unsupported",
+      "in_static_inventory": true,
+      "in_reset": true,
+      "dynamic_candidate": false,
+      "first_reference": 69462
+    },
+    {
+      "field": "thiefQuietJump",
+      "category": "rule",
+      "disposition": "fixed latest local profile; behavior remains deferred to owning rules",
+      "in_static_inventory": true,
+      "in_reset": true,
+      "dynamic_candidate": false,
+      "first_reference": 96619
+    },
+    {
+      "field": "thiefRemake",
+      "category": "rule",
+      "disposition": "fixed latest local profile; behavior remains deferred to owning rules",
+      "in_static_inventory": true,
+      "in_reset": true,
+      "dynamic_candidate": false,
+      "first_reference": 96621
+    },
+    {
+      "field": "thiefRequiredJump",
+      "category": "rule",
+      "disposition": "fixed latest local profile; behavior remains deferred to owning rules",
+      "in_static_inventory": true,
+      "in_reset": true,
+      "dynamic_candidate": false,
+      "first_reference": 96620
+    },
+    {
+      "field": "timeErasedPieceIds",
+      "category": "unresolved",
+      "disposition": "reject full JS snapshot; investigate reads/writes before enabling this feature",
+      "in_static_inventory": true,
+      "in_reset": true,
+      "dynamic_candidate": false,
+      "first_reference": 62016
+    },
+    {
+      "field": "timeErasingPieceIds",
+      "category": "unresolved",
+      "disposition": "reject full JS snapshot; investigate reads/writes before enabling this feature",
+      "in_static_inventory": true,
+      "in_reset": true,
+      "dynamic_candidate": false,
+      "first_reference": 62015
+    },
+    {
+      "field": "timeIsMineSequence",
+      "category": "unresolved",
+      "disposition": "reject full JS snapshot; investigate reads/writes before enabling this feature",
+      "in_static_inventory": true,
+      "in_reset": true,
+      "dynamic_candidate": false,
+      "first_reference": 73562
+    },
+    {
+      "field": "toUpperCase",
+      "category": "false-positive",
+      "disposition": "entry.state.toUpperCase at L24848, not game state",
+      "in_static_inventory": true,
+      "in_reset": false,
+      "dynamic_candidate": false,
+      "first_reference": 24848
+    },
+    {
+      "field": "transcendenceRule",
+      "category": "rule",
+      "disposition": "deferred rule state; NOT silently dropped by an importer; feature unsupported",
+      "in_static_inventory": true,
+      "in_reset": true,
+      "dynamic_candidate": false,
+      "first_reference": 69360
+    },
+    {
+      "field": "trojanHorse",
+      "category": "rule",
+      "disposition": "deferred rule state; NOT silently dropped by an importer; feature unsupported",
+      "in_static_inventory": true,
+      "in_reset": true,
+      "dynamic_candidate": false,
+      "first_reference": 69380
+    },
+    {
+      "field": "turn",
+      "category": "rule",
+      "disposition": "turn.side",
+      "in_static_inventory": true,
+      "in_reset": true,
+      "dynamic_candidate": false,
+      "first_reference": 42438
+    },
+    {
+      "field": "turnCaptures",
+      "category": "rule",
+      "disposition": "deferred rule state; NOT silently dropped by an importer; feature unsupported",
+      "in_static_inventory": true,
+      "in_reset": true,
+      "dynamic_candidate": false,
+      "first_reference": 74688
+    },
+    {
+      "field": "turnResolving",
+      "category": "unresolved",
+      "disposition": "reject full JS snapshot; investigate reads/writes before enabling this feature",
+      "in_static_inventory": true,
+      "in_reset": true,
+      "dynamic_candidate": false,
+      "first_reference": 44449
+    },
+    {
+      "field": "turnsTaken",
+      "category": "rule",
+      "disposition": "turn.completed",
+      "in_static_inventory": true,
+      "in_reset": true,
+      "dynamic_candidate": false,
+      "first_reference": 48323
+    },
+    {
+      "field": "ultimatum",
+      "category": "rule",
+      "disposition": "deferred rule state; NOT silently dropped by an importer; feature unsupported",
+      "in_static_inventory": true,
+      "in_reset": true,
+      "dynamic_candidate": false,
+      "first_reference": 62585
+    },
+    {
+      "field": "undeadResurrections",
+      "category": "rule",
+      "disposition": "deferred rule state; NOT silently dropped by an importer; feature unsupported",
+      "in_static_inventory": true,
+      "in_reset": true,
+      "dynamic_candidate": false,
+      "first_reference": 52675
+    },
+    {
+      "field": "underpromotion",
+      "category": "rule",
+      "disposition": "deferred rule state; NOT silently dropped by an importer; feature unsupported",
+      "in_static_inventory": true,
+      "in_reset": true,
+      "dynamic_candidate": false,
+      "first_reference": 69388
+    },
+    {
+      "field": "unifiedJumpObstacles",
+      "category": "rule",
+      "disposition": "fixed latest local profile; behavior remains deferred to owning rules",
+      "in_static_inventory": true,
+      "in_reset": true,
+      "dynamic_candidate": false,
+      "first_reference": 96616
+    },
+    {
+      "field": "vanguard",
+      "category": "rule",
+      "disposition": "deferred rule state; NOT silently dropped by an importer; feature unsupported",
+      "in_static_inventory": true,
+      "in_reset": false,
+      "dynamic_candidate": false,
+      "first_reference": 82528
+    },
+    {
+      "field": "vanguardDiagonalOnly",
+      "category": "rule",
+      "disposition": "fixed latest local profile; behavior remains deferred to owning rules",
+      "in_static_inventory": true,
+      "in_reset": true,
+      "dynamic_candidate": false,
+      "first_reference": 96611
+    },
+    {
+      "field": "vanishing",
+      "category": "rule",
+      "disposition": "deferred rule state; NOT silently dropped by an importer; feature unsupported",
+      "in_static_inventory": true,
+      "in_reset": true,
+      "dynamic_candidate": false,
+      "first_reference": 69384
+    },
+    {
+      "field": "winReason",
+      "category": "rule",
+      "disposition": "result.reason (typed subset)",
+      "in_static_inventory": true,
+      "in_reset": false,
+      "dynamic_candidate": false,
+      "first_reference": 99294
+    },
+    {
+      "field": "winner",
+      "category": "rule",
+      "disposition": "result (explicit ongoing/win/draw)",
+      "in_static_inventory": true,
+      "in_reset": true,
+      "dynamic_candidate": false,
+      "first_reference": 46342
+    },
+    {
+      "field": "winterKingdom",
+      "category": "rule",
+      "disposition": "deferred rule state; NOT silently dropped by an importer; feature unsupported",
+      "in_static_inventory": true,
+      "in_reset": true,
+      "dynamic_candidate": false,
+      "first_reference": 60899
+    },
+    {
+      "field": "wizardImpact",
+      "category": "unresolved",
+      "disposition": "reject full JS snapshot; investigate reads/writes before enabling this feature",
+      "in_static_inventory": true,
+      "in_reset": false,
+      "dynamic_candidate": false,
+      "first_reference": 81435
+    },
+    {
+      "field": "wizardPreview",
+      "category": "presentation",
+      "disposition": "excluded from core; no UI callback/timer serialization",
+      "in_static_inventory": true,
+      "in_reset": true,
+      "dynamic_candidate": false,
+      "first_reference": 53634
+    },
+    {
+      "field": "wizardSpell",
+      "category": "rule",
+      "disposition": "deferred rule state; NOT silently dropped by an importer; feature unsupported",
+      "in_static_inventory": true,
+      "in_reset": true,
+      "dynamic_candidate": false,
+      "first_reference": 53633
+    },
+    {
+      "field": "zugzwang",
+      "category": "rule",
+      "disposition": "deferred rule state; NOT silently dropped by an importer; feature unsupported",
+      "in_static_inventory": true,
+      "in_reset": true,
+      "dynamic_candidate": true,
+      "first_reference": 69421
+    },
+    {
+      "field": "zugzwangConsumesTurn",
+      "category": "rule",
+      "disposition": "fixed latest local profile; behavior remains deferred to owning rules",
+      "in_static_inventory": true,
+      "in_reset": true,
+      "dynamic_candidate": false,
+      "first_reference": 96622
+    }
+  ],
+  "dynamic_and_alias_sites": [
+    {
+      "line": 21822,
+      "code": "topic: previousState.connection.topic,"
+    },
+    {
+      "line": 21834,
+      "code": "gameShareId: previousState.gameShareId,"
+    },
+    {
+      "line": 21835,
+      "code": "recipientUserId: previousState.recipientUserId,"
+    },
+    {
+      "line": 21836,
+      "code": "replayRequested: previousState.replayRequested,"
+    },
+    {
+      "line": 21837,
+      "code": "replaySince: previousState.replaySince,"
+    },
+    {
+      "line": 21840,
+      "code": "topic: previousState.connection.topic,"
+    },
+    {
+      "line": 21844,
+      "code": "lastMessage: previousState.lastMessage,"
+    },
+    {
+      "line": 21995,
+      "code": "connectionEpoch2 = previousState.connection.epoch;"
+    },
+    {
+      "line": 22005,
+      "code": "gameShareId: previousState.gameShareId,"
+    },
+    {
+      "line": 22006,
+      "code": "recipientUserId: previousState.recipientUserId,"
+    },
+    {
+      "line": 22007,
+      "code": "replayRequested: previousState.replayRequested,"
+    },
+    {
+      "line": 22008,
+      "code": "replaySince: previousState.replaySince,"
+    },
+    {
+      "line": 22011,
+      "code": "topic: previousState.connection.topic,"
+    },
+    {
+      "line": 22015,
+      "code": "lastMessage: previousState.lastMessage,"
+    },
+    {
+      "line": 32608,
+      "code": "if (!match || !Array.isArray(sourceState?.board)) return null;"
+    },
+    {
+      "line": 32610,
+      "code": "const row = sourceState.board.length - Number(match[2]);"
+    },
+    {
+      "line": 32611,
+      "code": "return sourceState.board?.[row]?.[col] || null;"
+    },
+    {
+      "line": 32616,
+      "code": "if (!match || !Array.isArray(sourceState?.board)) return null;"
+    },
+    {
+      "line": 32618,
+      "code": "const row = sourceState.board.length - Number(match[2]);"
+    },
+    {
+      "line": 32619,
+      "code": "return sourceState.board?.[row]?.[col] || null;"
+    },
+    {
+      "line": 32649,
+      "code": "if (!sourceState?.board || !victoryState?.board) return true;"
+    },
+    {
+      "line": 32652,
+      "code": "if (sourceState.quantumPending?.[moving2.color] === true || moving2.chimera === true) {"
+    },
+    {
+      "line": 32659,
+      "code": "if (sourceState.democracy?.[target.color] === true) return true;"
+    },
+    {
+      "line": 32662,
+      "code": "const mistakeActive = sourceState.mistakeRule === true || sourceState.mistakeCard?.[moving2.color] === true;"
+    },
+    {
+      "line": 43452,
+      "code": "let activeMoveReplayCapture = null;"
+    },
+    {
+      "line": 43941,
+      "code": "return Boolean(sourceState?.onlineGameStarted !== false && ONLINE_STARTED_GAME_MODES.has(sourceState?.mode));"
+    },
+    {
+      "line": 43945,
+      "code": "const previousMoveCount = Number(previousState.moveCount) || 0;"
+    },
+    {
+      "line": 43947,
+      "code": "const previousFullMove = Number(previousState.fullMove) || 1;"
+    },
+    {
+      "line": 43949,
+      "code": "const previousHistoryCount = Array.isArray(previousState.boardHistory) ? previousState.boardHistory.length : 0;"
+    },
+    {
+      "line": 43951,
+      "code": "const previousLogCount = Array.isArray(previousState.logs) ? previousState.logs.length : 0;"
+    },
+    {
+      "line": 43963,
+      "code": "const previousFinishedOrWaiting = !previousState || previousState.mode === \"gameover\" || previousState.mode === \"idle\" || previousState.onlineGameStarted === false;"
+    },
+    {
+      "line": 43968,
+      "code": "if (previousState?.mode !== \"draft\" || nextState?.mode !== \"draft\") return false;"
+    },
+    {
+      "line": 43969,
+      "code": "if (!previousState.draftLocked || !nextState.draftLocked) return false;"
+    },
+    {
+      "line": 43970,
+      "code": "if (previousState.draft?.color !== nextState.draft?.color) return false;"
+    },
+    {
+      "line": 43971,
+      "code": "if ((previousState.draft?.phase || \"\") !== (nextState.draft?.phase || \"\")) return false;"
+    },
+    {
+      "line": 43972,
+      "code": "if (Number(previousState.draft?.pickIndex) !== Number(nextState.draft?.pickIndex)) return false;"
+    },
+    {
+      "line": 43975,
+      "code": "transitionEvent && transitionEvent.userId === online.userId && transitionEvent.color === previousState.draft?.color"
+    },
+    {
+      "line": 43979,
+      "code": "if (sourceState?.mode !== \"draft\" || !sourceState.draftLocked || !sourceState.draft?.color) return null;"
+    },
+    {
+      "line": 43980,
+      "code": "const color2 = sourceState.draft.color;"
+    },
+    {
+      "line": 43981,
+      "code": "const phase = sourceState.draft.phase || \"OPENING\";"
+    },
+    {
+      "line": 43982,
+      "code": "const grandPickIndex = sourceState.draft?.kind === \"grand\" ? Number(sourceState.draft?.pickIndex) : null;"
+    },
+    {
+      "line": 43983,
+      "code": "const grandPoolCardId = grandPickIndex === null ? null : sourceState.draft?.picks?.at?.(-1)?.instanceId || \"\";"
+    },
+    {
+      "line": 43984,
+      "code": "return [...sourceState.onlineEvents || []].reverse().find((event) => [\"draft-pick\", \"draft-skip\"].includes(event?.type) && event.color === color2 && (!event.phase || event.phase === phase) && (grandPickIndex === null || Number(event.pickIndex) === grandPickIndex && event.poolCardId === grandPoolCard"
+    },
+    {
+      "line": 43993,
+      "code": "if (!session?.enabled || sourceState?.mode !== \"draft\" || !sourceState.draftLocked) return null;"
+    },
+    {
+      "line": 43994,
+      "code": "const color2 = sourceState.draft?.color;"
+    },
+    {
+      "line": 44004,
+      "code": "phase: sourceState.draft.phase || \"OPENING\","
+    },
+    {
+      "line": 44005,
+      "code": "pickIndex: Number(sourceState.draft?.pickIndex) || 0,"
+    },
+    {
+      "line": 47820,
+      "code": "let value = state[key];"
+    },
+    {
+      "line": 48518,
+      "code": "const previousState = state;"
+    },
+    {
+      "line": 48793,
+      "code": "const previousClock = previousState?.clock;"
+    },
+    {
+      "line": 48795,
+      "code": "previousClock?.enabled && previousState?.mode === nextState.mode && previousState?.turn === nextState.turn && previousClock.runningColor === color2 && previousClock.lastStartedAt && COLORS.includes(color2)"
+    },
+    {
+      "line": 48810,
+      "code": "const previousDraftClock = previousState?.draftClock;"
+    },
+    {
+      "line": 48812,
+      "code": "previousState?.mode === \"draft\" && previousState?.draft?.color === color2 && (!isGrandGameStyle(nextState) || Number(previousState?.draft?.pickIndex) === Number(nextState?.draft?.pickIndex)) && previousDraftClock?.enabled && !previousDraftClock?.[selectedKey] && !previousDraftClock?.[autoSelectedKey"
+    },
+    {
+      "line": 49028,
+      "code": "sourceState.mode || \"\","
+    },
+    {
+      "line": 49029,
+      "code": "sourceState.turn || \"\","
+    },
+    {
+      "line": 49030,
+      "code": "Number(sourceState.moveCount) || 0,"
+    },
+    {
+      "line": 49031,
+      "code": "Number(sourceState.fullMove) || 0,"
+    },
+    {
+      "line": 49032,
+      "code": "Number(sourceState.turnsTaken?.white) || 0,"
+    },
+    {
+      "line": 49033,
+      "code": "Number(sourceState.turnsTaken?.black) || 0,"
+    },
+    {
+      "line": 49034,
+      "code": "sourceState.pendingPromotion?.color || \"\","
+    },
+    {
+      "line": 49035,
+      "code": "sourceState.draft?.kind || \"\","
+    },
+    {
+      "line": 49036,
+      "code": "sourceState.draft?.color || \"\","
+    },
+    {
+      "line": 49037,
+      "code": "sourceState.draft?.phase || \"\","
+    },
+    {
+      "line": 49038,
+      "code": "Number(sourceState.draft?.pickIndex) || 0,"
+    },
+    {
+      "line": 49039,
+      "code": "sourceState.draft?.picks?.at?.(-1)?.instanceId || \"\","
+    },
+    {
+      "line": 49040,
+      "code": "Boolean(sourceState.draftLocked),"
+    },
+    {
+      "line": 49041,
+      "code": "sourceState.winner || \"\","
+    },
+    {
+      "line": 49042,
+      "code": "sourceState.onlineGameStarted !== false"
+    },
+    {
+      "line": 50655,
+      "code": "return Boolean(isCampaignContext() && sourceState?.mode === \"gameover\" && !sourceState?.campaign?.reviewEnded);"
+    },
+    {
+      "line": 50688,
+      "code": "if ([\"idle\", \"gameover\"].includes(sourceState?.mode) || sourceState?.onlineGameStarted === false) {"
+    },
+    {
+      "line": 50784,
+      "code": "const previousDeathmatch = previousState.deathmatch;"
+    },
+    {
+      "line": 50786,
+      "code": "const started = previousState.mode === \"play\" && previousDeathmatch?.active !== true && nextDeathmatch?.active === true;"
+    },
+    {
+      "line": 50833,
+      "code": "const previousState = state;"
+    },
+    {
+      "line": 50834,
+      "code": "const previousCardArchiveOpen = Boolean(previousState?.cardArchiveOpen);"
+    },
+    {
+      "line": 50835,
+      "code": "const previousDevLibraryOpen = Boolean(previousState?.devLibraryOpen);"
+    },
+    {
+      "line": 50836,
+      "code": "const previousOpponentLibraryOpen = Boolean(previousState?.opponentLibraryOpen);"
+    },
+    {
+      "line": 50861,
+      "code": "if (nextState?.mode === \"gameover\" && previousState?.mode !== \"gameover\") {"
+    },
+    {
+      "line": 50892,
+      "code": "if (!nextState.logs?.length && Array.isArray(previousState?.logs)) {"
+    },
+    {
+      "line": 50893,
+      "code": "nextState.logs = previousState.logs;"
+    },
+    {
+      "line": 50936,
+      "code": "if (!localNoActionLoss && previousState?.mode !== \"gameover\" && state.mode === \"gameover\") {"
+    },
+    {
+      "line": 50940,
+      "code": "if (state.mode !== \"gameover\" && state.drawOffer?.userId && state.drawOffer.userId !== online.userId && previousState?.drawOffer?.userId !== state.drawOffer.userId) {"
+    },
+    {
+      "line": 50965,
+      "code": "(sourceState?.onlineEvents || []).map(onlineEventIdentity).filter(Boolean)"
+    },
+    {
+      "line": 50975,
+      "code": "const previousPieces = boardPieceIndex(previousState?.board);"
+    },
+    {
+      "line": 51041,
+      "code": "const targets = timeIsMineTargetSnapshots(previousState?.board, event.color);"
+    },
+    {
+      "line": 51142,
+      "code": "const previousHazards = Array.isArray(previousState?.delayedHazards) ? previousState.delayedHazards : [];"
+    },
+    {
+      "line": 51155,
+      "code": "const board = previousState?.board || nextState?.board || [];"
+    },
+    {
+      "line": 51158,
+      "code": "const previousCollapseDepth = normalizeCollapseDepth(previousState?.collapseDepth, rows, cols, Boolean(previousState?.collapsed));"
+    },
+    {
+      "line": 51166,
+      "code": "const previousBombs = normalizeRuleBombs(previousState?.ruleBombs, rows, cols, ruleBombNormalizationLimit(previousState?.ruleBombs));"
+    },
+    {
+      "line": 52620,
+      "code": "let saturationAttackContext = null;"
+    },
+    {
+      "line": 52622,
+      "code": "const previous = saturationAttackContext;"
+    },
+    {
+      "line": 52623,
+      "code": "saturationAttackContext = previous?.item === item2 ? previous : {"
+    },
+    {
+      "line": 52630,
+      "code": "saturationAttackContext = previous;"
+    },
+    {
+      "line": 52634,
+      "code": "if (source === state && saturationAttackContext?.item === item2) return saturationAttackContext.locked;"
+    },
+    {
+      "line": 55453,
+      "code": "if ([\"symmetry\", \"mutation\"].includes(card2.id)) return !state[card2.id]?.[color2];"
+    },
+    {
+      "line": 61361,
+      "code": "const originals = relaxedFlags.map(([group, color2]) => [group, color2, state[group]?.[color2]]);"
+    },
+    {
+      "line": 61364,
+      "code": "if (state[group]) state[group][color2] = false;"
+    },
+    {
+      "line": 61374,
+      "code": "if (state[group]) state[group][color2] = value;"
+    },
+    {
+      "line": 69605,
+      "code": "const sourceState = state;"
+    },
+    {
+      "line": 70686,
+      "code": "const previousState = state;"
+    },
+    {
+      "line": 70700,
+      "code": "const afterCardState = state;"
+    },
+    {
+      "line": 70732,
+      "code": "const moving2 = sourceState?.board?.[action.from?.row]?.[action.from?.col];"
+    },
+    {
+      "line": 70733,
+      "code": "const target = sourceState?.board?.[action.move?.row]?.[action.move?.col];"
+    },
+    {
+      "line": 70739,
+      "code": "const previousState = state;"
+    },
+    {
+      "line": 70763,
+      "code": "const rule = normalizeCrownRule(sourceState?.crownRule, sourceState?.board, sourceState?.moveCount);"
+    },
+    {
+      "line": 70779,
+      "code": "(sourceState?.board || []).forEach((boardRow, row) => {"
+    },
+    {
+      "line": 70791,
+      "code": "return Boolean(item2?.color && sourceState?.democracy?.[item2.color] && (isRoyalKing(item2) || item2.type === \"merchant\"));"
+    },
+    {
+      "line": 70794,
+      "code": "if (!item2?.color || !sourceState?.democracy?.[item2.color] || item2.type !== \"pawn\") return 0;"
+    },
+    {
+      "line": 70976,
+      "code": "if (state[key]?.[color2]) score += 3;"
+    },
+    {
+      "line": 72126,
+      "code": "const parentState = state;"
+    },
+    {
+      "line": 72187,
+      "code": "const parentState = state;"
+    },
+    {
+      "line": 72218,
+      "code": "const previousState = state;"
+    },
+    {
+      "line": 72324,
+      "code": "const parentState = state;"
+    },
+    {
+      "line": 72387,
+      "code": "const parentState = state;"
+    },
+    {
+      "line": 72418,
+      "code": "const previousState = state;"
+    },
+    {
+      "line": 72487,
+      "code": "const previousState = state;"
+    },
+    {
+      "line": 72693,
+      "code": "const stateRef = state;"
+    },
+    {
+      "line": 72734,
+      "code": "const visibleState = state;"
+    },
+    {
+      "line": 72737,
+      "code": "const sourcePresentation = clonePlain(sourceState.board?.[origin.row]?.[origin.col] || null);"
+    },
+    {
+      "line": 72758,
+      "code": "const sourcePieceId = sourceState.board?.[origin.row]?.[origin.col]?.id || null;"
+    },
+    {
+      "line": 72791,
+      "code": "const actor = sourceState?.board?.[from?.row]?.[from?.col]?.color || message.game.turn;"
+    },
+    {
+      "line": 72825,
+      "code": "sourceState.clock,"
+    },
+    {
+      "line": 72842,
+      "code": "const moving2 = from ? sourceState?.board?.[from.row]?.[from.col] || null : null;"
+    },
+    {
+      "line": 72846,
+      "code": "const moveNumber = Math.max(1, Number(sourceState?.fullMove) || 1);"
+    },
+    {
+      "line": 72893,
+      "code": "replayIndex: Math.max(0, Number(sourceState?.replayEvents?.length) || 0)"
+    },
+    {
+      "line": 72953,
+      "code": "const visibleState = state;"
+    },
+    {
+      "line": 72977,
+      "code": "const moving2 = from ? sourceState?.board?.[from.row]?.[from.col] || null : null;"
+    },
+    {
+      "line": 72986,
+      "code": "const deterministicType = upgrades.length === 1 ? monochromePieceType(upgrades[0], sourceState.monochromeChess) : null;"
+    },
+    {
+      "line": 73068,
+      "code": "const moving2 = from ? sourceState?.board?.[from.row]?.[from.col] || null : null;"
+    },
+    {
+      "line": 73071,
+      "code": "if (sourceState.quantumPending?.[moving2.color] === true) kinds.push(\"quantum\");"
+    },
+    {
+      "line": 73073,
+      "code": "if (sourceState.transcendenceRule === true && transcendenceUpgradeOptions(moving2.type).length > 0 && payload.promotion === null && candidate.lastMove.capture === true) {"
+    },
+    {
+      "line": 73074,
+      "code": "const before = betaFriendlyBoardPieceMap(sourceState.board);"
+    },
+    {
+      "line": 73086,
+      "code": "const sourceId = from ? sourceState?.board?.[from.row]?.[from.col]?.id || null : null;"
+    },
+    {
+      "line": 73095,
+      "code": "const sourcePiece = sourceState.board[from.row][from.col];"
+    },
+    {
+      "line": 73097,
+      "code": "if (upgrades.length === 1) projectedPiece.type = monochromePieceType(upgrades[0], sourceState.monochromeChess);"
+    },
+    {
+      "line": 73143,
+      "code": "prepareAuthoritativePieceImageAnimations(sourceState?.board, candidate.board, candidate);"
+    },
+    {
+      "line": 73280,
+      "code": "const actor = sourceState.board?.[from.row]?.[from.col];"
+    },
+    {
+      "line": 73281,
+      "code": "const target = sourceState.board?.[to.row]?.[to.col];"
+    },
+    {
+      "line": 73287,
+      "code": "displayedTurn: sourceState.turn,"
+    },
+    {
+      "line": 73288,
+      "code": "candidatePresent: Array.isArray(sourceState.legalMoves) ? sourceState.legalMoves.some((m) => m.row === to.row && m.col === to.col) : null,"
+    },
+    {
+      "line": 73289,
+      "code": "breakthrough: sourceState.breakthroughPawns?.[actor?.color] === true,"
+    },
+    {
+      "line": 73366,
+      "code": "const stateRef = state;"
+    },
+    {
+      "line": 73377,
+      "code": "const authoritativeState = state;"
+    },
+    {
+      "line": 76720,
+      "code": "const defaults = state;"
+    },
+    {
+      "line": 77244,
+      "code": "const stateRef = state;"
+    },
+    {
+      "line": 77905,
+      "code": "let activeMetalMove = null;"
+    },
+    {
+      "line": 77907,
+      "code": "if (activeMetalMove) noteMetalRelocations(state.board, activeMetalMove.before, state.turn !== activeMetalMove.color ? activeMetalMove.color : null);"
+    },
+    {
+      "line": 77910,
+      "code": "const previous = activeMetalMove;"
+    },
+    {
+      "line": 77911,
+      "code": "activeMetalMove = { before: metalPositions(state.board), color: state.turn };"
+    },
+    {
+      "line": 77917,
+      "code": "activeMetalMove = previous;"
+    },
+    {
+      "line": 79159,
+      "code": "const item2 = betaMove ? sourceState.board?.[betaMove.from.row]?.[betaMove.from.col] || null : null;"
+    },
+    {
+      "line": 79193,
+      "code": "const visibleState = state;"
+    },
+    {
+      "line": 79244,
+      "code": "const wirePromotion = type === \"pawn\" ? null : type === \"camel\" && refreshed.sourceState.monochromeChess ? \"knight\" : type;"
+    },
+    {
+      "line": 79688,
+      "code": "const replayCapture = activeMoveReplayCapture;"
+    },
+    {
+      "line": 79689,
+      "code": "saturationAttackContext = null;"
+    },
+    {
+      "line": 79845,
+      "code": "activeMoveReplayCapture = replayCapture;"
+    },
+    {
+      "line": 80345,
+      "code": "const active2 = previousState?.activeTrolley;"
+    },
+    {
+      "line": 80351,
+      "code": "const targets = trolleyTargetSnapshotsFromBoard(previousState?.board, doomedChoice?.pieces || []);"
+    },
+    {
+      "line": 81052,
+      "code": "const previousState = state;"
+    },
+    {
+      "line": 81704,
+      "code": "let freeMovePopulationBoard = null;"
+    },
+    {
+      "line": 81705,
+      "code": "function uniqueAlliedPieceCount(color2, board = freeMovePopulationBoard || state.board) {"
+    },
+    {
+      "line": 82479,
+      "code": "return septemberPrincessHasQueenMovement(color2, (freeMovePopulationBoard || state.board).flat().filter(Boolean)) ? rayMoves(row, col, color2, queenDirections()) : jumpMoves(row, col, color2, bishopDirections());"
+    },
+    {
+      "line": 85215,
+      "code": "const lastMove = sourceState?.lastMove;"
+    },
+    {
+      "line": 85217,
+      "code": "idolId && COLORS.includes(color2) && sourceState?.turn === color2 && lastMove?.idolEncoreConsumed === true && lastMove.idolEncoreId === idolId && lastMove.soundColor === color2"
+    },
+    {
+      "line": 85234,
+      "code": "if (!item2 || !COLORS.includes(color2) || sourceState?.turn !== color2) return false;"
+    },
+    {
+      "line": 85236,
+      "code": "return Number.isFinite(restTurn) && restTurn === (Number(sourceState.turnsTaken?.[color2]) || 0);"
+    },
+    {
+      "line": 85913,
+      "code": "state[key] = normalizeColorBooleans(state[key]);"
+    },
+    {
+      "line": 85914,
+      "code": "state[key][state.turn] = true;"
+    },
+    {
+      "line": 86090,
+      "code": "if (!activeMoveReplayCapture) return false;"
+    },
+    {
+      "line": 86091,
+      "code": "if (color2 && activeMoveReplayCapture.color !== color2) return false;"
+    },
+    {
+      "line": 86092,
+      "code": "activeMoveReplayCapture = null;"
+    },
+    {
+      "line": 86106,
+      "code": "activeMoveReplayCapture = {"
+    },
+    {
+      "line": 86124,
+      "code": "const pending = activeMoveReplayCapture;"
+    },
+    {
+      "line": 86127,
+      "code": "activeMoveReplayCapture = null;"
+    },
+    {
+      "line": 86130,
+      "code": "activeMoveReplayCapture = null;"
+    },
+    {
+      "line": 86180,
+      "code": "if (!state[stateKey] || typeof state[stateKey] !== \"object\") state[stateKey] = {};"
+    },
+    {
+      "line": 86181,
+      "code": "state[stateKey][color2] = clonePlain(before);"
+    },
+    {
+      "line": 90416,
+      "code": "const previousPopulationBoard = freeMovePopulationBoard;"
+    },
+    {
+      "line": 90435,
+      "code": "freeMovePopulationBoard = previousPopulationBoard || previousBoard;"
+    },
+    {
+      "line": 90444,
+      "code": "freeMovePopulationBoard = previousPopulationBoard;"
+    },
+    {
+      "line": 94758,
+      "code": "const resolvingState = state;"
+    },
+    {
+      "line": 96753,
+      "code": "for (const key of INTERNAL_EIGHT_FLAGS) state[key] = clonePlain(legacyProjection[key] || { white: false, black: false });"
+    },
+    {
+      "line": 96754,
+      "code": "Object.assign(state, internalFiveState(legacyProjection));"
+    },
+    {
+      "line": 96755,
+      "code": "for (const key of SEPTEMBER_PASSIVE_EFFECTS) if (key !== \"bigBishop\") state[key] = clonePlain(legacyProjection[key] || { white: false, black: false });"
+    },
+    {
+      "line": 99240,
+      "code": "Object.assign(state, clonePlain(legacyCampaignAuthority));"
+    },
+    {
+      "line": 99887,
+      "code": "Object.assign(state, revealedFrame);"
+    }
+  ],
+  "limitation": "Conservative lexical audit, not full alias/dataflow proof. Unresolved and deferred features cannot be imported."
+}

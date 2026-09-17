@@ -1,0 +1,128 @@
+use serde::{Deserialize, Serialize};
+
+#[derive(Debug, Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Serialize, Deserialize)]
+#[serde(rename_all = "snake_case")]
+pub enum Color {
+    White,
+    Black,
+}
+impl Color {
+    pub const fn opponent(self) -> Self {
+        match self {
+            Self::White => Self::Black,
+            Self::Black => Self::White,
+        }
+    }
+}
+#[derive(Debug, Clone, Copy, PartialEq, Eq, Serialize, Deserialize)]
+#[serde(rename_all = "snake_case")]
+pub enum Owner {
+    White,
+    Black,
+    Neutral,
+}
+impl From<Color> for Owner {
+    fn from(color: Color) -> Self {
+        match color {
+            Color::White => Self::White,
+            Color::Black => Self::Black,
+        }
+    }
+}
+#[derive(Debug, Clone, PartialEq, Eq, Serialize, Deserialize)]
+#[serde(deny_unknown_fields)]
+pub struct Sides<T> {
+    pub white: T,
+    pub black: T,
+}
+impl<T> Sides<T> {
+    pub fn get(&self, color: Color) -> &T {
+        match color {
+            Color::White => &self.white,
+            Color::Black => &self.black,
+        }
+    }
+}
+#[derive(Debug, Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Serialize, Deserialize)]
+#[serde(transparent)]
+pub struct PieceId(pub u32);
+#[derive(Debug, Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Serialize, Deserialize)]
+#[serde(transparent)]
+pub struct CardInstanceId(pub u32);
+#[derive(Debug, Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Serialize, Deserialize)]
+#[serde(deny_unknown_fields)]
+pub struct Square {
+    pub row: u16,
+    pub col: u16,
+}
+impl Square {
+    pub const fn new(row: u16, col: u16) -> Self {
+        Self { row, col }
+    }
+}
+/// Only represented kinds. Movement and abilities are not implemented yet.
+#[derive(Debug, Clone, Copy, PartialEq, Eq, Serialize, Deserialize)]
+#[serde(rename_all = "camelCase")]
+pub enum PieceKind {
+    Pawn,
+    Knight,
+    Bishop,
+    Rook,
+    Queen,
+    King,
+    Colossus,
+    Wall,
+}
+#[derive(Debug, Clone, PartialEq, Eq, PartialOrd, Ord, Serialize, Deserialize)]
+#[serde(tag = "kind", rename_all = "snake_case", deny_unknown_fields)]
+pub enum Status {
+    /// JS freshNoCaptureUntil compares against the owner's completed turns.
+    CannotCaptureUntilOwnerTurn { owner: Color, completed_turn: u32 },
+}
+#[derive(Debug, Clone, PartialEq, Eq, Serialize, Deserialize)]
+#[serde(deny_unknown_fields)]
+pub struct Piece {
+    pub id: PieceId,
+    pub owner: Owner,
+    pub kind: PieceKind,
+    pub anchor: Square,
+    /// Absolute occupied squares, a set normalized into row-major order.
+    pub footprint: Vec<Square>,
+    pub origin: Option<Square>,
+    pub moved: bool,
+    pub shielded: bool,
+    pub hp: Option<u16>,
+    pub max_hp: Option<u16>,
+    pub statuses: Vec<Status>,
+}
+impl Piece {
+    pub fn new(id: PieceId, owner: Owner, kind: PieceKind, anchor: Square) -> Self {
+        Self {
+            id,
+            owner,
+            kind,
+            anchor,
+            footprint: vec![anchor],
+            origin: Some(anchor),
+            moved: false,
+            shielded: false,
+            hp: None,
+            max_hp: None,
+            statuses: vec![],
+        }
+    }
+}
+#[derive(Debug, Clone, Copy, PartialEq, Eq, Serialize, Deserialize)]
+#[serde(rename_all = "snake_case")]
+pub enum CardCategory {
+    Opening,
+    Middle,
+    End,
+    Piece,
+}
+#[derive(Debug, Clone, Copy, PartialEq, Eq, Serialize, Deserialize)]
+#[serde(rename_all = "snake_case")]
+pub enum ActivationType {
+    Passive,
+    Active,
+}

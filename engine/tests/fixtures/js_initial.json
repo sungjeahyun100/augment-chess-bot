@@ -1,0 +1,872 @@
+{
+  "board": {
+    "rows": 8,
+    "cols": 8,
+    "cells": [
+      1,
+      3,
+      5,
+      7,
+      9,
+      11,
+      13,
+      15,
+      17,
+      19,
+      21,
+      23,
+      25,
+      27,
+      29,
+      31,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      18,
+      20,
+      22,
+      24,
+      26,
+      28,
+      30,
+      32,
+      2,
+      4,
+      6,
+      8,
+      10,
+      12,
+      14,
+      16
+    ]
+  },
+  "pieces": [
+    {
+      "id": 1,
+      "owner": "black",
+      "kind": "rook",
+      "anchor": {
+        "row": 0,
+        "col": 0
+      },
+      "footprint": [
+        {
+          "row": 0,
+          "col": 0
+        }
+      ],
+      "origin": {
+        "row": 0,
+        "col": 0
+      },
+      "moved": false,
+      "shielded": false,
+      "hp": null,
+      "max_hp": null,
+      "statuses": []
+    },
+    {
+      "id": 2,
+      "owner": "white",
+      "kind": "rook",
+      "anchor": {
+        "row": 7,
+        "col": 0
+      },
+      "footprint": [
+        {
+          "row": 7,
+          "col": 0
+        }
+      ],
+      "origin": {
+        "row": 7,
+        "col": 0
+      },
+      "moved": false,
+      "shielded": false,
+      "hp": null,
+      "max_hp": null,
+      "statuses": []
+    },
+    {
+      "id": 3,
+      "owner": "black",
+      "kind": "knight",
+      "anchor": {
+        "row": 0,
+        "col": 1
+      },
+      "footprint": [
+        {
+          "row": 0,
+          "col": 1
+        }
+      ],
+      "origin": {
+        "row": 0,
+        "col": 1
+      },
+      "moved": false,
+      "shielded": false,
+      "hp": null,
+      "max_hp": null,
+      "statuses": []
+    },
+    {
+      "id": 4,
+      "owner": "white",
+      "kind": "knight",
+      "anchor": {
+        "row": 7,
+        "col": 1
+      },
+      "footprint": [
+        {
+          "row": 7,
+          "col": 1
+        }
+      ],
+      "origin": {
+        "row": 7,
+        "col": 1
+      },
+      "moved": false,
+      "shielded": false,
+      "hp": null,
+      "max_hp": null,
+      "statuses": []
+    },
+    {
+      "id": 5,
+      "owner": "black",
+      "kind": "bishop",
+      "anchor": {
+        "row": 0,
+        "col": 2
+      },
+      "footprint": [
+        {
+          "row": 0,
+          "col": 2
+        }
+      ],
+      "origin": {
+        "row": 0,
+        "col": 2
+      },
+      "moved": false,
+      "shielded": false,
+      "hp": null,
+      "max_hp": null,
+      "statuses": []
+    },
+    {
+      "id": 6,
+      "owner": "white",
+      "kind": "bishop",
+      "anchor": {
+        "row": 7,
+        "col": 2
+      },
+      "footprint": [
+        {
+          "row": 7,
+          "col": 2
+        }
+      ],
+      "origin": {
+        "row": 7,
+        "col": 2
+      },
+      "moved": false,
+      "shielded": false,
+      "hp": null,
+      "max_hp": null,
+      "statuses": []
+    },
+    {
+      "id": 7,
+      "owner": "black",
+      "kind": "queen",
+      "anchor": {
+        "row": 0,
+        "col": 3
+      },
+      "footprint": [
+        {
+          "row": 0,
+          "col": 3
+        }
+      ],
+      "origin": {
+        "row": 0,
+        "col": 3
+      },
+      "moved": false,
+      "shielded": false,
+      "hp": null,
+      "max_hp": null,
+      "statuses": []
+    },
+    {
+      "id": 8,
+      "owner": "white",
+      "kind": "queen",
+      "anchor": {
+        "row": 7,
+        "col": 3
+      },
+      "footprint": [
+        {
+          "row": 7,
+          "col": 3
+        }
+      ],
+      "origin": {
+        "row": 7,
+        "col": 3
+      },
+      "moved": false,
+      "shielded": false,
+      "hp": null,
+      "max_hp": null,
+      "statuses": []
+    },
+    {
+      "id": 9,
+      "owner": "black",
+      "kind": "king",
+      "anchor": {
+        "row": 0,
+        "col": 4
+      },
+      "footprint": [
+        {
+          "row": 0,
+          "col": 4
+        }
+      ],
+      "origin": {
+        "row": 0,
+        "col": 4
+      },
+      "moved": false,
+      "shielded": false,
+      "hp": null,
+      "max_hp": null,
+      "statuses": []
+    },
+    {
+      "id": 10,
+      "owner": "white",
+      "kind": "king",
+      "anchor": {
+        "row": 7,
+        "col": 4
+      },
+      "footprint": [
+        {
+          "row": 7,
+          "col": 4
+        }
+      ],
+      "origin": {
+        "row": 7,
+        "col": 4
+      },
+      "moved": false,
+      "shielded": false,
+      "hp": null,
+      "max_hp": null,
+      "statuses": []
+    },
+    {
+      "id": 11,
+      "owner": "black",
+      "kind": "bishop",
+      "anchor": {
+        "row": 0,
+        "col": 5
+      },
+      "footprint": [
+        {
+          "row": 0,
+          "col": 5
+        }
+      ],
+      "origin": {
+        "row": 0,
+        "col": 5
+      },
+      "moved": false,
+      "shielded": false,
+      "hp": null,
+      "max_hp": null,
+      "statuses": []
+    },
+    {
+      "id": 12,
+      "owner": "white",
+      "kind": "bishop",
+      "anchor": {
+        "row": 7,
+        "col": 5
+      },
+      "footprint": [
+        {
+          "row": 7,
+          "col": 5
+        }
+      ],
+      "origin": {
+        "row": 7,
+        "col": 5
+      },
+      "moved": false,
+      "shielded": false,
+      "hp": null,
+      "max_hp": null,
+      "statuses": []
+    },
+    {
+      "id": 13,
+      "owner": "black",
+      "kind": "knight",
+      "anchor": {
+        "row": 0,
+        "col": 6
+      },
+      "footprint": [
+        {
+          "row": 0,
+          "col": 6
+        }
+      ],
+      "origin": {
+        "row": 0,
+        "col": 6
+      },
+      "moved": false,
+      "shielded": false,
+      "hp": null,
+      "max_hp": null,
+      "statuses": []
+    },
+    {
+      "id": 14,
+      "owner": "white",
+      "kind": "knight",
+      "anchor": {
+        "row": 7,
+        "col": 6
+      },
+      "footprint": [
+        {
+          "row": 7,
+          "col": 6
+        }
+      ],
+      "origin": {
+        "row": 7,
+        "col": 6
+      },
+      "moved": false,
+      "shielded": false,
+      "hp": null,
+      "max_hp": null,
+      "statuses": []
+    },
+    {
+      "id": 15,
+      "owner": "black",
+      "kind": "rook",
+      "anchor": {
+        "row": 0,
+        "col": 7
+      },
+      "footprint": [
+        {
+          "row": 0,
+          "col": 7
+        }
+      ],
+      "origin": {
+        "row": 0,
+        "col": 7
+      },
+      "moved": false,
+      "shielded": false,
+      "hp": null,
+      "max_hp": null,
+      "statuses": []
+    },
+    {
+      "id": 16,
+      "owner": "white",
+      "kind": "rook",
+      "anchor": {
+        "row": 7,
+        "col": 7
+      },
+      "footprint": [
+        {
+          "row": 7,
+          "col": 7
+        }
+      ],
+      "origin": {
+        "row": 7,
+        "col": 7
+      },
+      "moved": false,
+      "shielded": false,
+      "hp": null,
+      "max_hp": null,
+      "statuses": []
+    },
+    {
+      "id": 17,
+      "owner": "black",
+      "kind": "pawn",
+      "anchor": {
+        "row": 1,
+        "col": 0
+      },
+      "footprint": [
+        {
+          "row": 1,
+          "col": 0
+        }
+      ],
+      "origin": {
+        "row": 1,
+        "col": 0
+      },
+      "moved": false,
+      "shielded": false,
+      "hp": null,
+      "max_hp": null,
+      "statuses": []
+    },
+    {
+      "id": 18,
+      "owner": "white",
+      "kind": "pawn",
+      "anchor": {
+        "row": 6,
+        "col": 0
+      },
+      "footprint": [
+        {
+          "row": 6,
+          "col": 0
+        }
+      ],
+      "origin": {
+        "row": 6,
+        "col": 0
+      },
+      "moved": false,
+      "shielded": false,
+      "hp": null,
+      "max_hp": null,
+      "statuses": []
+    },
+    {
+      "id": 19,
+      "owner": "black",
+      "kind": "pawn",
+      "anchor": {
+        "row": 1,
+        "col": 1
+      },
+      "footprint": [
+        {
+          "row": 1,
+          "col": 1
+        }
+      ],
+      "origin": {
+        "row": 1,
+        "col": 1
+      },
+      "moved": false,
+      "shielded": false,
+      "hp": null,
+      "max_hp": null,
+      "statuses": []
+    },
+    {
+      "id": 20,
+      "owner": "white",
+      "kind": "pawn",
+      "anchor": {
+        "row": 6,
+        "col": 1
+      },
+      "footprint": [
+        {
+          "row": 6,
+          "col": 1
+        }
+      ],
+      "origin": {
+        "row": 6,
+        "col": 1
+      },
+      "moved": false,
+      "shielded": false,
+      "hp": null,
+      "max_hp": null,
+      "statuses": []
+    },
+    {
+      "id": 21,
+      "owner": "black",
+      "kind": "pawn",
+      "anchor": {
+        "row": 1,
+        "col": 2
+      },
+      "footprint": [
+        {
+          "row": 1,
+          "col": 2
+        }
+      ],
+      "origin": {
+        "row": 1,
+        "col": 2
+      },
+      "moved": false,
+      "shielded": false,
+      "hp": null,
+      "max_hp": null,
+      "statuses": []
+    },
+    {
+      "id": 22,
+      "owner": "white",
+      "kind": "pawn",
+      "anchor": {
+        "row": 6,
+        "col": 2
+      },
+      "footprint": [
+        {
+          "row": 6,
+          "col": 2
+        }
+      ],
+      "origin": {
+        "row": 6,
+        "col": 2
+      },
+      "moved": false,
+      "shielded": false,
+      "hp": null,
+      "max_hp": null,
+      "statuses": []
+    },
+    {
+      "id": 23,
+      "owner": "black",
+      "kind": "pawn",
+      "anchor": {
+        "row": 1,
+        "col": 3
+      },
+      "footprint": [
+        {
+          "row": 1,
+          "col": 3
+        }
+      ],
+      "origin": {
+        "row": 1,
+        "col": 3
+      },
+      "moved": false,
+      "shielded": false,
+      "hp": null,
+      "max_hp": null,
+      "statuses": []
+    },
+    {
+      "id": 24,
+      "owner": "white",
+      "kind": "pawn",
+      "anchor": {
+        "row": 6,
+        "col": 3
+      },
+      "footprint": [
+        {
+          "row": 6,
+          "col": 3
+        }
+      ],
+      "origin": {
+        "row": 6,
+        "col": 3
+      },
+      "moved": false,
+      "shielded": false,
+      "hp": null,
+      "max_hp": null,
+      "statuses": []
+    },
+    {
+      "id": 25,
+      "owner": "black",
+      "kind": "pawn",
+      "anchor": {
+        "row": 1,
+        "col": 4
+      },
+      "footprint": [
+        {
+          "row": 1,
+          "col": 4
+        }
+      ],
+      "origin": {
+        "row": 1,
+        "col": 4
+      },
+      "moved": false,
+      "shielded": false,
+      "hp": null,
+      "max_hp": null,
+      "statuses": []
+    },
+    {
+      "id": 26,
+      "owner": "white",
+      "kind": "pawn",
+      "anchor": {
+        "row": 6,
+        "col": 4
+      },
+      "footprint": [
+        {
+          "row": 6,
+          "col": 4
+        }
+      ],
+      "origin": {
+        "row": 6,
+        "col": 4
+      },
+      "moved": false,
+      "shielded": false,
+      "hp": null,
+      "max_hp": null,
+      "statuses": []
+    },
+    {
+      "id": 27,
+      "owner": "black",
+      "kind": "pawn",
+      "anchor": {
+        "row": 1,
+        "col": 5
+      },
+      "footprint": [
+        {
+          "row": 1,
+          "col": 5
+        }
+      ],
+      "origin": {
+        "row": 1,
+        "col": 5
+      },
+      "moved": false,
+      "shielded": false,
+      "hp": null,
+      "max_hp": null,
+      "statuses": []
+    },
+    {
+      "id": 28,
+      "owner": "white",
+      "kind": "pawn",
+      "anchor": {
+        "row": 6,
+        "col": 5
+      },
+      "footprint": [
+        {
+          "row": 6,
+          "col": 5
+        }
+      ],
+      "origin": {
+        "row": 6,
+        "col": 5
+      },
+      "moved": false,
+      "shielded": false,
+      "hp": null,
+      "max_hp": null,
+      "statuses": []
+    },
+    {
+      "id": 29,
+      "owner": "black",
+      "kind": "pawn",
+      "anchor": {
+        "row": 1,
+        "col": 6
+      },
+      "footprint": [
+        {
+          "row": 1,
+          "col": 6
+        }
+      ],
+      "origin": {
+        "row": 1,
+        "col": 6
+      },
+      "moved": false,
+      "shielded": false,
+      "hp": null,
+      "max_hp": null,
+      "statuses": []
+    },
+    {
+      "id": 30,
+      "owner": "white",
+      "kind": "pawn",
+      "anchor": {
+        "row": 6,
+        "col": 6
+      },
+      "footprint": [
+        {
+          "row": 6,
+          "col": 6
+        }
+      ],
+      "origin": {
+        "row": 6,
+        "col": 6
+      },
+      "moved": false,
+      "shielded": false,
+      "hp": null,
+      "max_hp": null,
+      "statuses": []
+    },
+    {
+      "id": 31,
+      "owner": "black",
+      "kind": "pawn",
+      "anchor": {
+        "row": 1,
+        "col": 7
+      },
+      "footprint": [
+        {
+          "row": 1,
+          "col": 7
+        }
+      ],
+      "origin": {
+        "row": 1,
+        "col": 7
+      },
+      "moved": false,
+      "shielded": false,
+      "hp": null,
+      "max_hp": null,
+      "statuses": []
+    },
+    {
+      "id": 32,
+      "owner": "white",
+      "kind": "pawn",
+      "anchor": {
+        "row": 6,
+        "col": 7
+      },
+      "footprint": [
+        {
+          "row": 6,
+          "col": 7
+        }
+      ],
+      "origin": {
+        "row": 6,
+        "col": 7
+      },
+      "moved": false,
+      "shielded": false,
+      "hp": null,
+      "max_hp": null,
+      "statuses": []
+    }
+  ],
+  "reset": {
+    "turn": "white",
+    "turnsTaken": {
+      "white": 0,
+      "black": 0
+    },
+    "fullMove": 1,
+    "moveCount": 0,
+    "actionsRemaining": 1,
+    "cardsUsedThisTurn": {
+      "white": 0,
+      "black": 0
+    },
+    "firstMoveCardsForced": {
+      "white": false,
+      "black": false
+    }
+  },
+  "deck_slots": {
+    "white": [
+      null,
+      null,
+      null
+    ],
+    "black": [
+      null,
+      null,
+      null
+    ]
+  }
+}

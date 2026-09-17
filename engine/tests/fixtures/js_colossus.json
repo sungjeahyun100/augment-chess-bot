@@ -1,0 +1,110 @@
+{
+  "board": {
+    "rows": 8,
+    "cols": 8,
+    "cells": [
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      1,
+      1,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      1,
+      1,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null
+    ]
+  },
+  "pieces": [
+    {
+      "id": 1,
+      "owner": "white",
+      "kind": "colossus",
+      "anchor": {
+        "row": 2,
+        "col": 3
+      },
+      "footprint": [
+        {
+          "row": 2,
+          "col": 3
+        },
+        {
+          "row": 2,
+          "col": 4
+        },
+        {
+          "row": 3,
+          "col": 3
+        },
+        {
+          "row": 3,
+          "col": 4
+        }
+      ],
+      "origin": {
+        "row": 2,
+        "col": 3
+      },
+      "moved": false,
+      "shielded": false,
+      "hp": 3,
+      "max_hp": 3,
+      "statuses": []
+    }
+  ]
+}

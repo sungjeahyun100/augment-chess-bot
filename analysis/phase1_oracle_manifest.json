@@ -1,0 +1,43 @@
+{
+  "source_sha256": "0dbbad680c6e8e2abcdb6e49817ff486aa2f8ef799a8035bd356baef8a2731ea",
+  "functions": [
+    "piece",
+    "createInitialBoard",
+    "createEmptyBoard",
+    "placeCampaignColossus",
+    "colossusCells",
+    "inBounds",
+    "squareName",
+    "fileLabels",
+    "boardRowCount",
+    "boardColCount",
+    "normalizeGameStyle",
+    "isChaosGameStyle",
+    "isGrandGameStyle",
+    "gameDeckSlotCount",
+    "createEmptyDeckSlots"
+  ],
+  "constants": [
+    "FILES",
+    "EXTENDED_FILES",
+    "NORMAL_DECK_SLOT_COUNT",
+    "CHAOS_DECK_SLOT_COUNT",
+    "GRAND_DECK_SLOT_COUNT",
+    "GAME_STYLE_IDS",
+    "DEFAULT_GAME_STYLE"
+  ],
+  "imports": [
+    "./modulepreload-polyfill-COaX8i6R.js",
+    "./zugzwang-BMan13jH.js",
+    "./betaSupabaseAuth-BM9hgzr_.js"
+  ],
+  "missing_imports": [
+    "./modulepreload-polyfill-COaX8i6R.js",
+    "./zugzwang-BMan13jH.js",
+    "./betaSupabaseAuth-BM9hgzr_.js"
+  ],
+  "scope": "initial board, literal reset counters, empty normal deck slots, shared colossus entity only",
+  "ui_event_sink": "none: selected paths have no UI calls; unexpected dependencies throw",
+  "timer_continuations": "none executed; resetGame/draft/action/turn continuations remain unsupported",
+  "randomness": "piece ID only, remapped by allocation order; no rules randomness consumed"
+}
