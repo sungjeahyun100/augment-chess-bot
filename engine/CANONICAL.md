@@ -1,8 +1,8 @@
-# Canonical v2 — phase2_cardless
+# Canonical v3 — phase3_cardless
 
-기계 검증 스키마는 `src/state.rs`의 `CanonicalState`와 각 nested DTO의 serde 정의 및 `GameState::from_snapshot` 불변식 검사다. 샘플은 `tests/fixtures/initial.canonical.json`이다. 이 v2는 **카드 없는 일반 8×8 실행 상태와 기존 state-only 표현**의 계약이며, 모든 카드가 포함된 JS 게임 상태 전체의 스키마라고 주장하지 않는다. 의미 상태를 추가할 때 스키마 버전과 fixture를 갱신하고 구버전 입력을 명시적으로 거절하거나 migration을 제공해야 한다.
+기계 검증 스키마는 `src/state.rs`의 `CanonicalState`와 각 nested DTO의 serde 정의 및 `GameState::from_snapshot` 불변식 검사다. 샘플은 `tests/fixtures/initial.canonical.json`이다. 이 v3는 **카드 없는 일반 8×8 실행 상태와 기존 state-only 표현**의 계약이며, 모든 카드가 포함된 JS 게임 상태 전체의 스키마라고 주장하지 않는다. 의미 상태를 추가할 때 스키마 버전과 fixture를 갱신하고 구버전 입력을 명시적으로 거절하거나 migration을 제공해야 한다.
 
-- `schema_version=2`, `capability=phase2_cardless` (실행) 또는 `phase1_state_only` (표현 전용), `config.rules_profile=local_0dbbad68`. 원본 전체 SHA-256은 `SOURCE_SHA256` 및 oracle manifest에 고정한다.
+- `schema_version=3`, `capability=phase3_cardless` (실행) 또는 `phase1_state_only` (표현 전용), `config.rules_profile=local_0dbbad68`. 원본 전체 SHA-256은 `SOURCE_SHA256` 및 oracle manifest에 고정한다.
 - `board`: rows/cols 1…64, row-major `cells`의 길이는 rows×cols. `null`은 빈칸, 나머지는 양의 `PieceId`. 크기 확장은 상태 표현용이며 다른 게임 모드 구현을 뜻하지 않는다.
 - `pieces`: ID 오름차순의 entity records. ID 중복/0/겹침/없는 참조 금지. anchor는 footprint 안에 있어야 하고 모든 칸은 보드 안이어야 한다. 각 footprint는 집합이며 row/col 순서로 정렬한다. 같은 entity는 정확히 한 번 serialize한다. 현재 위치에서 ID를 다시 만들지 않는다.
 - `origin`: 최초 생성/변신 위치. nullable. 기물의 `hp`/`max_hp`는 둘 다 null 또는 0 < hp ≤ max인 쌍이다. `statuses`는 중복 없는 정렬 집합이다. `cannot_capture_until_owner_turn`은 지정 owner의 완료 턴 counter를 기준으로 하며 owner가 entity owner와 일치해야 한다.
@@ -27,8 +27,40 @@
 - `pending_promotion`: null 또는 현재 플레이어의 마지막 rank 폰 ID. terminal/다른 소유자/비폰/마지막 rank 외 위치는 거절한다. 이동 뒤 선택을 직렬화하며 Promote 후 null이 된다.
 - `deathmatch`: null 또는 `{started_at_turn, half_turns_since_progress, interval_half_turns, progress_this_turn}`. 활성 상태만 객체로 표현한다. UI warning key는 제외한다. 흑 턴 완료 때만 +2하며, 폰 이동/포획은 progress를 표시하고 다음 흑 완료 때 해제한다. 만료는 side/full_move 전환보다 먼저 발생한다.
 
-기본 실행은 8×8, 여섯 기본 기물, 단일 칸 footprint, 양측 소유자, HP/shield 없음, actions_remaining=1, continuation 없음에 한정한다. 다른 표현 가능한 상태는 실행 시 Unsupported다. fresh-capture deadline은 승격 시 owner.completed+1로 기록하며 만료 후에도 원본처럼 보존한다. 승격은 origin도 승격 칸으로 갱신한다.
+기본 실행은 8×8, actions_remaining=1에 한정한다. 기본 기물과 현재 이식한 변형 기물은 `PHASE3_REPORT.md`를 따른다. 대형 기물은 anchor부터 오른쪽/아래의 정확한 2×2 footprint와 HP 쌍이 필요하다. 벽은 중립 소유자로도 배치할 수 있다. 일반 ExtraMove continuation은 아직 실행하지 않는다. 다른 표현 가능한 상태는 실행 시 Unsupported다. fresh-capture deadline은 승격 시 owner.completed+1로 기록하며 만료 후에도 원본처럼 보존한다. 승격은 origin도 승격 칸으로 갱신한다.
 
-앙파상은 실제 상대 폰 ID, 목표 칸과 available_to를 보존한다. cardless capability에서는 폰의 moved/두 칸 전진 도착 rank/목표 칸의 기하와 빈칸 여부를 검증한다. 왕 포획은 원본의 조기 반환을 보존하므로 착수자의 moved, 턴 카운터와 이전 앙파상 상태를 갱신하기 전에 종료할 수 있다. 제거된 entity를 가리키는 참조는 남기지 않는다.
+앙파상은 실제 폰 ID, 목표 칸과 전진 당시 반대 색인 available_to를 보존한다. 매수 후에는 현재 소유자가 전진 당시 색과 다를 수 있다. cardless capability에서는 폰의 moved/두 칸 전진 도착 rank/목표 칸의 기하를 검증한다. 통나무 자동 이동으로 목표 칸이 점유될 수 있다. 왕 포획은 원본의 조기 반환을 보존하므로 착수자의 moved, 턴 카운터와 이전 앙파상 상태를 갱신하기 전에 종료할 수 있다. 제거된 entity를 가리키는 참조는 남기지 않는다.
 
-스키마 v1에는 프로모션·데스매치·종료 설정이 없고 초기 반복 기록도 다르므로 자동 migration을 제공하지 않는다. `schema_version=1`은 Unsupported다. 규칙상 의미 없는 표시·기보·애니메이션, 비활성 카드용 누적 포획 이력은 이 cardless 계약에 포함하지 않으며, Phase 5에서 해당 이력이 필요한 카드를 추가할 때 모델을 확장해야 한다.
+스키마 v1에는 프로모션·데스매치·종료 설정이 없고 초기 반복 기록도 다르므로 자동 migration을 제공하지 않는다. `schema_version=1`과 `schema_version=2`는 Unsupported다. 규칙상 의미 없는 표시·기보·애니메이션, 비활성 카드용 누적 포획 이력은 이 cardless 계약에 포함하지 않으며, Phase 5에서 해당 이력이 필요한 카드를 추가할 때 모델을 확장해야 한다.
+
+
+## v3에 추가된 변형 기물 상태
+
+- `PieceKind`: 실제 이식된 식별자만 추가한다. 미구현 기물 식별자는 deserialize 오류다.
+- `Piece.windmill_mode`: `rook` 또는 생략. 입력의 명시적 `bishop`은 생략으로 정규화하며 의미는 비숍 모드다. 다른 기물에 모드를 지정하면 거절한다.
+- `Continuation::CheckerCapture {piece}`: 살아 있는 현재 플레이어 체커에 대한 강제 연속 잡기. 선택 종료 행동은 없다. move_count는 잡기마다 증가하지만 completed는 연쇄가 끝날 때 증가한다.
+- `Action::AttackSector {piece,sector}`: 거신병의 두 전방 섹터 중 하나를 공격한다. `sector=0`은 오른쪽, `1`은 왼쪽. 표시용 본체 클릭은 행동이 아니다. 같은 섹터 내 여러 UI 클릭을 하나의 행동으로 정규화한다.
+- 대형 entity의 네 칸은 하나의 PieceId다. 일반 HP 공격은 한 번에 HP 1을 줄이고 공격자는 움직이지 않는다. 대형 착지 포획은 HP 공격과 별도다.
+- 변신(폰 승격/종자/킹 체커)은 origin과 fresh deadline을 함께 갱신한다. 만료된 deadline도 원본처럼 보존한다.
+
+Phase 3은 진행 중이며 카드나 미래 기물의 필드는 미리 추가하지 않는다.
+
+- 전령 전용 `herald_jump_lock_turn`(optional u32), `herald_jump_locked`(false 생략)는 원본의 turn 기반 잠금과 legacy 잠금을 보존한다. 다른 기물에 설정하면 오류다. `herald_agreement`는 인접 왕에 의한 승리 이유다.
+- 징집관이 남기는 폰은 `ids.next_piece`를 할당하며 overflow 시 전체 행동을 거절한다. origin은 출발 칸, moved=false다. 원본이 누락한 공통 생성 턴 포획 금지는 owner.completed+1의 기존 fresh status로 적용한다.
+
+- 상인 전용 `gold`는 optional u32이며 생략 시 0으로 동작한다. 자기 턴 시작에 1 증가한다. `Purchase {merchant,target}`는 entity ID 두 개를 받으며 이동이나 일반 포획을 수행하지 않는다. 왕 매수는 `royal_purchase`로 즉시 종료한다. 매수된 기물의 fresh deadline은 보존하되 owner는 새 소유자로 바뀐다.
+
+- `shielded`는 이제 실행 상태다. 직접/앙파상 공격은 방패만 제거하고 공격자가 제자리에 남는다. 체커 점프는 방패를 제거하면서 착지한다. 대형 착지 포획과 섹터 공격은 원본의 별도 보호막 처리 경로를 따른다.
+
+- 마법사 전용 `mana`/`max_mana`는 optional u32, 기본 0/5이며 mana≤max_mana다. 아군 포획마다 상한까지 +1, 턴 시작 보급은 없다.
+- `CastSpell {wizard,spell,target}`는 lightning/shield/meteor/time_stop을 받는다. 메테오 target은 0…6의 좌상단, 보호는 아군 entity anchor, 시간 정지는 시전자 anchor로 표현한다.
+- `delayed_spells`는 등록 순서가 의미 있는 배열이며 빈 배열은 생략한다. 각 항목은 `{spell:lightning|meteor,anchor,owner,caster}`다. caster는 null 또는 이미 할당된 양의 ID이며 생존을 요구하지 않는다. owner의 상대가 행동을 완료하기 직전에 발동한다.
+- `time_stopped`는 중복 없는 색 집합이며 white/black 순으로 정렬하고 빈 집합은 생략한다. 시전 자체는 턴을 끝내지 않고, 다음 행동 후 상대 색의 예약을 소비해 completed/move_count 증가 및 지연 주문 발동 없이 같은 턴을 유지한다.
+
+- 통나무 전용 `log_direction`은 null/생략 또는 `{dr,dc}`이며 각 성분 -1…1, 둘 다 0은 금지다. `log_roll_after_turn`은 optional u32다. `SetLogDirection {piece,direction}`은 제자리에서 방향과 owner.completed+1의 deadline을 기록하고 턴을 끝낸다. 자동 이동은 시간 정지와 지연 주문보다 먼저 실행하며 경계/막힘/HP 충돌 때 방향과 deadline을 함께 지운다.
+
+- 샷건 킹은 단일 칸 footprint와 HP 쌍을 갖는 왕이다. HP가 0이 되면 포획한 색이 승리한다(아군 피해면 반대 색 승리). `ammo`/`max_ammo`는 optional u32, 기본 0/3이며 ammo≤max_ammo다. `facing`은 optional up/down/left/right다. 샷건 필드는 다른 타입에서 거절한다.
+- `Reload {piece}`, `ShotgunBlast {piece,direction:{dr,dc}}`, `ShotgunSnipe {piece,target}`를 지원한다. 이동은 빈 인접 칸만, 장전은 +1, 산탄/저격 비용은 각각 2/3이다. 산탄 방향은 보드 내 클릭으로 지정 가능한 8방향으로 한정한다. HP 피해는 기존 규칙처럼 1이다.
+- 샷건 킹이 존재하면 반복 position_counts를 갱신하지 않는다. 장기전 판정에서는 샷건 킹 소유자가 패배하며, 양쪽에 있으면 white가 패널티 대상이다. 카드 획득 이력에 의한 패널티는 Phase 5 범위다.
+
+- 빅룩 캐슬링도 기존 왕의 `Move`로 표현한다. 코너의 공유 ID로 빅룩을 찾고 새 2×2 footprint를 배치한다. 새 점유 칸의 아군은 entity 전체를 제거하지만 포획 효과를 발생시키지 않는다. 새 필드나 캐슬링 전용 Action은 필요하지 않다.

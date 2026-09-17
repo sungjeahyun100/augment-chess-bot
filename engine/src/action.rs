@@ -1,4 +1,6 @@
-use crate::{CardInstanceId, Color, PieceId, PieceKind, Square};
+use crate::{
+    CardInstanceId, Color, LogDirection, PieceId, PieceKind, ShotgunDirection, Square, WizardSpell,
+};
 use serde::{Deserialize, Serialize};
 
 /// Ordered targets and route are semantic input, not a sequence of UI clicks.
@@ -16,6 +18,34 @@ pub enum Action {
         from: Square,
         to: Square,
         route: Vec<Square>,
+    },
+    SetLogDirection {
+        piece: PieceId,
+        direction: LogDirection,
+    },
+    Reload {
+        piece: PieceId,
+    },
+    ShotgunBlast {
+        piece: PieceId,
+        direction: ShotgunDirection,
+    },
+    ShotgunSnipe {
+        piece: PieceId,
+        target: Square,
+    },
+    CastSpell {
+        wizard: PieceId,
+        spell: WizardSpell,
+        target: Square,
+    },
+    Purchase {
+        merchant: PieceId,
+        target: PieceId,
+    },
+    AttackSector {
+        piece: PieceId,
+        sector: u8,
     },
     Promote {
         piece: PieceId,

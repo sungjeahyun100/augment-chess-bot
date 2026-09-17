@@ -1,6 +1,6 @@
-# Augment Chess Rust core — Phase 2
+# Augment Chess Rust core — Phase 3 진행 중
 
-카드 없는 일반 8×8 증강체스를 브라우저 없이 실행한다. 기준은 `PORT_RUST_ENGINE.md`와 로컬 JS bundle이며, 구현 대응과 검증 범위는 `PHASE2_REPORT.md`에 기록한다.
+카드 없는 일반 8×8 증강체스를 브라우저 없이 실행한다. 기준은 `PORT_RUST_ENGINE.md`와 로컬 JS bundle이며, 구현 대응과 검증 범위는 `PHASE2_REPORT.md`와 `PHASE3_REPORT.md`에 기록한다.
 
 ```sh
 # 저장소 루트에서
@@ -11,6 +11,7 @@ node tools/phase1_oracle.cjs
 python3 tools/phase1_field_audit.py --check
 cargo build --offline --example oracle_bridge
 node tools/phase2_differential.cjs
+node tools/phase3_differential.cjs
 # 빠른 고정 시나리오만 실행
 PHASE2_SEEDS=0 node tools/phase2_differential.cjs
 ```
@@ -35,4 +36,4 @@ assert_eq!(state, restored);
 
 프로모션 칸으로 이동하면 `pending_promotion`을 저장하고 턴을 유지한다. `legal_actions()`는 네 가지 `Action::Promote`만 반환한다. 선택이 끝나면 한 턴을 완료한다. 기본 이동의 `route`는 빈 배열이어야 한다. 잘못된 행동이나 카운터 overflow는 원래 상태를 바꾸지 않는다. terminal에서 legal actions는 빈 목록, apply는 `Terminal` 오류다.
 
-`CanonicalState`는 공개 DTO다. `GameState::from_snapshot()` 또는 `from_canonical_json()`으로 검증하며, `snapshot()`은 독립 복사본이다. v2 스키마는 v1을 명시적으로 거절한다. 거신병·벽·HP·shield 등 기존 상태 표현은 유지하지만 그 상태에서 규칙 실행은 `Unsupported`다. 카드·변형 기물·드래프트·RULE·온라인 프로필·사이트 adapter는 후속 단계다.
+`CanonicalState`는 공개 DTO다. `GameState::from_snapshot()` 또는 `from_canonical_json()`으로 검증하며, `snapshot()`은 독립 복사본이다. v3 스키마는 v1/v2를 명시적으로 거절한다. 현재 이식한 변형 기물·거신병·빅룩·빅숍·벽은 직접 snapshot으로 배치하여 실행할 수 있다. 남은 변형 기물은 Phase 3에서 계속 구현한다. 카드·드래프트·RULE·온라인 프로필·사이트 adapter는 후속 단계다. 지원 목록과 제한은 `PHASE3_REPORT.md`를 확인한다.

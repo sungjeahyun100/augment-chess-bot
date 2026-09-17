@@ -2,7 +2,7 @@ use crate::*;
 use serde::{Deserialize, Serialize};
 use std::collections::BTreeSet;
 
-pub const SCHEMA_VERSION: u32 = 2;
+pub const SCHEMA_VERSION: u32 = 3;
 pub const SOURCE_SHA256: &str = "0dbbad680c6e8e2abcdb6e49817ff486aa2f8ef799a8035bd356baef8a2731ea";
 #[derive(Debug, Clone, Copy, PartialEq, Eq, Serialize, Deserialize)]
 pub enum RulesProfile {
@@ -13,7 +13,7 @@ pub enum RulesProfile {
 pub enum Capability {
     #[serde(rename = "phase1_state_only")]
     StateOnly,
-    #[serde(rename = "phase2_cardless")]
+    #[serde(rename = "phase3_cardless")]
     Cardless,
 }
 #[derive(Debug, Clone, PartialEq, Eq, Serialize, Deserialize)]
@@ -77,6 +77,7 @@ pub struct TurnState {
 #[serde(tag = "kind", rename_all = "snake_case", deny_unknown_fields)]
 pub enum Continuation {
     ExtraMove { piece: PieceId, optional: bool },
+    CheckerCapture { piece: PieceId },
 }
 #[derive(Debug, Clone, PartialEq, Eq, Serialize, Deserialize)]
 #[serde(tag = "kind", rename_all = "snake_case", deny_unknown_fields)]
@@ -100,6 +101,8 @@ pub enum GameResult {
 #[serde(rename_all = "snake_case")]
 pub enum EndReason {
     RoyalCapture,
+    HeraldAgreement,
+    RoyalPurchase,
     NoActions,
     RepetitionStars,
     TurnLimitStars,
@@ -156,6 +159,10 @@ pub struct CanonicalState {
     pub result: Option<GameResult>,
     pub pending_promotion: Option<PieceId>,
     pub deathmatch: Option<Deathmatch>,
+    #[serde(default, skip_serializing_if = "Vec::is_empty")]
+    pub delayed_spells: Vec<DelayedSpell>,
+    #[serde(default, skip_serializing_if = "Vec::is_empty")]
+    pub time_stopped: Vec<Color>,
 }
 
 /// Validated core. No writable references, global state, clocks, or I/O.
@@ -241,14 +248,20 @@ impl GameState {
             result: None,
             pending_promotion: None,
             deathmatch: None,
+            delayed_spells: vec![],
+            time_stopped: vec![],
         })?;
         crate::victory::record_position(&mut game.snapshot)?;
         Ok(game)
     }
     pub fn from_snapshot(mut snapshot: CanonicalState) -> EngineResult<Self> {
         Self::validate_snapshot(&snapshot)?;
+        snapshot.time_stopped.sort();
         snapshot.pieces.sort_by_key(|p| p.id);
         for piece in &mut snapshot.pieces {
+            if piece.windmill_mode == Some(WindmillMode::Bishop) {
+                piece.windmill_mode = None;
+            }
             piece.footprint.sort();
             piece.statuses.sort();
         }
@@ -265,6 +278,9 @@ impl GameState {
         s.config.validate()?;
         s.board.validate(&s.pieces)?;
         s.chance.validate()?;
+        crate::wizard::validate(s)?;
+        crate::log::validate(s)?;
+        crate::shotgun::validate(s)?;
         if s.ids.next_piece == 0
             || s.ids.next_card == 0
             || s.ids.next_effect == 0
@@ -273,6 +289,17 @@ impl GameState {
             return Err(invalid("allocator must exceed all allocated IDs"));
         }
         for p in &s.pieces {
+            if p.gold.is_some() && p.kind != PieceKind::Merchant {
+                return Err(invalid("gold on a non-merchant"));
+            }
+            if (p.herald_jump_lock_turn.is_some() || p.herald_jump_locked)
+                && p.kind != PieceKind::Herald
+            {
+                return Err(invalid("herald jump state on a different piece"));
+            }
+            if p.windmill_mode.is_some() && p.kind != PieceKind::Windmill {
+                return Err(invalid("windmill mode on a different piece"));
+            }
             match (p.hp, p.max_hp) {
                 (None, None) => {}
                 (Some(hp), Some(max)) if hp > 0 && hp <= max => {}
@@ -315,12 +342,22 @@ impl GameState {
         if matches!(s.phase, Phase::Terminal) != s.result.is_some() {
             return Err(invalid("terminal phase/result mismatch"));
         }
-        if let Some(Continuation::ExtraMove { piece, .. }) = s.turn.continuation {
+        if let Some(
+            Continuation::ExtraMove { piece, .. } | Continuation::CheckerCapture { piece },
+        ) = s.turn.continuation
+        {
             let p = s
                 .pieces
                 .iter()
                 .find(|p| p.id == piece)
                 .ok_or_else(|| invalid("unknown continuation piece"))?;
+            if matches!(
+                s.turn.continuation,
+                Some(Continuation::CheckerCapture { .. })
+            ) && !matches!(p.kind, PieceKind::Checker | PieceKind::CheckerKing)
+            {
+                return Err(invalid("checker continuation requires a checker"));
+            }
             if p.owner != Owner::from(s.turn.side) || s.result.is_some() {
                 return Err(invalid("invalid continuation owner/phase"));
             }
@@ -332,13 +369,15 @@ impl GameState {
                 .find(|p| p.id == ep.pawn)
                 .ok_or_else(|| invalid("unknown en passant pawn"))?;
             if p.kind != PieceKind::Pawn
-                || p.owner != Owner::from(ep.available_to.opponent())
+                || p.owner == Owner::Neutral
                 || !s.board.contains(ep.target)
             {
                 return Err(invalid("invalid en passant reference"));
             }
             if s.capability == Capability::Cardless {
-                let expected_row = match p.owner {
+                // Purchase changes ownership, but the recorded double-step color remains.
+                let advanced_owner = Owner::from(ep.available_to.opponent());
+                let expected_row = match advanced_owner {
                     Owner::White => p.anchor.row.checked_add(1),
                     Owner::Black => p.anchor.row.checked_sub(1),
                     Owner::Neutral => None,
@@ -346,8 +385,7 @@ impl GameState {
                 if expected_row != Some(ep.target.row)
                     || ep.target.col != p.anchor.col
                     || !p.moved
-                    || s.board.at(ep.target)?.is_some()
-                    || !match p.owner {
+                    || !match advanced_owner {
                         Owner::White => [4, 5].contains(&p.anchor.row),
                         Owner::Black => [2, 3].contains(&p.anchor.row),
                         Owner::Neutral => false,
@@ -364,7 +402,7 @@ impl GameState {
                 .find(|p| p.id == id)
                 .ok_or_else(|| invalid("unknown promotion piece"))?;
             if s.result.is_some()
-                || p.kind != PieceKind::Pawn
+                || !p.kind.pawn_mover()
                 || p.owner != Owner::from(s.turn.side)
                 || p.anchor.row
                     != if s.turn.side == Color::White {
@@ -457,7 +495,7 @@ impl GameState {
         crate::movement::ensure_supported(&self.snapshot)?;
         Ok(self.pieces().iter().any(|p| {
             p.owner == Owner::from(color)
-                && p.kind == PieceKind::King
+                && p.kind.royal()
                 && crate::movement::attacked(&self.snapshot, p.anchor, color.opponent())
         }))
     }

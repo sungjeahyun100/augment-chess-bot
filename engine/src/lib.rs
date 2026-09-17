@@ -2,12 +2,21 @@
 #![forbid(unsafe_code)]
 mod action;
 mod board;
+mod castling;
 mod chance;
+mod effects;
+mod large;
+mod log;
+mod merchant;
 mod movement;
+mod shotgun;
 mod state;
 mod transition;
 mod types;
+mod variants;
 mod victory;
+mod wizard;
+pub use wizard::{DelayedSpell, DelayedSpellKind, WizardSpell};
 
 pub use action::*;
 pub use board::*;

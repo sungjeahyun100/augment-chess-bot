@@ -217,8 +217,8 @@ fn malformed_external_states_are_rejected() {
     }
     let text = game().to_canonical_json().unwrap();
     let duplicated = text.replacen(
-        "\"schema_version\":2",
-        "\"schema_version\":2,\"schema_version\":2",
+        "\"schema_version\":3",
+        "\"schema_version\":3,\"schema_version\":3",
         1,
     );
     assert!(GameState::from_canonical_json(&duplicated).is_err());
@@ -440,9 +440,9 @@ fn noncanonical_object_keys_and_footprints_normalize() {
     let initial = game();
     let text = initial.to_canonical_json().unwrap();
     let reordered = format!(
-        "{{\"schema_version\":2,{}",
+        "{{\"schema_version\":3,{}",
         text.trim_start_matches('{')
-            .replace("\"schema_version\":2,", "")
+            .replace("\"schema_version\":3,", "")
     );
     assert_eq!(
         GameState::from_canonical_json(&reordered)

@@ -72,7 +72,7 @@ function load(ctx, input) {
     state.positionCounts=new Map(input.history.position_counts.map(e=>[e.key,e.count]));
     const ep=input.history.en_passant;
     const pawn=ep&&input.pieces.find(p=>p.id===ep.pawn);
-    state.enPassant=ep?{row:ep.target.row,col:ep.target.col,capturedRow:pawn.anchor.row,capturedCol:pawn.anchor.col,color:pawn.owner}:null;
+    state.enPassant=ep?{row:ep.target.row,col:ep.target.col,capturedRow:pawn.anchor.row,capturedCol:pawn.anchor.col,color:ep.available_to==='white'?'black':'white'}:null;
     state.starWinLimit=input.config.star_win_limit; state.deathmatchEnabled=input.config.deathmatch_enabled;
     state.deathmatchLimitTurns=input.config.deathmatch_limit_turns;
     const dm=input.deathmatch;
@@ -166,7 +166,7 @@ function manifest() {
     comparison:'full phase2 canonical state, legal action sets, and both king threat queries; JS state retained across each sequence',
   };
 }
-module.exports={oracle,createSession,starFixtures,manifest};
+module.exports={oracle,createSession,starFixtures,manifest,functionSource:name=>functions.get(name),makeContext,load,project,actions,plain,run,constant};
 if(require.main===module){
   if(process.argv.includes('--write-fixtures')){
     fs.writeFileSync(path.join(ROOT,'engine/tests/fixtures/js_star_tiebreak.json'),JSON.stringify(starFixtures(),null,2)+'\n');

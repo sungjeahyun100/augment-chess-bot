@@ -15,22 +15,22 @@ pub(crate) fn position_key(s: &CanonicalState) -> String {
     let mut pieces: Vec<_> = s
         .pieces
         .iter()
+        .filter(|p| p.kind != PieceKind::Wall)
         .map(|p| {
             let owner = match p.owner {
                 Owner::White => "white",
                 Owner::Black => "black",
                 Owner::Neutral => "neutral",
             };
-            let kind = match p.kind {
-                PieceKind::Pawn => "pawn",
-                PieceKind::Knight => "knight",
-                PieceKind::Bishop => "bishop",
-                PieceKind::Rook => "rook",
-                PieceKind::Queen => "queen",
-                PieceKind::King => "king",
-                _ => unreachable!(),
-            };
-            format!("{},{}:{owner}:{kind}:::0", p.anchor.row, p.anchor.col)
+            let kind = serde_json::to_value(p.kind).expect("piece identifier");
+            let kind = kind.as_str().expect("piece string identifier");
+            format!(
+                "{},{}:{owner}:{kind}:{}:{}:0",
+                p.anchor.row,
+                p.anchor.col,
+                p.hp.map(|hp| hp.to_string()).unwrap_or_default(),
+                p.ammo.map(|ammo| ammo.to_string()).unwrap_or_default()
+            )
         })
         .collect();
     pieces.sort();
@@ -73,6 +73,20 @@ pub fn star_tiebreak(stars: Sides<u32>, reason: EndReason) -> GameResult {
     }
 }
 fn stars(s: &mut CanonicalState, reason: EndReason) {
+    if let Some(color) = [Color::White, Color::Black].into_iter().find(|c| {
+        s.pieces
+            .iter()
+            .any(|p| p.owner == (*c).into() && p.kind == PieceKind::ShotgunKing)
+    }) {
+        finish(
+            s,
+            GameResult::Win {
+                winner: color.opponent(),
+                reason,
+            },
+        );
+        return;
+    }
     // Phase 2 has empty decks. Card instances will provide totals in Phase 5.
     finish(s, star_tiebreak(Sides { white: 0, black: 0 }, reason));
 }
@@ -85,7 +99,27 @@ pub(crate) fn mark_progress(s: &mut CanonicalState) {
     }
 }
 pub(crate) fn end_turn(s: &mut CanonicalState) -> EngineResult<()> {
+    if herald_agreement(s) {
+        return Ok(());
+    }
     let moving = s.turn.side;
+    crate::log::advance(s)?;
+    if herald_agreement(s) {
+        return Ok(());
+    }
+    if let Some(index) = s
+        .time_stopped
+        .iter()
+        .position(|color| *color == moving.opponent())
+    {
+        s.time_stopped.remove(index);
+        s.history.en_passant = None;
+        return Ok(());
+    }
+    crate::wizard::resolve_delayed(s)?;
+    if herald_agreement(s) {
+        return Ok(());
+    }
     increment(&mut s.turn.move_count)?;
     if *s.turn.completed.get(moving) == 0 {
         s.players.get_mut(moving).first_move_cards_forced = true;
@@ -111,7 +145,8 @@ pub(crate) fn end_turn(s: &mut CanonicalState) -> EngineResult<()> {
     }
     s.players.get_mut(moving).cards_used_this_turn = 0;
     s.turn.side = moving.opponent();
-    if record_position(s)? >= 3 {
+    crate::merchant::grant_gold(s)?;
+    if !s.pieces.iter().any(|p| p.kind == PieceKind::ShotgunKing) && record_position(s)? >= 3 {
         stars(s, EndReason::RepetitionStars);
         return Ok(());
     }
@@ -139,4 +174,39 @@ pub(crate) fn end_turn(s: &mut CanonicalState) -> EngineResult<()> {
         );
     }
     Ok(())
+}
+
+/// Reference checks the actor first, then the opponent, even for fresh heralds.
+pub(crate) fn herald_agreement(s: &mut CanonicalState) -> bool {
+    if s.result.is_some() {
+        return true;
+    }
+    for color in [s.turn.side, s.turn.side.opponent()] {
+        let won = s
+            .pieces
+            .iter()
+            .filter(|p| p.owner == Owner::from(color) && p.kind == PieceKind::Herald)
+            .any(|p| {
+                s.pieces.iter().any(|q| {
+                    q.owner == Owner::from(color.opponent())
+                        && q.kind.defeat_royal()
+                        && p.anchor
+                            .row
+                            .abs_diff(q.anchor.row)
+                            .max(p.anchor.col.abs_diff(q.anchor.col))
+                            == 1
+                })
+            });
+        if won {
+            finish(
+                s,
+                GameResult::Win {
+                    winner: color,
+                    reason: EndReason::HeraldAgreement,
+                },
+            );
+            return true;
+        }
+    }
+    false
 }

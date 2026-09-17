@@ -1,7 +1,7 @@
 {
-  "checks": 10728,
-  "decisions": 10560,
-  "seeds": 100,
+  "checks": 126,
+  "decisions": 58,
+  "seeds": 0,
   "max_decisions": 200,
   "named_scenarios": [
     "initial-e4",
