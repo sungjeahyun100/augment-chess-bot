@@ -36,6 +36,12 @@ pub struct Sides<T> {
     pub black: T,
 }
 impl<T> Sides<T> {
+    pub fn get_mut(&mut self, color: Color) -> &mut T {
+        match color {
+            Color::White => &mut self.white,
+            Color::Black => &mut self.black,
+        }
+    }
     pub fn get(&self, color: Color) -> &T {
         match color {
             Color::White => &self.white,
@@ -60,7 +66,7 @@ impl Square {
         Self { row, col }
     }
 }
-/// Only represented kinds. Movement and abilities are not implemented yet.
+/// Standard pieces have Phase 2 movement; variant entities remain state-only.
 #[derive(Debug, Clone, Copy, PartialEq, Eq, Serialize, Deserialize)]
 #[serde(rename_all = "camelCase")]
 pub enum PieceKind {

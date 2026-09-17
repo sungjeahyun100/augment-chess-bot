@@ -2,7 +2,7 @@
 
 ## 현재 진행 상태
 
-2026-09-18: Phase 1 core skeleton 완료. Rust 구현은 `engine/`, 초기화 JS oracle은 `tools/phase1_oracle.cjs`, 상태 audit는 `analysis/PHASE1_STATE_MAPPING.md`, 실행 결과와 미포팅 경계는 `PHASE1_REPORT.md`에 기록했다. legal actions/착수 실행은 아직 Unsupported이며 다음 구현 단계는 Phase 2다. 아래 Phase 0 완료/한계는 당시 분석 기준 기록이다.
+2026-09-18: Phase 2 카드 없는 기본 규칙 완료. `engine/`에서 행마·착수·프로모션·턴·종료를 실행하며 canonical v2를 사용한다. Rust 테스트 27개, JS와 고정 68개 시나리오 및 100 seeds 무작위 대국(총 10,560개 전이, 10,728개 상태 비교)이 통과했다. 대응/검증/미포팅 경계는 `PHASE2_REPORT.md`, `analysis/PHASE2_STATE_MAPPING.md`에 기록했다. 다음 단계는 Phase 3 변형 기물이다. Phase 1 기록과 아래 Phase 0 분석은 당시 경계에 대한 역사적 기록이다.
 
 ## 기준과 범위
 
@@ -147,6 +147,6 @@ reference 실행기는 UI/AI 정책과 분리한 진짜 규칙 경로를 사용�
 
 ## 다음 구현 착수 조건
 
-Phase 1의 초기화 oracle, 보수적 필드 audit, validated Rust state/canonical/chance 경계는 구현했다. 다음 작업은 Phase 2A다. 먼저 JS 기물 generator와 필요한 의존성을 제한적으로 추출해 카드 없는 기본 이동/직접 포획의 action set 및 전이 fixture를 확보한다. 현재 initial projection fixture를 전체 게임 differential로 확대 해석하지 않는다.
+Phase 2A–2D와 JS 실행 differential을 완료했다. 다음 작업은 Phase 3의 변형 기물이다. 현재 cardless canonical/differential 경계를 유지하면서 기물별 원본 generator/전이 및 필요한 entity 속성을 순차 추가하고 각 기물에 테스트를 작성한다. 현재 결과를 카드·RULE·온라인 프로필까지의 전체 게임 호환성으로 확대 해석하지 않는다.
 
 각 Phase 2 상태 전이에 필요한 의미 필드는 audit의 deferred 항목에서 꺼내 canonical schema에 추가하고 기존 상태의 migration 또는 버전 거절 계약을 갱신한다. 매 단계의 완료 보고에는 구현한 ID/JS 대응/실행한 테스트/미포팅 목록/버그·모호성 결정을 함께 남긴다.

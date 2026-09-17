@@ -2,7 +2,7 @@ use crate::*;
 use serde::{Deserialize, Serialize};
 use std::collections::BTreeSet;
 
-pub const SCHEMA_VERSION: u32 = 1;
+pub const SCHEMA_VERSION: u32 = 2;
 pub const SOURCE_SHA256: &str = "0dbbad680c6e8e2abcdb6e49817ff486aa2f8ef799a8035bd356baef8a2731ea";
 #[derive(Debug, Clone, Copy, PartialEq, Eq, Serialize, Deserialize)]
 pub enum RulesProfile {
@@ -13,6 +13,8 @@ pub enum RulesProfile {
 pub enum Capability {
     #[serde(rename = "phase1_state_only")]
     StateOnly,
+    #[serde(rename = "phase2_cardless")]
+    Cardless,
 }
 #[derive(Debug, Clone, PartialEq, Eq, Serialize, Deserialize)]
 #[serde(deny_unknown_fields)]
@@ -20,6 +22,9 @@ pub struct GameConfig {
     pub rules_profile: RulesProfile,
     pub draft_enabled: bool,
     pub opening_rules_enabled: bool,
+    pub star_win_limit: u32,
+    pub deathmatch_enabled: bool,
+    pub deathmatch_limit_turns: u32,
 }
 impl GameConfig {
     /// Explicit cardless setup; does not pretend to implement the website defaults.
@@ -28,9 +33,18 @@ impl GameConfig {
             rules_profile: RulesProfile::LocalReference,
             draft_enabled: false,
             opening_rules_enabled: false,
+            star_win_limit: 45,
+            deathmatch_enabled: true,
+            deathmatch_limit_turns: 10,
         }
     }
     fn validate(&self) -> EngineResult<()> {
+        if self.star_win_limit == 0
+            || self.deathmatch_limit_turns == 0
+            || self.deathmatch_limit_turns > u32::MAX / 2
+        {
+            return Err(invalid("invalid endgame limits"));
+        }
         if self.draft_enabled {
             return Err(EngineError::Unsupported("draft generation (Phase 6)"));
         }
@@ -140,12 +154,14 @@ pub struct CanonicalState {
     pub chance: ChanceState,
     pub ids: IdAllocators,
     pub result: Option<GameResult>,
+    pub pending_promotion: Option<PieceId>,
+    pub deathmatch: Option<Deathmatch>,
 }
 
 /// Validated core. No writable references, global state, clocks, or I/O.
 #[derive(Debug, Clone, PartialEq, Eq)]
 pub struct GameState {
-    snapshot: CanonicalState,
+    pub(crate) snapshot: CanonicalState,
 }
 impl GameState {
     pub fn new(config: GameConfig, seed: u64) -> EngineResult<Self> {
@@ -184,9 +200,9 @@ impl GameState {
             cards_used_this_turn: 0,
             first_move_cards_forced: false,
         };
-        Self::from_snapshot(CanonicalState {
+        let mut game = Self::from_snapshot(CanonicalState {
             schema_version: SCHEMA_VERSION,
-            capability: Capability::StateOnly,
+            capability: Capability::Cardless,
             config,
             board: Board::from_pieces(8, 8, &pieces)?,
             pieces,
@@ -223,7 +239,11 @@ impl GameState {
                 next_effect: 1,
             },
             result: None,
-        })
+            pending_promotion: None,
+            deathmatch: None,
+        })?;
+        crate::victory::record_position(&mut game.snapshot)?;
+        Ok(game)
     }
     pub fn from_snapshot(mut snapshot: CanonicalState) -> EngineResult<Self> {
         Self::validate_snapshot(&snapshot)?;
@@ -317,6 +337,52 @@ impl GameState {
             {
                 return Err(invalid("invalid en passant reference"));
             }
+            if s.capability == Capability::Cardless {
+                let expected_row = match p.owner {
+                    Owner::White => p.anchor.row.checked_add(1),
+                    Owner::Black => p.anchor.row.checked_sub(1),
+                    Owner::Neutral => None,
+                };
+                if expected_row != Some(ep.target.row)
+                    || ep.target.col != p.anchor.col
+                    || !p.moved
+                    || s.board.at(ep.target)?.is_some()
+                    || !match p.owner {
+                        Owner::White => [4, 5].contains(&p.anchor.row),
+                        Owner::Black => [2, 3].contains(&p.anchor.row),
+                        Owner::Neutral => false,
+                    }
+                {
+                    return Err(invalid("invalid cardless en passant geometry"));
+                }
+            }
+        }
+        if let Some(id) = s.pending_promotion {
+            let p = s
+                .pieces
+                .iter()
+                .find(|p| p.id == id)
+                .ok_or_else(|| invalid("unknown promotion piece"))?;
+            if s.result.is_some()
+                || p.kind != PieceKind::Pawn
+                || p.owner != Owner::from(s.turn.side)
+                || p.anchor.row
+                    != if s.turn.side == Color::White {
+                        0
+                    } else {
+                        s.board.rows() - 1
+                    }
+            {
+                return Err(invalid("invalid pending promotion"));
+            }
+        }
+        if let Some(dm) = &s.deathmatch {
+            if !s.config.deathmatch_enabled
+                || dm.interval_half_turns == 0
+                || dm.half_turns_since_progress > dm.interval_half_turns
+            {
+                return Err(invalid("invalid deathmatch state"));
+            }
         }
         let mut keys = BTreeSet::new();
         if s.history
@@ -369,30 +435,31 @@ impl GameState {
         self.snapshot.result.as_ref()
     }
     pub fn legal_actions(&self) -> EngineResult<Vec<Action>> {
-        if self.is_terminal() {
-            return Ok(vec![]);
-        }
-        Err(EngineError::Unsupported("move generation (Phase 2)"))
+        crate::movement::legal_actions(&self.snapshot)
     }
-    /// Until Phase 2 every action fails without mutation. Empty legal actions must
-    /// never be mistaken for a no-action loss on an unsupported ongoing position.
+    /// Validate first, resolve on a clone, and commit only a valid complete result.
     pub fn apply_action(&mut self, action: Action) -> EngineResult<()> {
         if self.is_terminal() {
             return Err(EngineError::Terminal);
         }
-        if let Action::Move { from, to, route } = &action {
-            if !self.board().contains(*from)
-                || !self.board().contains(*to)
-                || route.iter().any(|s| !self.board().contains(*s))
-            {
-                return Err(EngineError::InvalidAction("square out of bounds".into()));
-            }
-            let p = self.board().at(*from)?.and_then(|id| self.piece(id));
-            if from == to || p.is_none_or(|p| p.owner != Owner::from(self.side_to_move())) {
-                return Err(EngineError::InvalidAction("invalid source/target".into()));
-            }
+        if !self.legal_actions()?.contains(&action) {
+            return Err(EngineError::InvalidAction(
+                "action is not legal in this state".into(),
+            ));
         }
-        Err(EngineError::Unsupported("action execution (Phase 2+)"))
+        let mut next = self.snapshot.clone();
+        crate::transition::apply(&mut next, action)?;
+        *self = Self::from_snapshot(next)?;
+        Ok(())
+    }
+    /// Threat information is advisory; it does not filter ordinary moves.
+    pub fn is_in_check(&self, color: Color) -> EngineResult<bool> {
+        crate::movement::ensure_supported(&self.snapshot)?;
+        Ok(self.pieces().iter().any(|p| {
+            p.owner == Owner::from(color)
+                && p.kind == PieceKind::King
+                && crate::movement::attacked(&self.snapshot, p.anchor, color.opponent())
+        }))
     }
     /// Sorted object keys, compact UTF-8 JSON, no floats; ordered arrays preserved.
     pub fn to_canonical_json(&self) -> EngineResult<String> {
@@ -408,4 +475,13 @@ impl GameState {
             serde_json::from_str(json).map_err(|e| EngineError::Serialization(e.to_string()))?;
         Self::from_snapshot(snapshot)
     }
+}
+
+#[derive(Debug, Clone, PartialEq, Eq, Serialize, Deserialize)]
+#[serde(deny_unknown_fields)]
+pub struct Deathmatch {
+    pub started_at_turn: u32,
+    pub half_turns_since_progress: u32,
+    pub interval_half_turns: u32,
+    pub progress_this_turn: bool,
 }

@@ -1,0 +1,44 @@
+[
+  {
+    "stars": {
+      "white": 0,
+      "black": 0
+    },
+    "result": {
+      "kind": "draw",
+      "reason": "repetition_stars"
+    }
+  },
+  {
+    "stars": {
+      "white": 3,
+      "black": 4
+    },
+    "result": {
+      "kind": "win",
+      "winner": "white",
+      "reason": "repetition_stars"
+    }
+  },
+  {
+    "stars": {
+      "white": 4,
+      "black": 3
+    },
+    "result": {
+      "kind": "win",
+      "winner": "black",
+      "reason": "repetition_stars"
+    }
+  },
+  {
+    "stars": {
+      "white": 3,
+      "black": 3
+    },
+    "result": {
+      "kind": "draw",
+      "reason": "repetition_stars"
+    }
+  }
+]

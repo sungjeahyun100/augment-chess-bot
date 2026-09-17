@@ -1,16 +1,20 @@
-//! Phase 1: validated state and replay boundaries. Move generation is Phase 2.
+//! Deterministic cardless augment-chess rules with validated replay boundaries.
 #![forbid(unsafe_code)]
 mod action;
 mod board;
 mod chance;
+mod movement;
 mod state;
+mod transition;
 mod types;
+mod victory;
 
 pub use action::*;
 pub use board::*;
 pub use chance::*;
 pub use state::*;
 pub use types::*;
+pub use victory::star_tiebreak;
 
 #[derive(Debug, Clone, PartialEq, Eq)]
 pub enum EngineError {

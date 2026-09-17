@@ -152,7 +152,7 @@ fn sets_normalize_and_semantic_array_order_is_preserved() {
 fn malformed_external_states_are_rejected() {
     let base: Value = serde_json::from_str(&game().to_canonical_json().unwrap()).unwrap();
     let cases: Vec<(&str, Value)> = vec![
-        ("/schema_version", json!(2)),
+        ("/schema_version", json!(999)),
         ("/config/rules_profile", json!("online_v1")),
         ("/board/rows", json!(0)),
         ("/board/cols", json!(65)),
@@ -217,8 +217,8 @@ fn malformed_external_states_are_rejected() {
     }
     let text = game().to_canonical_json().unwrap();
     let duplicated = text.replacen(
-        "\"schema_version\":1",
-        "\"schema_version\":1,\"schema_version\":1",
+        "\"schema_version\":2",
+        "\"schema_version\":2,\"schema_version\":2",
         1,
     );
     assert!(GameState::from_canonical_json(&duplicated).is_err());
@@ -257,10 +257,7 @@ fn neutral_entities_and_capture_deadline_roundtrip() {
 fn queries_and_all_rejected_actions_are_non_mutating() {
     let mut g = game();
     let before = g.to_canonical_json().unwrap();
-    assert!(matches!(
-        g.legal_actions(),
-        Err(EngineError::Unsupported(_))
-    ));
+    assert_eq!(g.legal_actions().unwrap().len(), 20);
     assert!(!g.is_terminal());
     assert_eq!(g.result(), None);
     assert_eq!(g.side_to_move(), Color::White);
@@ -271,7 +268,11 @@ fn queries_and_all_rejected_actions_are_non_mutating() {
         }
     );
     let actions = vec![
-        move_action(),
+        Action::Move {
+            from: Square::new(6, 4),
+            to: Square::new(3, 4),
+            route: vec![],
+        },
         Action::Move {
             from: Square::new(90, 0),
             to: Square::new(0, 0),
@@ -439,9 +440,9 @@ fn noncanonical_object_keys_and_footprints_normalize() {
     let initial = game();
     let text = initial.to_canonical_json().unwrap();
     let reordered = format!(
-        "{{\"schema_version\":1,{}",
+        "{{\"schema_version\":2,{}",
         text.trim_start_matches('{')
-            .replace("\"schema_version\":1,", "")
+            .replace("\"schema_version\":2,", "")
     );
     assert_eq!(
         GameState::from_canonical_json(&reordered)
