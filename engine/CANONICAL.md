@@ -15,7 +15,7 @@
 
 출력은 compact UTF-8 JSON, 재귀적으로 알파벳순 object key, 정수만 사용한다. enum은 안정적인 문자열 이름을 쓴다. 구현은 serde_json의 기본 BTreeMap object ordering에 의존하므로 `preserve_order` 기능을 활성화하지 않는다. `pieces`/footprint/status/repetition 같은 집합만 정렬하고 카드 슬롯, chance outcome, action route/target 등 순서가 의미 있는 배열은 그대로 둔다. JSON object 입력 순서는 무관하다. Option 필드의 누락은 null로 정규화하고, 그 외 필수 필드 누락 및 모든 미지 필드를 거절한다. 중복 struct key도 오류다.
 
-정규화 대상은 같은 entity ID를 사용하는 의미상 동등 상태다. 서로 다른 ID 배정의 상태를 graph-isomorphism으로 같게 만들지는 않는다. JS fixture는 생성 순서의 단일 ID mapping을 모든 cell/entity 참조에 적용한다. 캐시/DOM/표시 로그는 포함하지 않는다. 카드, 포획 이력, 예약 effect, rollback, terrain 등 아직 모델링하지 않은 실제 규칙 상태는 이 스키마로 가져올 수 없다. 이를 임의의 빈 배열로 대체하여 호환성을 주장하지 않는다.
+정규화 대상은 같은 entity ID를 사용하는 의미상 동등 상태다. 서로 다른 ID 배정의 상태를 graph-isomorphism으로 같게 만들지는 않는다. JS fixture는 생성 순서의 단일 ID mapping을 모든 cell/entity 참조에 적용한다. 캐시/DOM/표시 로그는 포함하지 않는다. 카드, 포획 이력, 곰 이외의 예약 effect, rollback, terrain 등 아직 모델링하지 않은 실제 규칙 상태는 이 스키마로 가져올 수 없다. 이를 임의의 빈 배열로 대체하여 호환성을 주장하지 않는다.
 
 불변식 검사는 **구조적 일관성**을 보장한다. 외부 snapshot이 실제 합법 행동으로 도달 가능한 상태인지 증명하거나, terminal 결과가 실제 규칙에 맞는지 재판정하지는 않는다. 새 행동 이후의 판정은 실행 엔진의 책임이다.
 
@@ -64,3 +64,10 @@ Phase 3은 진행 중이며 카드나 미래 기물의 필드는 미리 추가�
 - 샷건 킹이 존재하면 반복 position_counts를 갱신하지 않는다. 장기전 판정에서는 샷건 킹 소유자가 패배하며, 양쪽에 있으면 white가 패널티 대상이다. 카드 획득 이력에 의한 패널티는 Phase 5 범위다.
 
 - 빅룩 캐슬링도 기존 왕의 `Move`로 표현한다. 코너의 공유 ID로 빅룩을 찾고 새 2×2 footprint를 배치한다. 새 점유 칸의 아군은 entity 전체를 제거하지만 포획 효과를 발생시키지 않는다. 새 필드나 캐슬링 전용 Action은 필요하지 않다.
+
+- 곰/고슴도치 전용 `bear_retaliations_remaining`은 0…2, `bear_move_locked_until_turn`은 owner completed 기준 deadline이다. 이동 잠금 중 곰의 퀸 위협은 유지하고 고슴도치의 킹 위협은 억제한다.
+- `pending_bear_retaliations`는 순서가 의미 있는 배열이며 빈 배열은 생략한다. 각 항목은 포획된 곰 또는 고슴도치 entity clone, 공격자 ID/색, 포획자 색, 피포획 칸, 포획 시 공격자 위치와 감소한 잔여 횟수를 보존한다. 해당 공격자 색의 행동 종료 또는 즉시 공격 경로에서 처리하며 공격자를 HP/방패와 무관하게 entity 전체 제거한다. 복귀 칸이 막히면 피포획 칸을 사용하고 둘 다 막히면 반격 기물은 복귀하지 않는다.
+- 대형 기물 착지는 원본의 처리 순서 때문에 곰/고슴도치 반격의 최종 효과가 남지 않는다. 이 경로는 대기열을 만들지 않는다. 거신병 섹터 공격은 일반 즉시 반격 경로를 따른다.
+- 캠프파이어는 별도 상태 필드가 없다. 현재 board에서 같은 색 캠프파이어와 직교 인접한 footprint를 조회해 왕 계열이 아닌 아군 entity의 포획을 막는다.
+- 랍스터는 별도 상태 없이 소유자 방향의 바로 앞 세 칸으로 이동·포획한다. 카드의 지연 소환 예약은 이 cardless 계약에 포함하지 않는다.
+- 슬라임은 직교 방향으로 정확히 세 칸을 뛰며 중간 점유는 보지 않는다. 이동할 때 `ids.next_piece`로 출발 칸에 새 슬라임을 할당하고 moved=true, origin=출발 칸, owner.completed+1의 기존 포획 잠금 status를 설정한다. allocator overflow는 행동 전체를 거절한다.

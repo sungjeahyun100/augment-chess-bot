@@ -195,6 +195,7 @@ pub(crate) fn apply(s: &mut CanonicalState, action: &Action) -> EngineResult<boo
                 if target.hp.is_some() {
                     damage(s, target.id, s.turn.side)?;
                 } else {
+                    let armed = crate::bear::arm(s, &target, target.anchor, &moving, s.turn.side);
                     crate::wizard::remove(s, target.id);
                     mark_progress(s);
                     crate::transition::rebuild(s)?;
@@ -207,6 +208,12 @@ pub(crate) fn apply(s: &mut CanonicalState, action: &Action) -> EngineResult<boo
                             },
                         );
                         break;
+                    }
+                    if armed {
+                        crate::bear::resolve(s, s.turn.side, Some(moving.id))?;
+                        if !s.pieces.iter().any(|p| p.id == moving.id) {
+                            break;
+                        }
                     }
                 }
                 if s.result.is_some() {

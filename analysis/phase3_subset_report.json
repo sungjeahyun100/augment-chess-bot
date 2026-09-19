@@ -2,16 +2,30 @@
   "schema_version": 3,
   "source_sha256": "0dbbad680c6e8e2abcdb6e49817ff486aa2f8ef799a8035bd356baef8a2731ea",
   "scope": [
-    "primeMinister",
-    "royalKnight"
+    "slime"
   ],
   "intentional_corrections": [
     "recruiter_spawn_fresh_status"
   ],
   "sequences": [
+    "prime-minister-blocked",
+    "prime-minister-detour",
     "capture-royal-knight",
     "assassin-royal-knight",
     "herald-royal-knight",
+    "missionary-converts",
+    "missionary-royal",
+    "jester-captures-merchant",
+    "royal-captures-jester",
+    "capture-vip",
+    "bear-counter",
+    "bear-counter-royal",
+    "bear-counter-checker",
+    "bear-counter-large",
+    "bear-counter-sector",
+    "hedgehog-counter",
+    "campfire-protection",
+    "campfire-royal-unprotected",
     "capture-merchant",
     "herald-merchant",
     "recruiter-spawn-replay",
@@ -53,6 +67,7 @@
     "wizard-friendly-loss",
     "wizard-guard",
     "wizard-fresh",
+    "wizard-bear",
     "log-ep-squire",
     "log-ep-landing",
     "log-start",
@@ -66,6 +81,7 @@
     "log-time-stop",
     "log-boundary",
     "log-fresh",
+    "log-bear-pending",
     "shotgun-reload",
     "shotgun-friends",
     "shotgun-hp",
@@ -74,6 +90,7 @@
     "shotgun-lethal",
     "shotgun-herald",
     "shotgun-star-limit",
+    "shotgun-bear",
     "big-castle-white-false-empty",
     "big-castle-white-false-friend",
     "big-castle-white-false-enemy",
@@ -135,6 +152,14 @@
     "purchase-fanatic",
     "purchase-primeMinister",
     "purchase-royalKnight",
+    "purchase-missionary",
+    "purchase-jester",
+    "purchase-vip",
+    "purchase-bear",
+    "purchase-hedgehog",
+    "purchase-campfire",
+    "purchase-lobster",
+    "purchase-slime",
     "purchase-amazon",
     "purchase-knightmaster",
     "purchase-windmill",
@@ -162,6 +187,6 @@
     "purchase-log",
     "purchase-shotgunKing"
   ],
-  "checks": 794,
-  "transitions": 594
+  "checks": 502,
+  "transitions": 300
 }

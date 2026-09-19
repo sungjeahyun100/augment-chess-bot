@@ -98,6 +98,16 @@ pub enum PieceKind {
     Fanatic,
     PrimeMinister,
     RoyalKnight,
+    Missionary,
+    Jester,
+    Bat,
+    Vip,
+    Bear,
+    Hedgehog,
+    Campfire,
+    Lobster,
+    Slime,
+    Paladin,
     Amazon,
     Knightmaster,
     Windmill,
@@ -156,6 +166,10 @@ pub struct Piece {
     pub log_direction: Option<LogDirection>,
     #[serde(default, skip_serializing_if = "Option::is_none")]
     pub log_roll_after_turn: Option<u32>,
+    #[serde(default, skip_serializing_if = "Option::is_none")]
+    pub bear_retaliations_remaining: Option<u8>,
+    #[serde(default, skip_serializing_if = "Option::is_none")]
+    pub bear_move_locked_until_turn: Option<u32>,
 }
 impl Piece {
     pub fn new(id: PieceId, owner: Owner, kind: PieceKind, anchor: Square) -> Self {
@@ -182,6 +196,9 @@ impl Piece {
             facing: None,
             log_direction: None,
             log_roll_after_turn: None,
+            bear_retaliations_remaining: matches!(kind, PieceKind::Bear | PieceKind::Hedgehog)
+                .then_some(2),
+            bear_move_locked_until_turn: None,
         }
     }
 }
@@ -242,6 +259,15 @@ impl PieceKind {
         matches!(self, Self::King | Self::ShotgunKing | Self::RoyalKnight)
     }
     pub(crate) fn defeat_royal(self) -> bool {
+        self.royal() || matches!(self, Self::Merchant | Self::Vip)
+    }
+    pub(crate) fn check_target(self) -> bool {
+        self.royal() || self == Self::Vip
+    }
+    pub(crate) fn jester_target(self) -> bool {
         self.royal() || self == Self::Merchant
+    }
+    pub(crate) fn herald_target(self) -> bool {
+        self.jester_target()
     }
 }

@@ -167,6 +167,9 @@ pub(crate) fn resolve_delayed(s: &mut CanonicalState) -> EngineResult<()> {
     s.delayed_spells
         .retain(|h| h.owner.opponent() != s.turn.side);
     for hazard in due {
+        let caster = hazard
+            .caster
+            .and_then(|id| s.pieces.iter().find(|p| p.id == id).cloned());
         let cells = if hazard.spell == DelayedSpellKind::Meteor {
             crate::large::cells(hazard.anchor)
         } else {
@@ -180,6 +183,9 @@ pub(crate) fn resolve_delayed(s: &mut CanonicalState) -> EngineResult<()> {
             if p.kind == PieceKind::Wall {
                 continue;
             }
+            if crate::movement::campfire_protected(s, &p) {
+                continue;
+            }
             let repeats = hazard.spell == DelayedSpellKind::Meteor && p.hp.is_some();
             if !repeats && !seen.insert(p.id) {
                 continue;
@@ -191,6 +197,9 @@ pub(crate) fn resolve_delayed(s: &mut CanonicalState) -> EngineResult<()> {
             if p.hp.is_some() {
                 crate::large::damage(s, p.id, hazard.owner)?;
             } else {
+                let armed = caster.as_ref().is_some_and(|attacker| {
+                    crate::bear::arm(s, &p, p.anchor, attacker, hazard.owner)
+                });
                 remove(s, p.id);
                 victory::mark_progress(s);
                 if p.kind.defeat_royal() {
@@ -208,6 +217,9 @@ pub(crate) fn resolve_delayed(s: &mut CanonicalState) -> EngineResult<()> {
                     );
                 }
                 crate::transition::rebuild(s)?;
+                if armed {
+                    crate::bear::resolve(s, hazard.owner, hazard.caster)?;
+                }
             }
         }
     }

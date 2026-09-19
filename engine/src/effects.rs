@@ -49,3 +49,21 @@ pub(crate) fn recruiter_pawn(s: &mut CanonicalState, owner: Owner, at: Square) -
     s.pieces.push(pawn);
     Ok(())
 }
+
+pub(crate) fn slime_clone(s: &mut CanonicalState, owner: Owner, at: Square) -> EngineResult<()> {
+    let id = PieceId(s.ids.next_piece);
+    s.ids.next_piece = s
+        .ids
+        .next_piece
+        .checked_add(1)
+        .ok_or_else(|| invalid("piece allocator overflow"))?;
+    let mut slime = Piece::new(id, owner, PieceKind::Slime, at);
+    transform(
+        &mut slime,
+        PieceKind::Slime,
+        *s.turn.completed.get(s.turn.side),
+    )?;
+    slime.moved = true;
+    s.pieces.push(slime);
+    Ok(())
+}

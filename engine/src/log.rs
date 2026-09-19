@@ -88,6 +88,7 @@ pub(crate) fn advance(s: &mut CanonicalState) -> EngineResult<()> {
                 stop(s, p.id);
                 continue;
             }
+            crate::bear::arm(s, &target, target.anchor, &p, s.turn.side);
             crate::wizard::remove(s, target.id);
             victory::mark_progress(s);
             if target.kind.defeat_royal() {

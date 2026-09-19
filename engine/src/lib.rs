@@ -1,6 +1,7 @@
 //! Deterministic cardless augment-chess rules with validated replay boundaries.
 #![forbid(unsafe_code)]
 mod action;
+mod bear;
 mod board;
 mod castling;
 mod chance;
@@ -16,6 +17,7 @@ mod types;
 mod variants;
 mod victory;
 mod wizard;
+pub use bear::PendingBearRetaliation;
 pub use wizard::{DelayedSpell, DelayedSpellKind, WizardSpell};
 
 pub use action::*;

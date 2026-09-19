@@ -120,7 +120,12 @@ pub(crate) fn attacks(s: &CanonicalState, p: &Piece, to: Square) -> bool {
     let dc = to.col as i16 - p.anchor.col as i16;
     ammo >= 3 && (dr == 0 || dc == 0 || dr.abs() == dc.abs()) && ray_clear(s, p.anchor, to)
 }
-fn hit(s: &mut CanonicalState, id: PieceId, by: Color) -> EngineResult<()> {
+fn hit(s: &mut CanonicalState, id: PieceId, attacker: &Piece) -> EngineResult<()> {
+    let by = match attacker.owner {
+        Owner::White => Color::White,
+        Owner::Black => Color::Black,
+        Owner::Neutral => return Ok(()),
+    };
     let Some(p) = s.pieces.iter().find(|p| p.id == id).cloned() else {
         return Ok(());
     };
@@ -129,6 +134,7 @@ fn hit(s: &mut CanonicalState, id: PieceId, by: Color) -> EngineResult<()> {
     } else if p.hp.is_some() {
         crate::large::damage(s, id, by)?;
     } else {
+        let armed = crate::bear::arm(s, &p, p.anchor, attacker, by);
         crate::wizard::remove(s, id);
         victory::mark_progress(s);
         if p.kind.defeat_royal() {
@@ -145,6 +151,9 @@ fn hit(s: &mut CanonicalState, id: PieceId, by: Color) -> EngineResult<()> {
             );
         }
         crate::transition::rebuild(s)?;
+        if armed {
+            crate::bear::resolve(s, by, Some(attacker.id))?;
+        }
     }
     Ok(())
 }
@@ -156,7 +165,6 @@ pub(crate) fn apply(s: &mut CanonicalState, a: &Action) -> EngineResult<bool> {
         _ => return Ok(false),
     };
     let p = s.pieces.iter().find(|p| p.id == id).unwrap().clone();
-    let by = s.turn.side;
     match *a {
         Action::ShotgunBlast { direction, .. } => {
             let mut seen = std::collections::BTreeSet::new();
@@ -170,24 +178,25 @@ pub(crate) fn apply(s: &mut CanonicalState, a: &Action) -> EngineResult<bool> {
                 {
                     continue;
                 }
-                hit(s, q.id, by)?;
+                hit(s, q.id, &p)?;
             }
         }
         Action::ShotgunSnipe { target, .. } => {
             let id = at(s, target).unwrap().id;
-            hit(s, id, by)?;
+            hit(s, id, &p)?;
         }
         _ => {}
     }
-    let shooter = s.pieces.iter_mut().find(|p| p.id == id).unwrap();
-    shooter.moved = true;
-    shooter.ammo = Some(if cost == 0 {
-        p.ammo.unwrap_or(0) + 1
-    } else {
-        p.ammo.unwrap_or(0) - cost
-    });
-    if let Action::ShotgunBlast { direction, .. } = *a {
-        shooter.facing = Some(facing(direction.dr.into(), direction.dc.into()));
+    if let Some(shooter) = s.pieces.iter_mut().find(|p| p.id == id) {
+        shooter.moved = true;
+        shooter.ammo = Some(if cost == 0 {
+            p.ammo.unwrap_or(0) + 1
+        } else {
+            p.ammo.unwrap_or(0) - cost
+        });
+        if let Action::ShotgunBlast { direction, .. } = *a {
+            shooter.facing = Some(facing(direction.dr.into(), direction.dc.into()));
+        }
     }
     s.history.en_passant = None;
     victory::end_turn(s)?;

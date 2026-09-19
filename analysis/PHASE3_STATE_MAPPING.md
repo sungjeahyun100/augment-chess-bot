@@ -19,6 +19,15 @@
 | shotgunPenaltyColor | 살아 있는 샷건 킹 검색 | 반복 기록 중지 및 장기전 패널티(white 우선) |
 | primeMinisterMoves | 기존 Action::Move | 빈 중간 칸을 거치는 최대 두 왕 걸음, 경로 중복 제거; 추가 상태 없음 |
 | royalKnight / isRoyalKing | PieceKind::RoyalKnight / royal() | 카드 없는 기본 나이트 행마 및 왕 판정; royalKnightKing/hillKing은 해당 카드 단계 |
+| missionaryConvert | 기존 Action::Move의 Missionary 분기 | 선교사는 제자리, 대상 소유권/origin/moved 변경; 대형 HP 복구; 별도 범용 effect 없음 |
+| jester capture restrictions | PieceKind::Jester + can_capture 분기 | 광대는 왕/상인만 포획하고 왕 계열만 광대를 포획 |
+| batMoves daytime | PieceKind::Bat의 최대 2칸 직선 ray | blood-moon-night 상태가 없는 cardless 낮 규칙; 추가 상태 없음 |
+| VIP royal predicates | royal / defeat_royal / check_target / herald_target 구분 | VIP는 체크·패배 대상이나 왕 정체성 및 전령 협정 대상은 아님 |
+| piece.bearRetaliationsRemaining | bear_retaliations_remaining: optional u8 | 곰/고슴도치 전용 0…2; 생성 기본값 2, 반격 복귀마다 1 감소 |
+| piece.bearMoveLockedUntilTurn | bear_move_locked_until_turn: optional u32 | owner completed가 deadline 미만이면 이동 금지; 곰 위협은 유지하고 고슴도치 위협은 억제 |
+| state.pendingBearRetaliations | pending_bear_retaliations ordered Vec | 포획된 곰/고슴도치 clone, 공격자 ID/색, 포획 칸·복귀 목적지·잔여 횟수 보존; 빈 배열 생략 |
+| septemberBoardCampfireProtects | 현재 board의 Campfire entity 조회 | 왕 계열을 제외한 같은 색 entity의 footprint가 캠프파이어와 직교 인접하면 포획 대상에서 제외; 저장 필드 없음 |
+| slime move의 새 entity | ids.next_piece + 기존 Piece/status | 출발 칸에 Slime을 할당하고 moved/origin/cannot_capture_until_owner_turn만 설정; 복제 전용 상태나 범용 spawn event 없음 |
 | piece.type | PieceKind의 실제 지원된 string ID | 생성/변신 |
 | piece.heraldJumpLockTurn / heraldJumpUnlocked===false | herald_jump_lock_turn / herald_jump_locked | 전령 전용; 이동 시 legacy 잠금 해제, owner completed와 deadline 비교 |
 | resolveHeraldThreats | EndReason::HeraldAgreement | 턴 완료 전 행동자 우선 인접 왕 확인 |
@@ -38,7 +47,7 @@
 | clockworkHasNeighbor | 인접 8칸에서 다른 아군 entity 존재 | 태엽인형 이동 query마다 계산 |
 | state.moveCount/turnsTaken | turn.move_count/completed | 체커 연쇄의 각 jump는 move_count, 연쇄 종료 때만 completed |
 
-카드 획득 상태, 드래프트, RULE, 누적 captures/capturedTypes, 예약 반격/부활, 골드/마나/탄약 외 기물 자원은 해당 기물/카드 이식 시점에 추가한다. 지금 비어 있다고 가정한 채 미구현 기능을 지원한다고 표시하지 않는다. 기물 속성을 임의 JSON map으로 저장하거나 앞으로 생길 카드용 범용 modifier DSL을 만들지 않았다.
+카드 획득 상태, 드래프트, RULE, 누적 captures/capturedTypes, 곰·고슴도치 외 예약 반격/부활, 골드/마나/탄약/반격 외 기물 자원은 해당 기물/카드 이식 시점에 추가한다. 지금 비어 있다고 가정한 채 미구현 기능을 지원한다고 표시하지 않는다. 기물 속성을 임의 JSON map으로 저장하거나 앞으로 생길 카드용 범용 modifier DSL을 만들지 않았다.
 
 ## JS oracle 표시 경계
 

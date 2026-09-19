@@ -1,0 +1,921 @@
+{
+  "name": "purchase-paladin",
+  "initial_state": {
+    "board": {
+      "cells": [
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        3,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        2,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        1,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null
+      ],
+      "cols": 8,
+      "rows": 8
+    },
+    "capability": "phase3_cardless",
+    "chance": {
+      "algorithm": "splitmix64_v1",
+      "high": 0,
+      "low": 0
+    },
+    "config": {
+      "deathmatch_enabled": true,
+      "deathmatch_limit_turns": 10,
+      "draft_enabled": false,
+      "opening_rules_enabled": false,
+      "rules_profile": "local_0dbbad68",
+      "star_win_limit": 45
+    },
+    "deathmatch": null,
+    "history": {
+      "castled": {
+        "black": false,
+        "white": false
+      },
+      "castling_canceled": {
+        "black": false,
+        "white": false
+      },
+      "en_passant": null,
+      "position_counts": [],
+      "repetition_salt": 0
+    },
+    "ids": {
+      "next_card": 1,
+      "next_effect": 1,
+      "next_piece": 4
+    },
+    "pending_promotion": null,
+    "phase": {
+      "kind": "play"
+    },
+    "pieces": [
+      {
+        "id": 1,
+        "owner": "white",
+        "kind": "merchant",
+        "anchor": {
+          "row": 7,
+          "col": 0
+        },
+        "footprint": [
+          {
+            "row": 7,
+            "col": 0
+          }
+        ],
+        "origin": {
+          "row": 7,
+          "col": 0
+        },
+        "moved": false,
+        "shielded": false,
+        "hp": null,
+        "max_hp": null,
+        "statuses": [],
+        "gold": 20
+      },
+      {
+        "id": 2,
+        "owner": "black",
+        "kind": "paladin",
+        "anchor": {
+          "row": 3,
+          "col": 3
+        },
+        "footprint": [
+          {
+            "row": 3,
+            "col": 3
+          }
+        ],
+        "origin": {
+          "row": 3,
+          "col": 3
+        },
+        "moved": false,
+        "shielded": false,
+        "hp": null,
+        "max_hp": null,
+        "statuses": []
+      },
+      {
+        "id": 3,
+        "owner": "black",
+        "kind": "king",
+        "anchor": {
+          "row": 0,
+          "col": 7
+        },
+        "footprint": [
+          {
+            "row": 0,
+            "col": 7
+          }
+        ],
+        "origin": {
+          "row": 0,
+          "col": 7
+        },
+        "moved": false,
+        "shielded": false,
+        "hp": null,
+        "max_hp": null,
+        "statuses": []
+      }
+    ],
+    "players": {
+      "black": {
+        "card_slots": [
+          null,
+          null,
+          null
+        ],
+        "cards_used_this_turn": 0,
+        "color": "black",
+        "first_move_cards_forced": false
+      },
+      "white": {
+        "card_slots": [
+          null,
+          null,
+          null
+        ],
+        "cards_used_this_turn": 0,
+        "color": "white",
+        "first_move_cards_forced": false
+      }
+    },
+    "result": null,
+    "schema_version": 3,
+    "turn": {
+      "actions_remaining": 1,
+      "completed": {
+        "black": 0,
+        "white": 0
+      },
+      "continuation": null,
+      "full_move": 1,
+      "move_count": 0,
+      "side": "white"
+    }
+  },
+  "history": [],
+  "input": {
+    "board": {
+      "cells": [
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        3,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        2,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        1,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null
+      ],
+      "cols": 8,
+      "rows": 8
+    },
+    "capability": "phase3_cardless",
+    "chance": {
+      "algorithm": "splitmix64_v1",
+      "high": 0,
+      "low": 0
+    },
+    "config": {
+      "deathmatch_enabled": true,
+      "deathmatch_limit_turns": 10,
+      "draft_enabled": false,
+      "opening_rules_enabled": false,
+      "rules_profile": "local_0dbbad68",
+      "star_win_limit": 45
+    },
+    "deathmatch": null,
+    "history": {
+      "castled": {
+        "black": false,
+        "white": false
+      },
+      "castling_canceled": {
+        "black": false,
+        "white": false
+      },
+      "en_passant": null,
+      "position_counts": [],
+      "repetition_salt": 0
+    },
+    "ids": {
+      "next_card": 1,
+      "next_effect": 1,
+      "next_piece": 4
+    },
+    "pending_promotion": null,
+    "phase": {
+      "kind": "play"
+    },
+    "pieces": [
+      {
+        "id": 1,
+        "owner": "white",
+        "kind": "merchant",
+        "anchor": {
+          "row": 7,
+          "col": 0
+        },
+        "footprint": [
+          {
+            "row": 7,
+            "col": 0
+          }
+        ],
+        "origin": {
+          "row": 7,
+          "col": 0
+        },
+        "moved": false,
+        "shielded": false,
+        "hp": null,
+        "max_hp": null,
+        "statuses": [],
+        "gold": 20
+      },
+      {
+        "id": 2,
+        "owner": "black",
+        "kind": "paladin",
+        "anchor": {
+          "row": 3,
+          "col": 3
+        },
+        "footprint": [
+          {
+            "row": 3,
+            "col": 3
+          }
+        ],
+        "origin": {
+          "row": 3,
+          "col": 3
+        },
+        "moved": false,
+        "shielded": false,
+        "hp": null,
+        "max_hp": null,
+        "statuses": []
+      },
+      {
+        "id": 3,
+        "owner": "black",
+        "kind": "king",
+        "anchor": {
+          "row": 0,
+          "col": 7
+        },
+        "footprint": [
+          {
+            "row": 0,
+            "col": 7
+          }
+        ],
+        "origin": {
+          "row": 0,
+          "col": 7
+        },
+        "moved": false,
+        "shielded": false,
+        "hp": null,
+        "max_hp": null,
+        "statuses": []
+      }
+    ],
+    "players": {
+      "black": {
+        "card_slots": [
+          null,
+          null,
+          null
+        ],
+        "cards_used_this_turn": 0,
+        "color": "black",
+        "first_move_cards_forced": false
+      },
+      "white": {
+        "card_slots": [
+          null,
+          null,
+          null
+        ],
+        "cards_used_this_turn": 0,
+        "color": "white",
+        "first_move_cards_forced": false
+      }
+    },
+    "result": null,
+    "schema_version": 3,
+    "turn": {
+      "actions_remaining": 1,
+      "completed": {
+        "black": 0,
+        "white": 0
+      },
+      "continuation": null,
+      "full_move": 1,
+      "move_count": 0,
+      "side": "white"
+    }
+  },
+  "action": null,
+  "js": {
+    "state": {
+      "board": {
+        "cells": [
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          3,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          2,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          1,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null
+        ],
+        "cols": 8,
+        "rows": 8
+      },
+      "capability": "phase3_cardless",
+      "chance": {
+        "algorithm": "splitmix64_v1",
+        "high": 0,
+        "low": 0
+      },
+      "config": {
+        "deathmatch_enabled": true,
+        "deathmatch_limit_turns": 10,
+        "draft_enabled": false,
+        "opening_rules_enabled": false,
+        "rules_profile": "local_0dbbad68",
+        "star_win_limit": 45
+      },
+      "deathmatch": null,
+      "history": {
+        "castled": {
+          "black": false,
+          "white": false
+        },
+        "castling_canceled": {
+          "black": false,
+          "white": false
+        },
+        "en_passant": null,
+        "position_counts": [],
+        "repetition_salt": 0
+      },
+      "ids": {
+        "next_card": 1,
+        "next_effect": 1,
+        "next_piece": 4
+      },
+      "pending_promotion": null,
+      "phase": {
+        "kind": "play"
+      },
+      "pieces": [
+        {
+          "id": 1,
+          "owner": "white",
+          "kind": "merchant",
+          "anchor": {
+            "row": 7,
+            "col": 0
+          },
+          "footprint": [
+            {
+              "row": 7,
+              "col": 0
+            }
+          ],
+          "origin": {
+            "row": 7,
+            "col": 0
+          },
+          "moved": false,
+          "shielded": false,
+          "hp": null,
+          "max_hp": null,
+          "statuses": [],
+          "gold": 20
+        },
+        {
+          "id": 2,
+          "owner": "black",
+          "kind": "paladin",
+          "anchor": {
+            "row": 3,
+            "col": 3
+          },
+          "footprint": [
+            {
+              "row": 3,
+              "col": 3
+            }
+          ],
+          "origin": {
+            "row": 3,
+            "col": 3
+          },
+          "moved": false,
+          "shielded": false,
+          "hp": null,
+          "max_hp": null,
+          "statuses": []
+        },
+        {
+          "id": 3,
+          "owner": "black",
+          "kind": "king",
+          "anchor": {
+            "row": 0,
+            "col": 7
+          },
+          "footprint": [
+            {
+              "row": 0,
+              "col": 7
+            }
+          ],
+          "origin": {
+            "row": 0,
+            "col": 7
+          },
+          "moved": false,
+          "shielded": false,
+          "hp": null,
+          "max_hp": null,
+          "statuses": []
+        }
+      ],
+      "players": {
+        "black": {
+          "card_slots": [
+            null,
+            null,
+            null
+          ],
+          "cards_used_this_turn": 0,
+          "color": "black",
+          "first_move_cards_forced": false
+        },
+        "white": {
+          "card_slots": [
+            null,
+            null,
+            null
+          ],
+          "cards_used_this_turn": 0,
+          "color": "white",
+          "first_move_cards_forced": false
+        }
+      },
+      "result": null,
+      "schema_version": 3,
+      "turn": {
+        "actions_remaining": 1,
+        "completed": {
+          "black": 0,
+          "white": 0
+        },
+        "continuation": null,
+        "full_move": 1,
+        "move_count": 0,
+        "side": "white"
+      }
+    },
+    "actions": [
+      {
+        "kind": "purchase",
+        "merchant": 1,
+        "target": 2
+      }
+    ],
+    "check": {
+      "white": false,
+      "black": false
+    }
+  },
+  "rust": {
+    "actions": [
+      {
+        "kind": "purchase",
+        "merchant": 1,
+        "target": 2
+      },
+      {
+        "kind": "purchase",
+        "merchant": 1,
+        "target": 3
+      }
+    ],
+    "check": {
+      "black": false,
+      "white": false
+    },
+    "state": {
+      "board": {
+        "cells": [
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          3,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          2,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          1,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null
+        ],
+        "cols": 8,
+        "rows": 8
+      },
+      "capability": "phase3_cardless",
+      "chance": {
+        "algorithm": "splitmix64_v1",
+        "high": 0,
+        "low": 0
+      },
+      "config": {
+        "deathmatch_enabled": true,
+        "deathmatch_limit_turns": 10,
+        "draft_enabled": false,
+        "opening_rules_enabled": false,
+        "rules_profile": "local_0dbbad68",
+        "star_win_limit": 45
+      },
+      "deathmatch": null,
+      "history": {
+        "castled": {
+          "black": false,
+          "white": false
+        },
+        "castling_canceled": {
+          "black": false,
+          "white": false
+        },
+        "en_passant": null,
+        "position_counts": [],
+        "repetition_salt": 0
+      },
+      "ids": {
+        "next_card": 1,
+        "next_effect": 1,
+        "next_piece": 4
+      },
+      "pending_promotion": null,
+      "phase": {
+        "kind": "play"
+      },
+      "pieces": [
+        {
+          "anchor": {
+            "col": 0,
+            "row": 7
+          },
+          "footprint": [
+            {
+              "col": 0,
+              "row": 7
+            }
+          ],
+          "gold": 20,
+          "hp": null,
+          "id": 1,
+          "kind": "merchant",
+          "max_hp": null,
+          "moved": false,
+          "origin": {
+            "col": 0,
+            "row": 7
+          },
+          "owner": "white",
+          "shielded": false,
+          "statuses": []
+        },
+        {
+          "anchor": {
+            "col": 3,
+            "row": 3
+          },
+          "footprint": [
+            {
+              "col": 3,
+              "row": 3
+            }
+          ],
+          "hp": null,
+          "id": 2,
+          "kind": "paladin",
+          "max_hp": null,
+          "moved": false,
+          "origin": {
+            "col": 3,
+            "row": 3
+          },
+          "owner": "black",
+          "shielded": false,
+          "statuses": []
+        },
+        {
+          "anchor": {
+            "col": 7,
+            "row": 0
+          },
+          "footprint": [
+            {
+              "col": 7,
+              "row": 0
+            }
+          ],
+          "hp": null,
+          "id": 3,
+          "kind": "king",
+          "max_hp": null,
+          "moved": false,
+          "origin": {
+            "col": 7,
+            "row": 0
+          },
+          "owner": "black",
+          "shielded": false,
+          "statuses": []
+        }
+      ],
+      "players": {
+        "black": {
+          "card_slots": [
+            null,
+            null,
+            null
+          ],
+          "cards_used_this_turn": 0,
+          "color": "black",
+          "first_move_cards_forced": false
+        },
+        "white": {
+          "card_slots": [
+            null,
+            null,
+            null
+          ],
+          "cards_used_this_turn": 0,
+          "color": "white",
+          "first_move_cards_forced": false
+        }
+      },
+      "result": null,
+      "schema_version": 3,
+      "turn": {
+        "actions_remaining": 1,
+        "completed": {
+          "black": 0,
+          "white": 0
+        },
+        "continuation": null,
+        "full_move": 1,
+        "move_count": 0,
+        "side": "white"
+      }
+    }
+  },
+  "diff": {
+    "field": "$.actions.1",
+    "rust": {
+      "kind": "purchase",
+      "merchant": 1,
+      "target": 3
+    }
+  },
+  "error": "AssertionError [ERR_ASSERTION]: Expected values to be strictly deep-equal:\n+ actual - expected\n\n  {\n    actions: [\n      {\n        kind: 'purchase',\n        merchant: 1,\n        target: 2\n      },\n+     {\n+       kind: 'purchase',\n+       merchant: 1,\n+       target: 3\n+     }\n    ],\n    check: {\n      black: false,\n      white: false\n    },\n\n    at check (/home/sjh100/바탕화면/augment-chess-bot/tools/phase3_differential.cjs:30:69)\n    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)\n    at async /home/sjh100/바탕화면/augment-chess-bot/tools/phase3_differential.cjs:221:115"
+}

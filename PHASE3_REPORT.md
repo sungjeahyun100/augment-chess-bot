@@ -23,8 +23,17 @@ Phase 3 전체 완료 보고가 아니다. `PORT_RUST_ENGINE.md`와 `PORTING_PLA
 - log의 방향 지정과 자기 행동 종료 때의 자동 이동. 방향 지정 당일에는 굴러가지 않고 이후 owner 완료 턴마다 한 번만 이동한다. 보드 순서, 경계·보호막·가드·HP 정지, 왕 포획을 보존한다.
 - shotgunKing의 비포획 인접 이동, HP 왕 판정, 탄약/바라보는 방향, 장전·산탄·저격. 산탄은 아군도 타격하며 entity당 한 번, 저격은 광선의 첫 상대 기물만 대상으로 삼는다.
 - pegasus의 빈 칸 전역 이동/나이트 포획, fanatic의 전방 최대 2칸 이동·포획과 승격 없음. 새 상태 필드 없이 기존 이동 규칙으로 구현한다.
+- missionary의 대각선 한 칸 이동과 전향. 선교사는 제자리에 남고 대상 entity의 소유권·origin·moved를 갱신하며, 보호막과 자원은 유지한다. 대형 HP는 최대치로 복구하고 왕 전향은 즉시 승리한다.
+- jester의 퀸 광선 이동, 왕/상인만 포획하는 제한과 왕 계열에게만 잡히는 면역.
+- bat의 카드 없는 낮 행마(상하좌우 최대 2칸). 밤 행마는 blood-moon-night 카드 상태를 이식할 때 연결한다.
+- vip의 킹 행마, 체크 대상과 포획 패배. 원본대로 왕 정체성과는 구분하여 암살자·광대·전령의 왕 전용 규칙에는 포함하지 않는다.
 - primeMinister의 왕 행마 1~2회 이동·포획. 두 번째 걸음은 빈 중간 칸을 필요로 하며, 여러 경로의 같은 목적지는 한 행동이다.
 - royalKnight의 기본 나이트 행마와 왕 포획·위협·협정·매수 판정. royalKnightKing/hillKing 카드 효과는 아직 지원하지 않는다.
+- bear의 퀸 행마, 2회 반격 자원, 반격 직후 다음 자기 턴까지의 이동 잠금. 직접 포획·체커·거신병 섹터·마법사·샷건은 즉시 반격하고, 통나무 포획은 직렬화 가능한 대기열로 다음 해당 색 행동 종료까지 보존한다.
+- hedgehog의 킹 행마와 같은 2회 반격. 곰과 달리 이동 잠금 중에는 위협도 억제되며 반격 복귀 뒤 종류를 유지한다.
+- campfire의 상하좌우 한 칸 비포획 이동과 인접 4칸 아군 보호. 왕 계열은 보호 대상에서 제외하고, 대형 footprint·체커·섹터·통나무·마법·샷건도 같은 현재 보드 aura를 사용한다.
+- lobster의 자기 전방 세 칸 이동·포획. 카드가 만드는 지연 소환 예약은 카드 단계에 남기고 직접 배치된 기물 규칙만 지원한다.
+- slime의 직교 정확히 3칸 도약과 출발 칸 복제. 복제본은 단조 증가 ID, moved=true, origin=출발 칸과 다음 자기 턴까지의 포획 잠금을 갖는다.
 - 지연 마법이 현재 왕 칸에 지정된 경우 캐슬링 금지. 통과/도착 칸에만 지정된 마법은 같은 금지 조건을 적용하지 않는다.
 - bigRook 캐슬링: 공유 footprint를 경로에서 제외하고 새 2×2 착지의 아군을 포획 효과 없이 제거한다. 양색·양측을 지원한다.
 - wall의 이동 없음·차단·포획 금지 및 cardinal 반사.
@@ -60,7 +69,10 @@ node tools/phase3_differential.cjs --replay analysis/phase3_failure.json
 
 현재 묶음 검증:
 
-- Rust 테스트 102개(기존 27 + Phase 3 75)가 통과했다. fmt, clippy 경고 0 검사 통과.
+- Rust 테스트 114개(기존 27 + Phase 3 87)가 통과했다. fmt, clippy 경고 0 검사 통과.
+- 곰의 양색/중앙/경계/장애물/fresh/반격 자원·잠금 조합과 직접·왕·체커·대형 착지·섹터·통나무·마법사·샷건 시나리오는 **1,381개 비교, 1,138개 전이**를 통과했다. 이 중 고정 연속 시나리오는 **397개 비교, 226개 전이**다.
+- 고슴도치와 캠프파이어의 양색/경계/장애물/fresh/반격 자원·잠금 조합, 반격·보호·왕 예외·매수 시나리오는 함께 **768개 비교, 496개 전이**를 통과했다. 확장된 전체 고정 시나리오는 **408개 비교, 232개 전이**다.
+- 랍스터 조합은 **472개 비교, 271개 전이**, 슬라임의 도약·복제·ID·fresh 상태 조합은 **502개 비교, 300개 전이**를 통과했다. 현재 전체 고정 시나리오는 **414개 비교, 236개 전이**다.
 - 전령: 선택 실행 **870개 상태/합법수/위협 비교, 759개 전이** 통과. 징집관과 연속 시나리오: **176개 비교, 131개 전이** 통과. 징집관 생성 fresh status는 위 명세 수정에 따른 의도적 차이로 별도 보정하며 나머지를 비교한다.
 - 상인 추가 전 전체 실행: 27개 변형 기물에서 **6,595개 비교, 5,830개 전이** 통과. 이 실행은 징집관 fresh status 수정 전이며 해당 수정은 위 별도 실행으로 검증했다.
 - 상인의 골드/색/경계/fresh 조합은 **262개 비교, 97개 전이** 통과. 이후 지원 기물 전체 매수 가격·소유권 변경·골드 보급·왕 매수·매수된 폰의 앙파상 이력을 포함한 연속 시나리오는 **156개 비교, 98개 전이** 통과. 실행 간 겹치는 시나리오가 있으므로 합산하지 않는다.
@@ -98,6 +110,7 @@ node tools/phase3_differential.cjs --replay analysis/phase3_failure.json
 | 샷건 킹이 있으면 반복 횟수를 기록하지 않고 장기전에서 해당 색이 패배 | 양쪽 샷건 킹이면 COLORS 순서의 white가 패널티 대상 | 원본 보존; 턴 제한과 반복 기록 회귀 테스트 |
 | 산탄은 아군도 맞고 HP entity당 1회; 메테오는 점유 칸마다 HP 피해 | 같은 광역 공격으로 통합하면 규칙이 달라짐 | 별도 주문/산탄 순서와 중복 제거 유지 |
 | 빅룩 캐슬링의 아군 제거는 capturePieceAt을 호출하지 않음 | 일반 착지 포획과 달리 마나/포획 progress/왕 패배를 발생시키지 않음 | 캐슬링 전이를 분리하고 실제 entity 전체만 제거 |
+| 대형 기물 착지가 곰/고슴도치를 잡으면 즉시 반격으로 제거된 공격자 객체를 이어지는 착지 코드가 다시 배치 | 최종 보드에서는 공격자가 살아 있고 반격 기물이 사라지는 원본 순서 의존 동작 | 대형 착지에는 반격 대기열을 만들지 않아 최종 의미 상태를 보존; 섹터 공격은 정상 즉시 반격 |
 | 반복 key는 풍차 모드를 포함하지 않음 | 미래 행동이 다른 상태를 같은 반복으로 셀 수 있음 | 원본 반복 key 보존; canonical은 모드 포함 |
 
 ## 남은 작업
@@ -110,8 +123,8 @@ node tools/phase3_differential.cjs --replay analysis/phase3_failure.json
 | `amazon` | 기본/현재 구현 |
 | `assassin` | 기본/현재 구현 |
 | `babyBear` | 미구현 |
-| `bat` | 미구현 |
-| `bear` | 미구현 |
+| `bat` | 낮 행마 구현; blood-moon-night의 밤 행마는 카드 단계 |
+| `bear` | 퀸 행마·2회 반격·이동 잠금·대기열 구현 |
 | `berserker` | 기본/현재 구현 |
 | `bigBishop` | 기본/현재 구현 |
 | `bigRook` | 이동·포획·HP·대형 캐슬링 구현 |
@@ -119,7 +132,7 @@ node tools/phase3_differential.cjs --replay analysis/phase3_failure.json
 | `blackHole` | 미구현 |
 | `brutus` | 미구현 |
 | `camel` | 기본/현재 구현 |
-| `campfire` | 미구현 |
+| `campfire` | 직교 한 칸 비포획 이동·인접 아군 보호 구현 |
 | `cannon` | 기본/현재 구현 |
 | `cardinal` | 기본/현재 구현 |
 | `checker` | 기본/현재 구현 |
@@ -136,20 +149,20 @@ node tools/phase3_differential.cjs --replay analysis/phase3_failure.json
 | `football` | 미구현 |
 | `grasshopper` | 기본/현재 구현 |
 | `guard` | 기본/현재 구현 |
-| `hedgehog` | 미구현 |
+| `hedgehog` | 킹 행마·2회 반격·이동/위협 잠금 구현 |
 | `herald` | 현재 구현 |
 | `hook` | 기본/현재 구현 |
 | `idol` | 미구현 |
-| `jester` | 미구현 |
+| `jester` | 현재 구현 |
 | `king` | 기본/현재 구현 |
 | `knight` | 기본/현재 구현 |
 | `knightmaster` | 기본/현재 구현 |
-| `lobster` | 미구현 |
+| `lobster` | 전방 세 칸 이동·포획 구현; 지연 소환은 카드 단계 |
 | `log` | 현재 구현 |
 | `magicGirl` | 미구현 |
 | `man` | 기본/현재 구현 |
 | `merchant` | 현재 구현 |
-| `missionary` | 미구현 |
+| `missionary` | 현재 구현 |
 | `monster` | 미구현 |
 | `octopus` | 미구현 |
 | `paladin` | 미구현 |
@@ -168,7 +181,7 @@ node tools/phase3_differential.cjs --replay analysis/phase3_failure.json
 | `shotgunKing` | 현재 구현 |
 | `siegeRam` | 미구현 |
 | `siren` | 미구현 |
-| `slime` | 미구현 |
+| `slime` | 직교 3칸 도약·출발 칸 fresh 복제 구현 |
 | `squire` | 기본/현재 구현 |
 | `standardBearer` | 기본/현재 구현 |
 | `thief` | 미구현 |
@@ -176,7 +189,7 @@ node tools/phase3_differential.cjs --replay analysis/phase3_failure.json
 | `trickster` | 미구현 |
 | `undead` | 미구현 |
 | `vampireLord` | 미구현 |
-| `vip` | 미구현 |
+| `vip` | 현재 구현 |
 | `wall` | 기본/현재 구현 |
 | `windmill` | 기본/현재 구현 |
 | `windmillBishop` | 풍차 표시 별칭 (별도 entity 아님) |

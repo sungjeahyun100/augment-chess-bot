@@ -163,6 +163,8 @@ pub struct CanonicalState {
     pub delayed_spells: Vec<DelayedSpell>,
     #[serde(default, skip_serializing_if = "Vec::is_empty")]
     pub time_stopped: Vec<Color>,
+    #[serde(default, skip_serializing_if = "Vec::is_empty")]
+    pub pending_bear_retaliations: Vec<PendingBearRetaliation>,
 }
 
 /// Validated core. No writable references, global state, clocks, or I/O.
@@ -250,6 +252,7 @@ impl GameState {
             deathmatch: None,
             delayed_spells: vec![],
             time_stopped: vec![],
+            pending_bear_retaliations: vec![],
         })?;
         crate::victory::record_position(&mut game.snapshot)?;
         Ok(game)
@@ -300,6 +303,16 @@ impl GameState {
             if p.windmill_mode.is_some() && p.kind != PieceKind::Windmill {
                 return Err(invalid("windmill mode on a different piece"));
             }
+            if (p.bear_retaliations_remaining.is_some() || p.bear_move_locked_until_turn.is_some())
+                && !matches!(p.kind, PieceKind::Bear | PieceKind::Hedgehog)
+            {
+                return Err(invalid("bear state on a different piece"));
+            }
+            if p.bear_retaliations_remaining
+                .is_some_and(|remaining| remaining > 2)
+            {
+                return Err(invalid("bear retaliation count exceeds maximum"));
+            }
             match (p.hp, p.max_hp) {
                 (None, None) => {}
                 (Some(hp), Some(max)) if hp > 0 && hp <= max => {}
@@ -322,6 +335,7 @@ impl GameState {
         if s.players.white.color != Color::White || s.players.black.color != Color::Black {
             return Err(invalid("player color mismatch"));
         }
+        crate::bear::validate(s)?;
         if s.players.white.card_slots.len() != 3 || s.players.black.card_slots.len() != 3 {
             return Err(invalid(
                 "normal profile requires three card slots per player",
@@ -495,7 +509,7 @@ impl GameState {
         crate::movement::ensure_supported(&self.snapshot)?;
         Ok(self.pieces().iter().any(|p| {
             p.owner == Owner::from(color)
-                && p.kind.royal()
+                && p.kind.check_target()
                 && crate::movement::attacked(&self.snapshot, p.anchor, color.opponent())
         }))
     }

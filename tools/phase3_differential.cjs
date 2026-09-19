@@ -43,6 +43,7 @@ function setup(base,kind,row,col,side,occupied,fresh,mode){
  if(kind==='shotgunKing'){s.pieces[0].hp=s.pieces[0].max_hp=4;s.pieces[0].ammo=mode??0;s.pieces[0].max_ammo=3;s.pieces[0].facing=side==='white'?'up':'down';}
  if(kind==='wizard'&&mode!==null){s.pieces[0].mana=mode;s.pieces[0].max_mana=5;}
  if(kind==='merchant'&&mode!==null)s.pieces[0].gold=mode;
+ if(['bear','hedgehog'].includes(kind)){s.pieces[0].bear_retaliations_remaining=mode;s.pieces[0].bear_move_locked_until_turn=mode===1?1:undefined;}
  if(kind==='herald'&&mode){s.pieces[0].herald_jump_locked=true;if(mode!=='legacy')s.pieces[0].herald_jump_lock_turn=mode==='fresh'?0:1;}
  s.board.cells=Array(64).fill(null);for(const p of s.pieces)p.footprint.forEach(sq=>s.board.cells[sq.row*8+sq.col]=p.id);
  for(const p of s.pieces)if(p.kind==='shotgunKing'&&p.hp===null)Object.assign(p,{hp:4,max_hp:4,ammo:0,max_ammo:3,facing:p.owner==='white'?'up':'down'});s.ids.next_piece=Math.max(...s.pieces.map(p=>p.id))+1;s.turn.side=side;s.history.position_counts=[];return s;
@@ -52,8 +53,8 @@ function setup(base,kind,row,col,side,occupied,fresh,mode){
  const replay=process.argv.indexOf('--replay');
  if(replay>=0){const f=JSON.parse(fs.readFileSync(process.argv[replay+1],'utf8'));current={name:'replay'};await check(createSession(f.input),f.input,f.action);console.log('Replay passed');return;}
 
- const kinds=process.argv.includes('--sequences-only')?[]:(process.env.PHASE3_KINDS?.split(',') || ['man','ferz','alfil','camel','eagle','pegasus','fanatic','primeMinister','royalKnight','amazon','knightmaster','windmill','assassin','guard','cannon','grasshopper','hook','cardinal','protestant','checker','checkerKing','squire','standardBearer','colossus','bigRook','bigBishop','berserker','princess','clockwork','herald','recruiter','merchant','wizard','log','shotgunKing']);
- for(const kind of kinds)for(const side of ['white','black'])for(const [row,col] of [[4,4],[0,0],[7,0]])for(const occupied of [false,true])for(const fresh of [false,true])for(const mode of kind==='windmill'?[null,'bishop','rook']:kind==='herald'?[null,'legacy','fresh','expired']:kind==='merchant'?[null,1,2,3,9,20]:kind==='wizard'?[null,1,2,3,5]:kind==='shotgunKing'?[0,1,2,3]:[null]){
+ const kinds=process.argv.includes('--sequences-only')?[]:(process.env.PHASE3_KINDS?.split(',') || ['man','ferz','alfil','camel','eagle','pegasus','fanatic','primeMinister','royalKnight','missionary','jester','bat','vip','bear','hedgehog','campfire','lobster','slime','paladin','amazon','knightmaster','windmill','assassin','guard','cannon','grasshopper','hook','cardinal','protestant','checker','checkerKing','squire','standardBearer','colossus','bigRook','bigBishop','berserker','princess','clockwork','herald','recruiter','merchant','wizard','log','shotgunKing']);
+ for(const kind of kinds)for(const side of ['white','black'])for(const [row,col] of [[4,4],[0,0],[7,0]])for(const occupied of [false,true])for(const fresh of [false,true])for(const mode of kind==='windmill'?[null,'bishop','rook']:kind==='herald'?[null,'legacy','fresh','expired']:kind==='merchant'?[null,1,2,3,9,20]:kind==='wizard'?[null,1,2,3,5]:kind==='shotgunKing'?[0,1,2,3]:['bear','hedgehog'].includes(kind)?[0,1,2]:[null]){
   if(['colossus','bigRook','bigBishop'].includes(kind)&&(row>=7||col>=7))continue;
   const state=setup(base,kind,row,col,side,occupied,fresh,mode);
   current={name:[kind,side,row,col,occupied,fresh,mode].join('-'),initial_state:state,history:[]};
@@ -66,13 +67,28 @@ function setup(base,kind,row,col,side,occupied,fresh,mode){
  }
  // Multi-action sequences retain JS state across turns and pending decisions.
  const move=(r,c,tr,tc)=>({kind:'move',from:{row:r,col:c},to:{row:tr,col:tc},route:[]});
- function custom(entries){const s=setup(base,entries[0][1],entries[0][2],entries[0][3],'white',false,false,null);s.pieces=entries.map(([owner,kind,row,col],i)=>({id:i+1,owner,kind,anchor:{row,col},footprint:[{row,col}],origin:{row,col},moved:false,shielded:false,hp:null,max_hp:null,statuses:[]}));for(const p of s.pieces)if(['colossus','bigRook','bigBishop'].includes(p.kind)){const {row,col}=p.anchor;p.footprint=[{row,col},{row,col:col+1},{row:row+1,col},{row:row+1,col:col+1}];p.hp=p.max_hp=p.kind==='colossus'?3:2;}for(const p of s.pieces)if(p.kind==='shotgunKing'&&p.hp===null)Object.assign(p,{hp:4,max_hp:4,ammo:0,max_ammo:3,facing:p.owner==='white'?'up':'down'});s.ids.next_piece=Math.max(...s.pieces.map(p=>p.id))+1;s.board.cells=Array(64).fill(null);for(const p of s.pieces)p.footprint.forEach(sq=>s.board.cells[sq.row*8+sq.col]=p.id);return s;}
+ function custom(entries){const s=setup(base,entries[0][1],entries[0][2],entries[0][3],'white',false,false,null);s.pieces=entries.map(([owner,kind,row,col],i)=>({id:i+1,owner,kind,anchor:{row,col},footprint:[{row,col}],origin:{row,col},moved:false,shielded:false,hp:null,max_hp:null,statuses:[]}));for(const p of s.pieces)if(['colossus','bigRook','bigBishop'].includes(p.kind)){const {row,col}=p.anchor;p.footprint=[{row,col},{row,col:col+1},{row:row+1,col},{row:row+1,col:col+1}];p.hp=p.max_hp=p.kind==='colossus'?3:2;}for(const p of s.pieces){if(p.kind==='shotgunKing'&&p.hp===null)Object.assign(p,{hp:4,max_hp:4,ammo:0,max_ammo:3,facing:p.owner==='white'?'up':'down'});if(['bear','hedgehog'].includes(p.kind))p.bear_retaliations_remaining=2;}s.ids.next_piece=Math.max(...s.pieces.map(p=>p.id))+1;s.board.cells=Array(64).fill(null);for(const p of s.pieces)p.footprint.forEach(sq=>s.board.cells[sq.row*8+sq.col]=p.id);return s;}
  const sequences=[
   ['prime-minister-blocked',[['white','primeMinister',4,4],['white','pawn',3,3],['black','pawn',3,4],['white','pawn',3,5],['black','rook',2,4],['black','king',0,7]],[]],
   ['prime-minister-detour',[['white','primeMinister',4,4],['white','pawn',3,3],['black','pawn',3,4],['black','rook',2,4],['black','king',0,7]],[move(4,4,2,4)]],
   ['capture-royal-knight',[['white','rook',4,0],['black','royalKnight',4,4]],[move(4,0,4,4)]],
   ['assassin-royal-knight',[['white','assassin',4,0],['black','royalKnight',4,4]],[move(4,0,4,4)]],
   ['herald-royal-knight',[['white','herald',4,0],['black','royalKnight',3,3]],[move(4,0,4,3)]],
+  ['missionary-converts',[['white','missionary',4,4],['black','guard',3,3],['black','king',0,7]],[move(4,4,3,3)]],
+  ['missionary-royal',[['white','missionary',4,4],['black','royalKnight',3,3]],[move(4,4,3,3)]],
+  ['jester-captures-merchant',[['white','jester',4,0],['black','merchant',4,4]],[move(4,0,4,4)]],
+  ['royal-captures-jester',[['white','royalKnight',4,4],['black','jester',2,3]],[move(4,4,2,3)]],
+  ['capture-vip',[['white','rook',4,0],['black','vip',4,4]],[move(4,0,4,4)]],
+  ['bear-counter',[['white','rook',4,0],['black','bear',4,4],['black','king',0,7]],[move(4,0,4,4)]],
+  ['bear-counter-royal',[['white','king',4,0],['black','bear',4,1]],[move(4,0,4,1)]],
+  ['bear-counter-checker',[['white','checker',4,4],['black','bear',3,3],['black','king',0,7]],[move(4,4,2,2)]],
+  ['bear-counter-large',[['white','bigRook',4,4],['black','bear',3,4],['black','king',0,7]],[move(4,4,3,4)]],
+  ['bear-counter-sector',[['white','colossus',4,4],['black','bear',2,6],['black','king',0,0]],[{kind:'attack_sector',piece:1,sector:0}]],
+  ['hedgehog-counter',[['white','rook',4,0],['black','hedgehog',4,4],['black','king',0,7]],[move(4,0,4,4)]],
+  ['campfire-protection',[['white','rook',4,0],['black','pawn',4,4],['black','campfire',3,4],['black','king',0,7]],[]],
+  ['campfire-royal-unprotected',[['white','rook',4,0],['black','king',4,4],['black','campfire',3,4]],[move(4,0,4,4)]],
+  ['paladin-radiance-dark',[['white','rook',5,2],['black','paladin',4,4],['black','king',0,7]],[]],
+  ['paladin-radiance-light',[['white','rook',5,1],['black','paladin',4,4],['black','king',0,7]],[move(5,1,5,7)]],
   ['capture-merchant',[['white','rook',4,0],['black','merchant',4,4]],[move(4,0,4,4)]],
   ['herald-merchant',[['white','herald',4,0],['black','merchant',3,3]],[move(4,0,4,3)]],
   ['recruiter-spawn-replay',[['white','recruiter',4,4],['black','king',0,7]],[move(4,4,3,4),move(0,7,1,7),move(3,4,2,4)]],
@@ -108,7 +124,8 @@ function setup(base,kind,row,col,side,occupied,fresh,mode){
   ['wizard-two-royals',3,[['white','wizard',7,0],['white','king',3,3],['black','king',3,4],['black','pawn',1,7]],[cast('meteor',3,3),move(1,7,2,7)]],
   ['wizard-friendly-loss',1,[['white','wizard',7,0],['white','pawn',3,3],['black','king',0,7]],[cast('lightning',3,3),move(0,7,0,6)]],
   ['wizard-guard',1,[['white','wizard',7,0],['black','guard',3,3],['black','king',0,7]],[cast('lightning',3,3),move(0,7,0,6)]],
-  ['wizard-fresh',1,[['white','wizard',7,0],['black','pawn',3,3],['black','king',0,7]],[cast('lightning',3,3),move(0,7,0,6)]]
+  ['wizard-fresh',1,[['white','wizard',7,0],['black','pawn',3,3],['black','king',0,7]],[cast('lightning',3,3),move(0,7,0,6)]],
+  ['wizard-bear',1,[['white','wizard',7,0],['black','bear',3,3],['black','king',0,7]],[cast('lightning',3,3),move(0,7,0,6)]]
  ];
  for(const [name,mana,entries,actions] of wizardSequences){
   let state=custom(entries);state.pieces[0].mana=mana;state.pieces[0].max_mana=5;
@@ -147,6 +164,7 @@ function setup(base,kind,row,col,side,occupied,fresh,mode){
   ['log-time-stop',[['white','log',4,4],['white','pawn',6,0],['black','king',0,7]],[move(6,0,5,0),move(5,0,4,0)]],
   ['log-boundary',[['white','log',0,4],['white','pawn',6,0],['black','king',0,7]],[move(6,0,5,0)]],
   ['log-fresh',[['white','log',4,4],['white','pawn',6,0],['black','pawn',3,4],['black','king',0,7]],[move(6,0,5,0)]]
+  ,['log-bear-pending',[['white','log',4,4],['white','pawn',6,0],['black','bear',3,4],['black','king',0,7]],[move(6,0,5,0),move(0,7,0,6),move(5,0,4,0)]]
  ];
  for(const [name,entries,actions] of logSequences){
   let state=custom(entries);if(name!=='log-start')for(const p of state.pieces)if(p.kind==='log')p.log_direction={dr:-1,dc:0};
@@ -167,7 +185,8 @@ function setup(base,kind,row,col,side,occupied,fresh,mode){
   ['shotgun-two-royals',[['white','shotgunKing',4,4],['white','king',3,3],['black','king',3,4]],[blast(-1,0)]],
   ['shotgun-lethal',[['white','rook',4,0],['black','shotgunKing',4,4]],[move(4,0,4,4)]],
   ['shotgun-herald',[['white','herald',4,0],['black','shotgunKing',3,3]],[move(4,0,4,3)]],
-  ['shotgun-star-limit',[['white','shotgunKing',4,4],['black','king',0,7]],[move(4,4,5,4),move(0,7,0,6)]]
+  ['shotgun-star-limit',[['white','shotgunKing',4,4],['black','king',0,7]],[move(4,4,5,4),move(0,7,0,6)]],
+  ['shotgun-bear',[['white','shotgunKing',4,0],['black','bear',4,4],['black','king',0,7]],[{kind:'shotgun_snipe',piece:1,target:{row:4,col:4}}]]
  ];
  for(const [name,entries,actions] of shotgunSequences){
   let state=custom(entries);for(const p of state.pieces)if(p.kind==='shotgunKing')p.ammo=name==='shotgun-reload'?0:3;
@@ -196,7 +215,7 @@ function setup(base,kind,row,col,side,occupied,fresh,mode){
   for(const action of actions){state=(await check(session,state,action)).state;current.history.push(action);}
  }
  // Every supported purchase price, including missing encyclopedia entries and shared HP entities.
- const purchaseKinds=['pawn','knight','bishop','rook','queen','king','ferz','man','alfil','camel','eagle','pegasus','fanatic','primeMinister','royalKnight','amazon','knightmaster','windmill','assassin','guard','cannon','grasshopper','hook','cardinal','protestant','checker','checkerKing','squire','standardBearer','colossus','bigRook','bigBishop','berserker','princess','clockwork','herald','recruiter','merchant','wizard','log','shotgunKing'];
+ const purchaseKinds=['pawn','knight','bishop','rook','queen','king','ferz','man','alfil','camel','eagle','pegasus','fanatic','primeMinister','royalKnight','missionary','jester','vip','bear','hedgehog','campfire','lobster','slime','paladin','amazon','knightmaster','windmill','assassin','guard','cannon','grasshopper','hook','cardinal','protestant','checker','checkerKing','squire','standardBearer','colossus','bigRook','bigBishop','berserker','princess','clockwork','herald','recruiter','merchant','wizard','log','shotgunKing'];
  for(const kind of purchaseKinds){
   let state=custom([['white','merchant',7,0],['black',kind,3,3],['black','king',0,7]]);state.pieces[0].gold=20;
   current={name:'purchase-'+kind,initial_state:state,history:[]};const session=createSession(state);const initial=await check(session,state);

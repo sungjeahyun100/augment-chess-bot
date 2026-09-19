@@ -99,10 +99,17 @@ pub(crate) fn mark_progress(s: &mut CanonicalState) {
     }
 }
 pub(crate) fn end_turn(s: &mut CanonicalState) -> EngineResult<()> {
-    if herald_agreement(s) {
+    if s.result.is_some() {
         return Ok(());
     }
     let moving = s.turn.side;
+    crate::bear::resolve(s, moving, None)?;
+    if s.result.is_some() {
+        return Ok(());
+    }
+    if herald_agreement(s) {
+        return Ok(());
+    }
     crate::log::advance(s)?;
     if herald_agreement(s) {
         return Ok(());
@@ -189,7 +196,7 @@ pub(crate) fn herald_agreement(s: &mut CanonicalState) -> bool {
             .any(|p| {
                 s.pieces.iter().any(|q| {
                     q.owner == Owner::from(color.opponent())
-                        && q.kind.defeat_royal()
+                        && q.kind.herald_target()
                         && p.anchor
                             .row
                             .abs_diff(q.anchor.row)

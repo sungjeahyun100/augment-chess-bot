@@ -51,6 +51,83 @@ fn ray(s: &CanonicalState, p: &Piece, start: Square, dr: i16, dc: i16) -> Vec<Sq
 pub(crate) fn destinations(s: &CanonicalState, p: &Piece) -> Vec<Square> {
     let queen = || DIAGONAL.into_iter().chain(STRAIGHT);
     match p.kind {
+        PieceKind::Missionary => {
+            let capture_locked = p.statuses.iter().any(|status| match status {
+                Status::CannotCaptureUntilOwnerTurn {
+                    owner,
+                    completed_turn,
+                } => s.turn.completed.get(*owner) < completed_turn,
+            });
+            DIAGONAL
+                .into_iter()
+                .filter_map(|(r, c)| offset(p.anchor, r, c))
+                .filter(|to| match at(s, *to) {
+                    None => true,
+                    Some(q) => {
+                        !capture_locked
+                            && q.owner != p.owner
+                            && q.owner != Owner::Neutral
+                            && q.kind != PieceKind::Wall
+                    }
+                })
+                .collect()
+        }
+        PieceKind::Jester => queen()
+            .flat_map(|(r, c)| ray(s, p, p.anchor, r, c))
+            .collect(),
+        PieceKind::Bat => STRAIGHT
+            .into_iter()
+            .flat_map(|(r, c)| {
+                ray(s, p, p.anchor, r, c)
+                    .into_iter()
+                    .filter(|to| to.row.abs_diff(p.anchor.row) + to.col.abs_diff(p.anchor.col) <= 2)
+            })
+            .collect(),
+        PieceKind::Bear => {
+            let color = match p.owner {
+                Owner::White => Color::White,
+                Owner::Black => Color::Black,
+                Owner::Neutral => return vec![],
+            };
+            if p.bear_move_locked_until_turn
+                .is_some_and(|deadline| *s.turn.completed.get(color) < deadline)
+            {
+                vec![]
+            } else {
+                queen()
+                    .flat_map(|(r, c)| ray(s, p, p.anchor, r, c))
+                    .collect()
+            }
+        }
+        PieceKind::Hedgehog => {
+            let color = match p.owner {
+                Owner::White => Color::White,
+                Owner::Black => Color::Black,
+                Owner::Neutral => return vec![],
+            };
+            if p.bear_move_locked_until_turn
+                .is_some_and(|deadline| *s.turn.completed.get(color) < deadline)
+            {
+                vec![]
+            } else {
+                jumps(s, p, queen())
+            }
+        }
+        PieceKind::Campfire => STRAIGHT
+            .into_iter()
+            .filter_map(|(dr, dc)| offset(p.anchor, dr, dc))
+            .filter(|to| at(s, *to).is_none())
+            .collect(),
+        PieceKind::Lobster => {
+            let dr = match p.owner {
+                Owner::White => -1,
+                Owner::Black => 1,
+                Owner::Neutral => return vec![],
+            };
+            jumps(s, p, [-1, 0, 1].into_iter().map(|dc| (dr, dc)))
+        }
+        PieceKind::Slime => jumps(s, p, STRAIGHT.into_iter().map(|(dr, dc)| (dr * 3, dc * 3))),
+        PieceKind::Paladin => jumps(s, p, KNIGHT.into_iter()),
         PieceKind::RoyalKnight => jumps(s, p, KNIGHT.into_iter()),
         PieceKind::PrimeMinister => {
             // Two king steps, with an empty intermediate square. Different
@@ -170,7 +247,9 @@ pub(crate) fn destinations(s: &CanonicalState, p: &Piece) -> Vec<Square> {
                 .filter(|sq| at(s, *sq).is_none())
                 .collect()
         }
-        PieceKind::Man | PieceKind::Guard | PieceKind::Recruiter => jumps(s, p, queen()),
+        PieceKind::Man | PieceKind::Vip | PieceKind::Guard | PieceKind::Recruiter => {
+            jumps(s, p, queen())
+        }
         PieceKind::Ferz | PieceKind::Knightmaster => jumps(s, p, DIAGONAL.into_iter()),
         PieceKind::Alfil => jumps(s, p, DIAGONAL.into_iter().map(|(r, c)| (r * 2, c * 2))),
         PieceKind::Eagle => jumps(s, p, queen().map(|(r, c)| (r * 2, c * 2))),
@@ -299,8 +378,26 @@ pub(crate) fn attacks(s: &CanonicalState, p: &Piece, to: Square) -> bool {
     let dc = to.col as i16 - p.anchor.col as i16;
     match p.kind {
         PieceKind::Pegasus | PieceKind::RoyalKnight => KNIGHT.contains(&(dr, dc)),
+        PieceKind::Bat => {
+            (dr == 0 || dc == 0) && dr.abs() + dc.abs() <= 2 && ray_clear(s, p.anchor, to)
+        }
+        PieceKind::Bear => {
+            (dr == 0 || dc == 0 || dr.abs() == dc.abs()) && ray_clear(s, p.anchor, to)
+        }
+        PieceKind::Hedgehog => {
+            let color = match p.owner {
+                Owner::White => Color::White,
+                Owner::Black => Color::Black,
+                Owner::Neutral => return false,
+            };
+            p.bear_move_locked_until_turn
+                .is_none_or(|deadline| *s.turn.completed.get(color) >= deadline)
+                && dr.abs().max(dc.abs()) == 1
+        }
+        PieceKind::Lobster => dr == if p.owner == Owner::White { -1 } else { 1 } && dc.abs() <= 1,
+        PieceKind::Slime => (dr == 0 || dc == 0) && dr.abs() + dc.abs() == 3,
         PieceKind::ShotgunKing => crate::shotgun::attacks(s, p, to),
-        PieceKind::Herald | PieceKind::Wizard => false,
+        PieceKind::Herald | PieceKind::Wizard | PieceKind::Campfire | PieceKind::Paladin => false,
         // The source's advisory threat switch omits clockwork entirely.
         PieceKind::Clockwork => false,
         PieceKind::Princess => {
@@ -331,7 +428,7 @@ pub(crate) fn attacks(s: &CanonicalState, p: &Piece, to: Square) -> bool {
                 && offset(to, dr, dc).is_some_and(|sq| at(s, sq).is_none())
                 && at(s, to).is_none_or(|q| can_capture(s, p, q))
         }
-        PieceKind::Man => dr.abs().max(dc.abs()) == 1,
+        PieceKind::Man | PieceKind::Vip => dr.abs().max(dc.abs()) == 1,
         PieceKind::Guard | PieceKind::Recruiter => false,
         PieceKind::Ferz | PieceKind::Knightmaster => dr.abs() == 1 && dc.abs() == 1,
         PieceKind::Alfil => dr.abs() == 2 && dc.abs() == 2,

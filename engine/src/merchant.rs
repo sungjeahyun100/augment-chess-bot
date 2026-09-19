@@ -4,20 +4,23 @@ use crate::*;
 fn cost(kind: PieceKind) -> Option<u32> {
     use PieceKind::*;
     Some(match kind {
-        Ferz | Wall => return None,
-        King | ShotgunKing | RoyalKnight | Merchant => 20,
-        Queen | Recruiter | Wizard | PrimeMinister => 9,
-        Rook | Herald | Grasshopper | Clockwork | Pegasus => 5,
+        Ferz | Wall | Bat => return None,
+        King | ShotgunKing | RoyalKnight | Vip | Merchant => 20,
+        Queen | Recruiter | Wizard | PrimeMinister | Jester => 9,
+        Rook | Herald | Grasshopper | Clockwork | Pegasus | Campfire => 5,
+        Slime => 5,
         Knight | Bishop | Protestant | Knightmaster => 3,
-        Cannon | Man | Assassin | CheckerKing | Windmill => 4,
+        Cannon | Man | Assassin | CheckerKing | Windmill | Paladin => 4,
         Amazon => 13,
+        Bear => 17,
+        Hedgehog => 9,
         Cardinal | Berserker => 7,
         Hook => 15,
         Princess => 6,
         Colossus => 12,
         BigRook | BigBishop => 8,
-        Fanatic | Log | Pawn | Squire | StandardBearer | Eagle | Camel | Alfil | Guard
-        | Checker => 2,
+        Fanatic | Log | Missionary | Pawn | Squire | StandardBearer | Eagle | Camel | Alfil
+        | Guard | Checker | Lobster => 2,
     })
 }
 pub(crate) fn actions(s: &CanonicalState, merchant: &Piece) -> Vec<Action> {
@@ -52,7 +55,7 @@ pub(crate) fn purchase(
     let buyer = s.pieces.iter_mut().find(|p| p.id == merchant).unwrap();
     buyer.gold =
         Some(buyer.gold.unwrap_or(0) - cost(target_kind).expect("validated purchase price"));
-    if target_kind.royal() {
+    if target_kind.defeat_royal() {
         victory::finish(
             s,
             GameResult::Win {

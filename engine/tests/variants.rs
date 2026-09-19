@@ -81,6 +81,325 @@ leaper_case!(prime_minister, PrimeMinister, 24, (2, 3));
 leaper_case!(royal_knight, RoyalKnight, 8, (2, 3));
 
 #[test]
+fn missionary_moves_one_diagonal_and_converts_without_leaving_its_square() {
+    let mut g = game(&[
+        (White, Missionary, 4, 4),
+        (Black, Guard, 3, 3),
+        (Black, King, 0, 7),
+    ]);
+    let mut snapshot = g.snapshot();
+    snapshot.pieces[1].shielded = true;
+    snapshot.pieces[1]
+        .statuses
+        .push(Status::CannotCaptureUntilOwnerTurn {
+            owner: Color::Black,
+            completed_turn: 3,
+        });
+    g = GameState::from_snapshot(snapshot).unwrap();
+    assert!(g.legal_actions().unwrap().contains(&mv(4, 4, 3, 3)));
+    g.apply_action(mv(4, 4, 3, 3)).unwrap();
+    let missionary = g.piece(PieceId(1)).unwrap();
+    let converted = g.piece(PieceId(2)).unwrap();
+    assert_eq!(missionary.anchor, Square::new(4, 4));
+    assert!(missionary.moved);
+    assert_eq!(converted.owner, White);
+    assert_eq!(converted.origin, Some(Square::new(3, 3)));
+    assert!(converted.moved);
+    assert!(converted.shielded);
+    assert!(converted.statuses.is_empty());
+}
+
+#[test]
+fn missionary_conversion_obeys_fresh_lock_and_defeats_royals() {
+    let mut locked = game(&[
+        (White, Missionary, 4, 4),
+        (Black, Pawn, 3, 3),
+        (Black, King, 0, 7),
+    ])
+    .snapshot();
+    locked.pieces[0]
+        .statuses
+        .push(Status::CannotCaptureUntilOwnerTurn {
+            owner: Color::White,
+            completed_turn: 1,
+        });
+    let locked = GameState::from_snapshot(locked).unwrap();
+    assert!(!locked.legal_actions().unwrap().contains(&mv(4, 4, 3, 3)));
+    assert!(locked.legal_actions().unwrap().contains(&mv(4, 4, 5, 5)));
+
+    let mut royal = game(&[(White, Missionary, 4, 4), (Black, RoyalKnight, 3, 3)]);
+    royal.apply_action(mv(4, 4, 3, 3)).unwrap();
+    assert_eq!(royal.piece(PieceId(2)).unwrap().owner, White);
+    assert_eq!(
+        royal.snapshot().result,
+        Some(GameResult::Win {
+            winner: Color::White,
+            reason: EndReason::RoyalCapture,
+        })
+    );
+}
+
+#[test]
+fn jester_rays_stop_at_non_royals_and_only_royals_can_capture_it() {
+    let blocked = game(&[
+        (White, Jester, 4, 0),
+        (Black, Pawn, 4, 2),
+        (Black, King, 4, 4),
+    ]);
+    assert!(targets(&blocked, PieceId(1)).contains(&Square::new(4, 1)));
+    assert!(!targets(&blocked, PieceId(1)).contains(&Square::new(4, 2)));
+    assert!(!targets(&blocked, PieceId(1)).contains(&Square::new(4, 4)));
+
+    let mut merchant = game(&[(White, Jester, 4, 0), (Black, Merchant, 4, 4)]);
+    assert!(merchant.legal_actions().unwrap().contains(&mv(4, 0, 4, 4)));
+    merchant.apply_action(mv(4, 0, 4, 4)).unwrap();
+    assert_eq!(
+        merchant.snapshot().result,
+        Some(GameResult::Win {
+            winner: Color::White,
+            reason: EndReason::RoyalCapture,
+        })
+    );
+
+    let pawn = game(&[(White, Pawn, 3, 2), (Black, Jester, 2, 3)]);
+    assert!(!pawn.legal_actions().unwrap().contains(&mv(3, 2, 2, 3)));
+    let royal = game(&[(White, RoyalKnight, 4, 4), (Black, Jester, 2, 3)]);
+    assert!(royal.legal_actions().unwrap().contains(&mv(4, 4, 2, 3)));
+}
+
+#[test]
+fn bat_uses_daytime_two_square_rook_rays() {
+    let g = game(&[(White, Bat, 4, 4), (Black, Pawn, 4, 6), (Black, King, 0, 7)]);
+    let destinations = targets(&g, PieceId(1));
+    assert_eq!(destinations.len(), 8);
+    assert!(destinations.contains(&Square::new(4, 6)));
+    assert!(!destinations.contains(&Square::new(4, 7)));
+
+    let blocked = game(&[
+        (White, Bat, 4, 4),
+        (White, Pawn, 4, 5),
+        (Black, Pawn, 4, 6),
+        (Black, King, 0, 7),
+    ]);
+    assert!(!targets(&blocked, PieceId(1)).contains(&Square::new(4, 6)));
+}
+
+#[test]
+fn vip_is_checked_and_defeated_but_is_not_a_royal_identity() {
+    let checked = game(&[(White, Rook, 4, 0), (Black, Vip, 4, 4)]);
+    assert!(checked.is_in_check(Color::Black).unwrap());
+    let mut captured = checked.clone();
+    captured.apply_action(mv(4, 0, 4, 4)).unwrap();
+    assert_eq!(
+        captured.snapshot().result,
+        Some(GameResult::Win {
+            winner: Color::White,
+            reason: EndReason::RoyalCapture,
+        })
+    );
+
+    let assassin = game(&[(White, Assassin, 4, 0), (Black, Vip, 4, 4)]);
+    assert!(!assassin.legal_actions().unwrap().contains(&mv(4, 0, 4, 4)));
+    let jester = game(&[(White, Jester, 4, 0), (Black, Vip, 4, 4)]);
+    assert!(!jester.legal_actions().unwrap().contains(&mv(4, 0, 4, 4)));
+
+    let mut herald = game(&[(White, Herald, 4, 0), (Black, Vip, 3, 3)]);
+    herald.apply_action(mv(4, 0, 4, 3)).unwrap();
+    assert_eq!(herald.snapshot().result, None);
+}
+
+#[test]
+fn bear_retaliates_to_the_attackers_origin_and_locks_its_next_move() {
+    let mut g = game(&[
+        (White, Rook, 4, 0),
+        (Black, Bear, 4, 4),
+        (Black, King, 0, 7),
+    ]);
+    g.apply_action(mv(4, 0, 4, 4)).unwrap();
+    assert!(g.piece(PieceId(1)).is_none());
+    let bear = g.piece(PieceId(2)).unwrap();
+    assert_eq!(bear.anchor, Square::new(4, 0));
+    assert_eq!(bear.bear_retaliations_remaining, Some(1));
+    assert_eq!(bear.bear_move_locked_until_turn, Some(1));
+    assert!(bear.moved);
+    assert_eq!(g.snapshot().turn.side, Color::Black);
+    assert!(targets(&g, PieceId(2)).is_empty());
+    assert_eq!(
+        GameState::from_canonical_json(&g.to_canonical_json().unwrap()).unwrap(),
+        g
+    );
+}
+
+#[test]
+fn bear_retaliation_can_defeat_the_capturing_royal() {
+    let mut g = game(&[(White, King, 4, 0), (Black, Bear, 4, 1)]);
+    g.apply_action(mv(4, 0, 4, 1)).unwrap();
+    assert!(g.piece(PieceId(1)).is_none());
+    assert_eq!(g.piece(PieceId(2)).unwrap().anchor, Square::new(4, 0));
+    assert_eq!(
+        g.snapshot().result,
+        Some(GameResult::Win {
+            winner: Color::Black,
+            reason: EndReason::RoyalCapture,
+        })
+    );
+}
+
+#[test]
+fn hedgehog_uses_king_steps_and_its_retaliation_lock_also_suppresses_threats() {
+    let mut state = game(&[(White, Hedgehog, 4, 4), (Black, King, 3, 3)]).snapshot();
+    state.pieces[0].bear_move_locked_until_turn = Some(1);
+    let locked = GameState::from_snapshot(state).unwrap();
+    assert!(targets(&locked, PieceId(1)).is_empty());
+    assert!(!locked.is_in_check(Color::Black).unwrap());
+
+    let mut g = game(&[
+        (White, Rook, 4, 0),
+        (Black, Hedgehog, 4, 4),
+        (Black, King, 0, 7),
+    ]);
+    g.apply_action(mv(4, 0, 4, 4)).unwrap();
+    assert!(g.piece(PieceId(1)).is_none());
+    let hedgehog = g.piece(PieceId(2)).unwrap();
+    assert_eq!(hedgehog.kind, Hedgehog);
+    assert_eq!(hedgehog.anchor, Square::new(4, 0));
+    assert_eq!(hedgehog.bear_retaliations_remaining, Some(1));
+}
+
+#[test]
+fn campfire_moves_quietly_and_protects_adjacent_non_royals() {
+    let g = game(&[
+        (White, Campfire, 4, 4),
+        (Black, Pawn, 3, 4),
+        (Black, King, 0, 7),
+    ]);
+    assert!(!targets(&g, PieceId(1)).contains(&Square::new(3, 4)));
+    assert!(!g.is_in_check(Color::Black).unwrap());
+
+    let protected = game(&[
+        (White, Rook, 4, 0),
+        (Black, Pawn, 4, 4),
+        (Black, Campfire, 3, 4),
+        (Black, King, 0, 7),
+    ]);
+    assert!(!protected.legal_actions().unwrap().contains(&mv(4, 0, 4, 4)));
+
+    let mut royal = game(&[
+        (White, Rook, 4, 0),
+        (Black, King, 4, 4),
+        (Black, Campfire, 3, 4),
+    ]);
+    royal.apply_action(mv(4, 0, 4, 4)).unwrap();
+    assert_eq!(
+        royal.snapshot().result,
+        Some(GameResult::Win {
+            winner: Color::White,
+            reason: EndReason::RoyalCapture,
+        })
+    );
+}
+
+#[test]
+fn lobster_moves_or_captures_into_any_forward_adjacent_file() {
+    let mut white = game(&[
+        (White, Lobster, 4, 4),
+        (Black, Pawn, 3, 4),
+        (Black, King, 0, 7),
+    ]);
+    assert_eq!(
+        targets(&white, PieceId(1)),
+        vec![Square::new(3, 3), Square::new(3, 4), Square::new(3, 5)]
+    );
+    white.apply_action(mv(4, 4, 3, 4)).unwrap();
+    assert!(white.piece(PieceId(2)).is_none());
+
+    let mut black_state = game(&[(Black, Lobster, 3, 4), (White, King, 4, 3)]).snapshot();
+    black_state.turn.side = Color::Black;
+    let black = GameState::from_snapshot(black_state).unwrap();
+    assert!(targets(&black, PieceId(1)).contains(&Square::new(4, 5)));
+    assert!(black.is_in_check(Color::White).unwrap());
+}
+
+#[test]
+fn slime_jumps_exactly_three_squares_and_leaves_a_fresh_clone() {
+    let mut g = game(&[
+        (White, Slime, 4, 4),
+        (White, Pawn, 4, 5),
+        (Black, Pawn, 4, 7),
+        (Black, King, 0, 7),
+    ]);
+    assert!(targets(&g, PieceId(1)).contains(&Square::new(4, 7)));
+    g.apply_action(mv(4, 4, 4, 7)).unwrap();
+    assert!(g.piece(PieceId(3)).is_none());
+    assert_eq!(g.piece(PieceId(1)).unwrap().anchor, Square::new(4, 7));
+    let clone = g.piece(PieceId(5)).unwrap();
+    assert_eq!(clone.kind, Slime);
+    assert_eq!(clone.anchor, Square::new(4, 4));
+    assert_eq!(clone.origin, Some(Square::new(4, 4)));
+    assert!(clone.moved);
+    assert_eq!(
+        clone.statuses,
+        vec![Status::CannotCaptureUntilOwnerTurn {
+            owner: Color::White,
+            completed_turn: 1,
+        }]
+    );
+    assert_eq!(
+        GameState::from_canonical_json(&g.to_canonical_json().unwrap()).unwrap(),
+        g
+    );
+}
+
+#[test]
+fn paladin_moves_as_a_quiet_knight_and_radiance_blocks_dark_origins() {
+    let paladin = game(&[
+        (White, Paladin, 4, 4),
+        (Black, Pawn, 2, 3),
+        (Black, King, 0, 7),
+    ]);
+    assert!(!targets(&paladin, PieceId(1)).contains(&Square::new(2, 3)));
+    assert!(!paladin.is_in_check(Color::Black).unwrap());
+
+    let dark = game(&[
+        (White, Rook, 5, 2),
+        (Black, Paladin, 4, 4),
+        (Black, King, 0, 7),
+    ]);
+    assert!(!targets(&dark, PieceId(1)).contains(&Square::new(5, 7)));
+
+    let light = game(&[
+        (White, Rook, 5, 1),
+        (Black, Paladin, 4, 4),
+        (Black, King, 0, 7),
+    ]);
+    assert!(targets(&light, PieceId(1)).contains(&Square::new(5, 7)));
+}
+
+#[test]
+fn log_capture_leaves_serializable_bear_retaliation_until_the_logs_next_action() {
+    let mut state = game(&[
+        (White, Log, 4, 4),
+        (White, Pawn, 6, 0),
+        (Black, Bear, 3, 4),
+        (Black, King, 0, 7),
+    ])
+    .snapshot();
+    state.pieces[0].log_direction = Some(LogDirection { dr: -1, dc: 0 });
+    state.pieces[0].log_roll_after_turn = Some(0);
+    let mut g = GameState::from_snapshot(state).unwrap();
+    g.apply_action(mv(6, 0, 5, 0)).unwrap();
+    assert_eq!(g.piece(PieceId(1)).unwrap().anchor, Square::new(3, 4));
+    assert!(g.piece(PieceId(3)).is_none());
+    assert_eq!(g.snapshot().pending_bear_retaliations.len(), 1);
+    g = GameState::from_canonical_json(&g.to_canonical_json().unwrap()).unwrap();
+    g.apply_action(mv(0, 7, 0, 6)).unwrap();
+    g.apply_action(mv(5, 0, 4, 0)).unwrap();
+    assert!(g.piece(PieceId(1)).is_none());
+    assert_eq!(g.piece(PieceId(3)).unwrap().anchor, Square::new(4, 4));
+    assert!(g.snapshot().pending_bear_retaliations.is_empty());
+}
+
+#[test]
 fn royal_knight_is_royal_for_threats_capture_and_herald_agreement() {
     let mut g = game(&[(White, Assassin, 4, 0), (Black, RoyalKnight, 4, 4)]);
     assert!(g.is_in_check(Color::Black).unwrap());

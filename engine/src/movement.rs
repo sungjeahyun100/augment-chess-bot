@@ -35,6 +35,10 @@ pub(crate) fn offset(sq: Square, dr: i16, dc: i16) -> Option<Square> {
 }
 pub(crate) fn can_capture(s: &CanonicalState, p: &Piece, q: &Piece) -> bool {
     p.owner != q.owner
+        && !matches!(p.kind, PieceKind::Campfire | PieceKind::Paladin)
+        && !campfire_protected(s, q)
+        && (p.kind != PieceKind::Jester || q.kind.jester_target())
+        && (q.kind != PieceKind::Jester || p.kind.royal())
         && !matches!(p.kind, PieceKind::Guard | PieceKind::Recruiter)
         && !matches!(q.kind, PieceKind::Guard | PieceKind::Wall)
         && !p.statuses.iter().any(|status| match status {
@@ -42,6 +46,21 @@ pub(crate) fn can_capture(s: &CanonicalState, p: &Piece, q: &Piece) -> bool {
                 owner,
                 completed_turn,
             } => s.turn.completed.get(*owner) < completed_turn,
+        })
+}
+pub(crate) fn campfire_protected(s: &CanonicalState, target: &Piece) -> bool {
+    !target.kind.royal()
+        && s.pieces.iter().any(|fire| {
+            fire.id != target.id
+                && fire.owner == target.owner
+                && fire.kind == PieceKind::Campfire
+                && fire.footprint.iter().any(|fire_square| {
+                    target.footprint.iter().any(|target_square| {
+                        fire_square.row.abs_diff(target_square.row)
+                            + fire_square.col.abs_diff(target_square.col)
+                            == 1
+                    })
+                })
         })
 }
 pub(crate) const DIAGONAL: [(i16, i16); 4] = [(1, 1), (1, -1), (-1, 1), (-1, -1)];
@@ -56,6 +75,124 @@ pub(crate) const KNIGHT: [(i16, i16); 8] = [
     (-1, 2),
     (-1, -2),
 ];
+fn paladin_radiance(s: &CanonicalState, mover: &Piece) -> std::collections::BTreeSet<Square> {
+    s.pieces
+        .iter()
+        .filter(|p| {
+            p.kind == PieceKind::Paladin
+                && p.owner != mover.owner
+                && (p.anchor.row + p.anchor.col) % 2 == 0
+        })
+        .flat_map(|p| {
+            DIAGONAL
+                .into_iter()
+                .chain(STRAIGHT)
+                .filter_map(|(dr, dc)| offset(p.anchor, dr, dc))
+        })
+        .collect()
+}
+fn radiance_line_clear(
+    from: Square,
+    to: Square,
+    radiance: &std::collections::BTreeSet<Square>,
+) -> bool {
+    let dr = to.row as i16 - from.row as i16;
+    let dc = to.col as i16 - from.col as i16;
+    if dr != 0 && dc != 0 && dr.abs() != dc.abs() {
+        return true;
+    }
+    let distance = dr.abs().max(dc.abs());
+    (1..distance).all(|step| {
+        let row = (from.row as i16 + dr.signum() * step) as u16;
+        let col = (from.col as i16 + dc.signum() * step) as u16;
+        !radiance.contains(&Square::new(row, col))
+    })
+}
+fn radiance_variant_path(
+    s: &CanonicalState,
+    mover: &Piece,
+    to: Square,
+    radiance: &std::collections::BTreeSet<Square>,
+) -> bool {
+    let mut blocked = s.clone();
+    let mut id = u32::MAX;
+    for square in radiance {
+        if at(&blocked, *square).is_some() {
+            continue;
+        }
+        while blocked.pieces.iter().any(|p| p.id == PieceId(id)) {
+            id -= 1;
+        }
+        blocked
+            .pieces
+            .push(Piece::new(PieceId(id), Owner::Neutral, PieceKind::Wall, *square));
+        id -= 1;
+    }
+    blocked.board = Board::from_pieces(8, 8, &blocked.pieces).expect("radiance blockers are unique");
+    let mover = blocked
+        .pieces
+        .iter()
+        .find(|p| p.id == mover.id)
+        .expect("moving piece remains present");
+    crate::variants::destinations(&blocked, mover).contains(&to)
+}
+fn radiance_allows_move(s: &CanonicalState, from: Square, to: Square) -> bool {
+    let Some(mover) = at(s, from) else {
+        return false;
+    };
+    if (from.row + from.col) % 2 == 0 {
+        return true;
+    }
+    let radiance = paladin_radiance(s, mover);
+    if radiance.is_empty() {
+        return true;
+    }
+    let landing = if mover.kind.large() {
+        crate::large::cells(to)
+    } else {
+        vec![to]
+    };
+    if landing.iter().any(|sq| radiance.contains(sq)) {
+        return false;
+    }
+    let dr = to.row as i16 - from.row as i16;
+    let dc = to.col as i16 - from.col as i16;
+    let leaps = matches!(
+        mover.kind,
+        PieceKind::Knight
+            | PieceKind::Paladin
+            | PieceKind::RoyalKnight
+            | PieceKind::Camel
+            | PieceKind::Alfil
+            | PieceKind::Eagle
+            | PieceKind::Assassin
+            | PieceKind::Herald
+            | PieceKind::Grasshopper
+            | PieceKind::Slime
+            | PieceKind::Pegasus
+            | PieceKind::Checker
+            | PieceKind::CheckerKing
+    ) || mover.kind == PieceKind::Amazon && KNIGHT.contains(&(dr, dc));
+    if leaps {
+        return true;
+    }
+    if matches!(mover.kind, PieceKind::Hook | PieceKind::Cardinal | PieceKind::Protestant | PieceKind::PrimeMinister) {
+        return radiance_variant_path(s, mover, to, &radiance);
+    }
+    if mover.kind == PieceKind::King && from.col.abs_diff(to.col) == 2 {
+        let rook_col = if to.col > from.col { 7 } else { 0 };
+        let rook_to = Square::new(from.row, if to.col > from.col { 5 } else { 3 });
+        if let Some(rook) = at(s, Square::new(from.row, rook_col)) {
+            if (rook.anchor.row + rook.anchor.col) % 2 == 1
+                && (!radiance_line_clear(rook.anchor, rook_to, &radiance)
+                    || radiance.contains(&rook_to))
+            {
+                return false;
+            }
+        }
+    }
+    radiance_line_clear(from, to, &radiance)
+}
 pub(crate) fn ray_clear(s: &CanonicalState, from: Square, to: Square) -> bool {
     let dr = (to.row as i16 - from.row as i16).signum();
     let dc = (to.col as i16 - from.col as i16).signum();
@@ -78,12 +215,14 @@ pub(crate) fn attacked(s: &CanonicalState, to: Square, by: Color) -> bool {
         .iter()
         .filter(|p| p.owner == Owner::from(by))
         .any(|p| {
-            if p.statuses.iter().any(|status| match status {
-                Status::CannotCaptureUntilOwnerTurn {
-                    owner,
-                    completed_turn,
-                } => s.turn.completed.get(*owner) < completed_turn,
-            }) || at(s, to).is_some_and(|q| q.kind == PieceKind::Guard)
+            if p.kind == PieceKind::Campfire
+                || p.statuses.iter().any(|status| match status {
+                    Status::CannotCaptureUntilOwnerTurn {
+                        owner,
+                        completed_turn,
+                    } => s.turn.completed.get(*owner) < completed_turn,
+                })
+                || at(s, to).is_some_and(|q| q.kind == PieceKind::Guard)
             {
                 return false;
             }
@@ -296,5 +435,9 @@ pub(crate) fn legal_actions(s: &CanonicalState) -> EngineResult<Vec<Action>> {
             route: vec![],
         }));
     }
+    actions.retain(|action| match action {
+        Action::Move { from, to, .. } => radiance_allows_move(s, *from, *to),
+        _ => true,
+    });
     Ok(actions)
 }

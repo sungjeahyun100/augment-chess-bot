@@ -47,6 +47,39 @@ pub(crate) fn apply(s: &mut CanonicalState, action: Action) -> EngineResult<()> 
     match action {
         Action::Move { from, to, .. } => {
             let moving = at(s, from).expect("validated move").clone();
+            if moving.kind == PieceKind::Missionary {
+                if let Some(target) = at(s, to).cloned() {
+                    let royal = target.kind.defeat_royal();
+                    let converted = s.pieces.iter_mut().find(|p| p.id == target.id).unwrap();
+                    converted.owner = moving.owner;
+                    converted.origin = Some(to);
+                    converted.moved = true;
+                    converted.statuses.clear();
+                    if converted.kind.large() {
+                        let hp = if converted.kind == PieceKind::Colossus {
+                            3
+                        } else {
+                            2
+                        };
+                        converted.hp = Some(hp);
+                        converted.max_hp = Some(hp);
+                    }
+                    let missionary = s.pieces.iter_mut().find(|p| p.id == moving.id).unwrap();
+                    missionary.moved = true;
+                    s.history.en_passant = None;
+                    if royal {
+                        finish(
+                            s,
+                            GameResult::Win {
+                                winner: s.turn.side,
+                                reason: EndReason::RoyalCapture,
+                            },
+                        );
+                        return Ok(());
+                    }
+                    return end_turn(s);
+                }
+            }
             let ep_victim = s
                 .history
                 .en_passant
@@ -105,14 +138,25 @@ pub(crate) fn apply(s: &mut CanonicalState, action: Action) -> EngineResult<()> 
                 .pieces
                 .iter()
                 .any(|p| captures.contains(&p.id) && p.kind.defeat_royal());
+            let captured_pieces: Vec<_> = s
+                .pieces
+                .iter()
+                .filter(|p| captures.contains(&p.id))
+                .cloned()
+                .collect();
             if !captures.is_empty() {
                 mark_progress(s);
             }
             for id in &captures {
                 crate::wizard::remove(s, *id);
             }
-            let p = s.pieces.iter_mut().find(|p| p.id == moving.id).unwrap();
-            relocate(p, to);
+            for captured in &captured_pieces {
+                crate::bear::arm(s, captured, captured.anchor, &moving, s.turn.side);
+            }
+            relocate(s.pieces.iter_mut().find(|p| p.id == moving.id).unwrap(), to);
+            if moving.kind == PieceKind::Slime {
+                crate::effects::slime_clone(s, moving.owner, from)?;
+            }
             // Reference returns after landing on a captured king, before moved/EP/turn bookkeeping.
             if royal_capture {
                 finish(
@@ -133,6 +177,7 @@ pub(crate) fn apply(s: &mut CanonicalState, action: Action) -> EngineResult<()> 
                 }
                 return Ok(());
             }
+            let p = s.pieces.iter_mut().find(|p| p.id == moving.id).unwrap();
             p.moved = true;
             if moving.kind == PieceKind::ShotgunKing {
                 p.facing = Some(crate::shotgun::facing(
